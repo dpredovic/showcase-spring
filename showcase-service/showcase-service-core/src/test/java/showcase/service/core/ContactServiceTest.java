@@ -2,13 +2,10 @@ package showcase.service.core;
 
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,12 +18,11 @@ import showcase.service.core.config.ServiceConfig;
 import showcase.zipresolver.ZipResolver;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.RETURNS_SMART_NULLS;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("junit")
-@ContextConfiguration(classes = {ServiceConfig.class, ContactServiceTest.class}, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = ServiceConfig.class, loader = AnnotationConfigContextLoader.class)
 public class ContactServiceTest {
 
     @Autowired
@@ -37,10 +33,6 @@ public class ContactServiceTest {
 
     @Autowired
     private ZipResolver zipResolver;
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void getContact() {
@@ -68,10 +60,4 @@ public class ContactServiceTest {
         assertThat(contacts).contains(standardContact, invoicingContact);
 
     }
-
-    @Bean
-    public ZipResolver zipResolver() {
-        return Mockito.mock(ZipResolver.class, RETURNS_SMART_NULLS);
-    }
-
 }

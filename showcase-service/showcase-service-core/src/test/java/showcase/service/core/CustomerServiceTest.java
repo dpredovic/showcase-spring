@@ -19,7 +19,7 @@ import static org.mockito.Mockito.RETURNS_SMART_NULLS;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("junit")
-@ContextConfiguration(classes = {ServiceConfig.class, CustomerServiceTest.class}, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = ServiceConfig.class, loader = AnnotationConfigContextLoader.class)
 public class CustomerServiceTest {
 
     @Autowired
