@@ -6,6 +6,11 @@
             http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!--
+        This could be done in code too, but one line of xml is much more convenient then code.
+        Next version of spring-data-jpa should implement the enabling annotation - something like
+        @EnableTransactionManagement (an equivalent of tx:annotation-driven xml).
+    -->
     <jpa:repositories base-package="showcase.persistence.repository"/>
 
 </beans>
