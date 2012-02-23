@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 
 @Configuration
-@Profile({"production", "standalone"})
+@Profile({"integration", "standalone"})
 public class DataSourceConfig {
 
     @Autowired
