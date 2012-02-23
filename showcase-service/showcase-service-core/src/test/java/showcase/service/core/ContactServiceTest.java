@@ -54,6 +54,9 @@ public class ContactServiceTest {
         ContactDto invoicingContact = contactService.getContactByCustomerAndType(id, ContactType.INVOICING);
         assertThat(invoicingContact).isNotNull();
         assertThat(invoicingContact.getContactType()).isEqualTo(ContactType.INVOICING);
+        assertThat(invoicingContact.getCity()).isEqualTo("MockCity");
+        assertThat(invoicingContact.getCountryCode()).isEqualTo(ccCaptor.getValue());
+        assertThat(invoicingContact.getZipCode()).isEqualTo(zipCaptor.getValue());
 
         List<ContactDto> contacts = contactService.getContactsByCustomer(id);
         assertThat(contacts).hasSize(4);
