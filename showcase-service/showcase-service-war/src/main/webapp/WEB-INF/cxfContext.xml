@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+            http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+
+    <jaxws:endpoint address="/CustomerService">
+        <jaxws:implementor>
+            <ref bean="customerService"/>
+        </jaxws:implementor>
+    </jaxws:endpoint>
+    <jaxws:endpoint address="/ContactService">
+        <jaxws:implementor>
+            <ref bean="contactService"/>
+        </jaxws:implementor>
+    </jaxws:endpoint>
+
+    <jaxrs:server address="/rest">
+        <jaxrs:serviceBeans>
+            <ref bean="restService"/>
+        </jaxrs:serviceBeans>
+    </jaxrs:server>
+
+    <bean id="restService" class="showcase.service.remoting.RestServiceBean"/>
+    <bean id="contactService" class="showcase.service.remoting.ContactServiceBean"/>
+    <bean id="customerService" class="showcase.service.remoting.CustomerServiceBean"/>
+</beans>
