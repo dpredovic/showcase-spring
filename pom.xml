@@ -13,6 +13,7 @@
         <module>showcase-persistence</module>
         <module>showcase-common</module>
         <module>showcase-service</module>
+        <module>showcase-zip-resolver</module>
     </modules>
 
     <properties>
@@ -71,6 +72,11 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>showcase-zip-resolver</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>showcase-persistence-unit</artifactId>
                 <version>${project.version}</version>
                 <type>test-jar</type>
@@ -112,7 +118,6 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
                 <version>${spring.version}</version>
-                <scope>runtime</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.data</groupId>

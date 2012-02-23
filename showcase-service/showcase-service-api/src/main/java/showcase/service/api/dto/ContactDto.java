@@ -18,6 +18,7 @@ public class ContactDto implements Serializable {
 
     private String street;
     private String zipCode;
+    private String city;
     private String countryCode;
 
     private ContactType contactType;
@@ -62,6 +63,14 @@ public class ContactDto implements Serializable {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getCountryCode() {

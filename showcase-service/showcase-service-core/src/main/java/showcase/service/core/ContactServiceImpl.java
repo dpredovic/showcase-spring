@@ -12,6 +12,7 @@ import showcase.persistence.repository.ContactRepository;
 import showcase.persistence.unit.Contact;
 import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
+import showcase.zipresolver.ZipResolver;
 
 @Service
 @Transactional
@@ -23,6 +24,9 @@ public class ContactServiceImpl implements ContactService {
     @Autowired
     private Mapper mapper;
 
+    @Autowired
+    private ZipResolver zipResolver;
+
     @Override
     @Transactional(readOnly = true)
     public ContactDto getContact(long contactId) {
@@ -30,8 +34,7 @@ public class ContactServiceImpl implements ContactService {
         if (contact == null) {
             return null;
         }
-
-        return mapper.map(contact, ContactDto.class);
+        return mapAndEnrichCity(contact);
     }
 
     @Override
@@ -42,7 +45,7 @@ public class ContactServiceImpl implements ContactService {
             return null;
         }
 
-        return mapper.map(contact, ContactDto.class);
+        return mapAndEnrichCity(contact);
     }
 
     @Override
@@ -52,9 +55,16 @@ public class ContactServiceImpl implements ContactService {
 
         List<ContactDto> contactDtos = new ArrayList<ContactDto>(contacts.size());
         for (Contact contact : contacts) {
-            ContactDto contactDto = mapper.map(contact, ContactDto.class);
+            ContactDto contactDto = mapAndEnrichCity(contact);
             contactDtos.add(contactDto);
         }
         return contactDtos;
+    }
+
+    private ContactDto mapAndEnrichCity(Contact contact) {
+        ContactDto contactDto = mapper.map(contact, ContactDto.class);
+        String city = zipResolver.resolveCity(contactDto.getCountryCode(), contactDto.getZipCode());
+        contactDto.setCity(city);
+        return contactDto;
     }
 }
