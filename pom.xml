@@ -19,18 +19,19 @@
     <properties>
         <app.name>showcase</app.name>
         <service.name>${app.name}-${parsedVersion.majorVersion}.${parsedVersion.minorVersion}</service.name>
+		
         <spring.version>3.1.1.RELEASE</spring.version>
         <spring-data-jpa.version>1.0.3.RELEASE</spring-data-jpa.version>
         <hibernate-jpa-2.0-api.version>1.0.1.Final</hibernate-jpa-2.0-api.version>
         <hibernate.version>4.1.0.Final</hibernate.version>
+		<querydsl.version>2.3.2</querydsl.version>
         <slf4j.version>1.6.4</slf4j.version>
-        <junit.version>4.9</junit.version>
+        <junit.version>4.10</junit.version>
         <dozer.version>5.3.2</dozer.version>
         <cxf.version>2.5.2</cxf.version>
 
         <compiler.source.version>1.6</compiler.source.version>
         <compiler.target.version>1.6</compiler.target.version>
-        <querydsl.version>2.3.0</querydsl.version>
     </properties>
 
     <dependencyManagement>
