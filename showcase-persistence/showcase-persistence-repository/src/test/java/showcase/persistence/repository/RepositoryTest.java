@@ -21,6 +21,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import showcase.common.CommunicationType;
 import showcase.common.ContactType;
 import showcase.common.CustomerType;
+import showcase.common.DispatchType;
 import showcase.persistence.repository.config.RepositoryConfig;
 import showcase.persistence.unit.Contact;
 import showcase.persistence.unit.Customer;
@@ -50,7 +51,8 @@ public class RepositoryTest {
             public Long doInTransaction(TransactionStatus status) {
 
                 Customer customer = new Customer();
-                customer.setCustomerType(CustomerType.PERSON);
+                customer.setCustomerType(CustomerType.PERSON.toString());
+                customer.setDispatchType(DispatchType.EMAIL.toString());
                 customer.setRegistrationDate(new Date());
                 customer.setCooperationPartnerId(1L);
                 customer.getProperties().put("platinum", "true");
@@ -88,9 +90,9 @@ public class RepositoryTest {
         contact.setLastName("ln" + i);
         contact.setStreet("str" + i);
         contact.setZipCode("zip" + i);
-        contact.setContactType(type);
+        contact.setContactType(type == null ? null : type.toString());
 
-        contact.getCommunications().put(CommunicationType.EMAIL, "test" + i + "@test");
+        contact.getCommunications().put(CommunicationType.EMAIL.toString(), "test" + i + "@test");
 
         contact.setCustomer(customer);
         return contact;

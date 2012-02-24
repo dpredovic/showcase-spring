@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import showcase.common.ContactType;
 import showcase.persistence.repository.ContactRepository;
 import showcase.persistence.unit.Contact;
 import showcase.service.api.ContactService;
@@ -48,7 +47,7 @@ public class ContactServiceImpl implements ContactService {
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = "contact", key = "'customerId='+#customerId+',type='+#type")
-    public ContactDto getContactByCustomerAndType(long customerId, ContactType type) {
+    public ContactDto getContactByCustomerAndType(long customerId, String type) {
         Contact contact = contactRepository.findByCustomerIdAndContactType(customerId, type);
         if (contact == null) {
             return null;

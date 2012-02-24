@@ -12,8 +12,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
-import showcase.common.CustomerType;
-import showcase.common.DispatchType;
 
 @Entity
 @Audited
@@ -31,10 +29,10 @@ public class Customer {
     private Date registrationDate;
 
     @Basic(optional = false)
-    private CustomerType customerType;
+    private String customerType;
 
     @Basic(optional = false)
-    private DispatchType dispatchType = DispatchType.EMAIL;
+    private String dispatchType;
 
     @ElementCollection
     private Map<String, String> properties = new HashMap<String, String>();
@@ -63,19 +61,19 @@ public class Customer {
         this.registrationDate = registrationDate;
     }
 
-    public CustomerType getCustomerType() {
+    public String getCustomerType() {
         return customerType;
     }
 
-    public void setCustomerType(CustomerType customerType) {
+    public void setCustomerType(String customerType) {
         this.customerType = customerType;
     }
 
-    public DispatchType getDispatchType() {
+    public String getDispatchType() {
         return dispatchType;
     }
 
-    public void setDispatchType(DispatchType dispatchType) {
+    public void setDispatchType(String dispatchType) {
         this.dispatchType = dispatchType;
     }
 

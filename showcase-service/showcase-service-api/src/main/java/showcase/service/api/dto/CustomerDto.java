@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import showcase.common.CustomerType;
-import showcase.common.DispatchType;
-
 @XmlRootElement
 public class CustomerDto implements Serializable {
 
@@ -18,9 +15,9 @@ public class CustomerDto implements Serializable {
 
     private Date registrationDate;
 
-    private CustomerType customerType;
+    private String customerType;
 
-    private DispatchType dispatchType;
+    private String dispatchType;
 
     private Map<String, String> properties = new HashMap<String, String>();
 
@@ -48,19 +45,19 @@ public class CustomerDto implements Serializable {
         this.registrationDate = registrationDate;
     }
 
-    public CustomerType getCustomerType() {
+    public String getCustomerType() {
         return customerType;
     }
 
-    public void setCustomerType(CustomerType customerType) {
+    public void setCustomerType(String customerType) {
         this.customerType = customerType;
     }
 
-    public DispatchType getDispatchType() {
+    public String getDispatchType() {
         return dispatchType;
     }
 
-    public void setDispatchType(DispatchType dispatchType) {
+    public void setDispatchType(String dispatchType) {
         this.dispatchType = dispatchType;
     }
 

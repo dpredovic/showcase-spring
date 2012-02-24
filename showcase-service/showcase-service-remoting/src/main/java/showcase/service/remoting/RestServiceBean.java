@@ -16,7 +16,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
-import showcase.common.ContactType;
 import showcase.service.api.ContactService;
 import showcase.service.api.CustomerService;
 import showcase.service.api.dto.ContactDto;
@@ -51,7 +50,7 @@ public class RestServiceBean {
             @PathParam("id")
             long customerId,
             @PathParam("type")
-            ContactType type) {
+            String type) {
         return contactService.getContactByCustomerAndType(customerId, type);
     }
 

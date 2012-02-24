@@ -14,7 +14,6 @@ import javax.ws.rs.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
-import showcase.common.ContactType;
 import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
 
@@ -38,7 +37,7 @@ public class ContactServiceBean implements ContactService {
     }
 
     @Override
-    public ContactDto getContactByCustomerAndType(long customerId, ContactType type) {
+    public ContactDto getContactByCustomerAndType(long customerId, String type) {
         return delegate.getContactByCustomerAndType(customerId, type);
     }
 

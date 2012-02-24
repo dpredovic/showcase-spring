@@ -37,9 +37,9 @@ public class ContactServiceBeanTest {
     @Test
     public void testByCustomerAndType() throws Exception {
         ContactDto expected = new ContactDto();
-        when(mock.getContactByCustomerAndType(1L, ContactType.STANDARD)).thenReturn(expected);
+        when(mock.getContactByCustomerAndType(1L, ContactType.STANDARD.toString())).thenReturn(expected);
 
-        ContactDto contact = underTest.getContactByCustomerAndType(1L, ContactType.STANDARD);
+        ContactDto contact = underTest.getContactByCustomerAndType(1L, ContactType.STANDARD.toString());
 
         assertThat(contact).isSameAs(expected);
     }

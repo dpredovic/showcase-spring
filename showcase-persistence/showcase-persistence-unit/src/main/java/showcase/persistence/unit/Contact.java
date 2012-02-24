@@ -1,6 +1,6 @@
 package showcase.persistence.unit;
 
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -10,8 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.envers.Audited;
-import showcase.common.CommunicationType;
-import showcase.common.ContactType;
 
 @Entity
 @Audited
@@ -32,10 +30,10 @@ public class Contact {
     @JoinColumn
     private Customer customer;
 
-    private ContactType contactType;
+    private String contactType;
 
     @ElementCollection
-    private Map<CommunicationType, String> communications = new EnumMap<CommunicationType, String>(CommunicationType.class);
+    private Map<String, String> communications = new HashMap<String, String>();
 
     public Long getId() {
         return id;
@@ -93,15 +91,15 @@ public class Contact {
         this.customer = customer;
     }
 
-    public ContactType getContactType() {
+    public String getContactType() {
         return contactType;
     }
 
-    public void setContactType(ContactType contactType) {
+    public void setContactType(String contactType) {
         this.contactType = contactType;
     }
 
-    public Map<CommunicationType, String> getCommunications() {
+    public Map<String, String> getCommunications() {
         return communications;
     }
 

@@ -51,31 +51,31 @@ public class CachingServiceTest {
 
         Contact contact = new Contact();
         contact.setId(contactId);
-        contact.setContactType(type);
+        contact.setContactType(type.toString());
 
-        when(contactRepository.findByCustomerIdAndContactType(customerId, type))
+        when(contactRepository.findByCustomerIdAndContactType(customerId, type.toString()))
                 .thenReturn(contact)
                 .thenThrow(new RuntimeException("allowed only once"));
 
         {
-            ContactDto contactDto = contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD);
+            ContactDto contactDto = contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
             assertThat(contactDto).isNotNull();
             assertThat(contactDto.getId()).isEqualTo(contactId);
-            assertThat(contactDto.getContactType()).isEqualTo(type);
+            assertThat(contactDto.getContactType()).isEqualTo(type.toString());
         }
 
         {
-            ContactDto contactDto = contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD);
+            ContactDto contactDto = contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
             assertThat(contactDto).isNotNull();
             assertThat(contactDto.getId()).isEqualTo(contactId);
-            assertThat(contactDto.getContactType()).isEqualTo(type);
+            assertThat(contactDto.getContactType()).isEqualTo(type.toString());
         }
 
         {
             ContactDto contactDto = contactService.getContact(contactId);
             assertThat(contactDto).isNotNull();
             assertThat(contactDto.getId()).isEqualTo(contactId);
-            assertThat(contactDto.getContactType()).isEqualTo(type);
+            assertThat(contactDto.getContactType()).isEqualTo(type.toString());
         }
 
     }

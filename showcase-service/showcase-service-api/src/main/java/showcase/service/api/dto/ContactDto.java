@@ -1,12 +1,9 @@
 package showcase.service.api.dto;
 
 import java.io.Serializable;
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import showcase.common.CommunicationType;
-import showcase.common.ContactType;
 
 @XmlRootElement
 public class ContactDto implements Serializable {
@@ -23,9 +20,9 @@ public class ContactDto implements Serializable {
     private String city;
     private String countryCode;
 
-    private ContactType contactType;
+    private String contactType;
 
-    private Map<CommunicationType, String> communications = new EnumMap<CommunicationType, String>(CommunicationType.class);
+    private Map<String, String> communications = new HashMap<String, String>();
 
     public Long getId() {
         return id;
@@ -91,19 +88,19 @@ public class ContactDto implements Serializable {
         this.countryCode = countryCode;
     }
 
-    public ContactType getContactType() {
+    public String getContactType() {
         return contactType;
     }
 
-    public void setContactType(ContactType contactType) {
+    public void setContactType(String contactType) {
         this.contactType = contactType;
     }
 
-    public Map<CommunicationType, String> getCommunications() {
+    public Map<String, String> getCommunications() {
         return communications;
     }
 
-    public void setCommunications(Map<CommunicationType, String> communications) {
+    public void setCommunications(Map<String, String> communications) {
         this.communications = communications;
     }
 
