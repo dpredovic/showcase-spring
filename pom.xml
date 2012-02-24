@@ -30,6 +30,7 @@
 
         <compiler.source.version>1.6</compiler.source.version>
         <compiler.target.version>1.6</compiler.target.version>
+        <querydsl.version>2.3.0</querydsl.version>
     </properties>
 
     <dependencyManagement>
@@ -169,6 +170,17 @@
                 <groupId>org.jboss.spec.javax.ejb</groupId>
                 <artifactId>jboss-ejb-api_3.1_spec</artifactId>
                 <version>1.0.0.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mysema.querydsl</groupId>
+                <artifactId>querydsl-jpa</artifactId>
+                <version>${querydsl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mysema.querydsl</groupId>
+                <artifactId>querydsl-apt</artifactId>
+                <version>${querydsl.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>

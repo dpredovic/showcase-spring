@@ -8,9 +8,6 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.interceptor.Interceptors;
 import javax.jws.WebService;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
@@ -42,11 +39,12 @@ public class ContactServiceBean implements ContactService {
     }
 
     @Override
-    @GET
-    @Path("/customer/{id}/contact")
-    public List<ContactDto> getContactsByCustomer(
-            @PathParam("id")
-            long customerId) {
+    public List<ContactDto> getContactsByCustomer(long customerId) {
         return delegate.getContactsByCustomer(customerId);
+    }
+
+    @Override
+    public List<ContactDto> getByEmail(String email) {
+        return delegate.getByEmail(email);
     }
 }

@@ -34,10 +34,10 @@ import static org.fest.assertions.Assertions.assertThat;
 public class RepositoryTest {
 
     @Autowired
-    private CustomerRepository customerDao;
+    private CustomerRepository customerRepository;
 
     @Autowired
-    private ContactRepository contactDao;
+    private ContactRepository contactRepository;
 
     @Autowired
     private PlatformTransactionManager transactionManager;
@@ -46,8 +46,35 @@ public class RepositoryTest {
     @Transactional(readOnly = true)
     public void createCustomer() throws Exception {
 
+        Long id = saveCustomer();
+
+        Customer customer = customerRepository.findOne(id);
+
+        assertThat(customer).isNotNull();
+        assertThat(customer.getId()).isEqualTo(id);
+
+        assertThat(customer.getProperties()).hasSize(1);
+
+        Collection<Contact> contacts = contactRepository.findByCustomerId(id);
+        assertThat(contacts).hasSize(3);
+        for (Contact contact : contacts) {
+            assertThat(contact.getCommunications()).hasSize(1);
+        }
+
+        {
+            Iterable<Contact> foundByEmail = contactRepository.findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(), "test1@test"));
+            assertThat(foundByEmail).hasSize(1);
+        }
+
+        {
+            Iterable<Contact> foundByEmail = contactRepository.findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(), "notexisting"));
+            assertThat(foundByEmail).isEmpty();
+        }
+    }
+
+    private Long saveCustomer() {
         TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager, new DefaultTransactionDefinition(TransactionDefinition.PROPAGATION_REQUIRES_NEW));
-        Long id = transactionTemplate.execute(new TransactionCallback<Long>() {
+        return transactionTemplate.execute(new TransactionCallback<Long>() {
             public Long doInTransaction(TransactionStatus status) {
 
                 Customer customer = new Customer();
@@ -57,31 +84,17 @@ public class RepositoryTest {
                 customer.setCooperationPartnerId(1L);
                 customer.getProperties().put("platinum", "true");
 
-                customer = customerDao.save(customer);
+                customer = customerRepository.save(customer);
 
                 Contact c1 = createContact(1, ContactType.STANDARD, customer);
                 Contact c2 = createContact(2, ContactType.CONTRACT, customer);
                 Contact c3 = createContact(3, null, customer);
 
-                contactDao.save(Arrays.asList(c1, c2, c3));
+                contactRepository.save(Arrays.asList(c1, c2, c3));
 
                 return customer.getId();
             }
         });
-
-        Customer customer = customerDao.findOne(id);
-
-        assertThat(customer).isNotNull();
-        assertThat(customer.getId()).isEqualTo(id);
-
-        assertThat(customer.getProperties()).hasSize(1);
-
-        Collection<Contact> contacts = contactDao.findByCustomerId(id);
-        assertThat(contacts).hasSize(3);
-        for (Contact contact : contacts) {
-            assertThat(contact.getCommunications()).hasSize(1);
-        }
-
     }
 
     private Contact createContact(int i, ContactType type, Customer customer) {

@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import showcase.persistence.repository.ContactPredicates;
 import showcase.persistence.repository.ContactRepository;
 import showcase.persistence.unit.Contact;
 import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
+import showcase.service.api.type.CommunicationType;
 import showcase.service.core.cache.CacheSync;
 import showcase.zipresolver.ZipResolver;
 
@@ -65,6 +67,20 @@ public class ContactServiceImpl implements ContactService {
         List<Contact> contacts = contactRepository.findByCustomerId(customerId);
 
         List<ContactDto> contactDtos = new ArrayList<ContactDto>(contacts.size());
+        for (Contact contact : contacts) {
+            ContactDto contactDto = mapAndEnrichCity(contact);
+            contactDtos.add(contactDto);
+            cacheSync.put(contactDto);
+        }
+        return contactDtos;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ContactDto> getByEmail(String email) {
+        Iterable<Contact> contacts = contactRepository.findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(), email));
+
+        List<ContactDto> contactDtos = new ArrayList<ContactDto>();
         for (Contact contact : contacts) {
             ContactDto contactDto = mapAndEnrichCity(contact);
             contactDtos.add(contactDto);

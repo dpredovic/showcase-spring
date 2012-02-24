@@ -15,4 +15,6 @@ public interface ContactService {
     ContactDto getContactByCustomerAndType(long customerId, String type);
 
     List<ContactDto> getContactsByCustomer(long customerId);
+
+    List<ContactDto> getByEmail(String email);
 }
