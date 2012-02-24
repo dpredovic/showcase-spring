@@ -7,14 +7,14 @@ import java.util.Map;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import showcase.common.CommunicationType;
-import showcase.common.ContactType;
-import showcase.common.CustomerType;
-import showcase.common.DispatchType;
 import showcase.service.api.CustomerService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.dto.CreateCustomerRequestDto;
 import showcase.service.api.dto.CustomerDto;
+import showcase.service.api.type.CommunicationType;
+import showcase.service.api.type.ContactType;
+import showcase.service.api.type.CustomerType;
+import showcase.service.api.type.DispatchType;
 
 @Component
 public class TestCustomerCreator {

@@ -9,12 +9,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import showcase.common.ContactType;
 import showcase.common.cache.CachingConfig;
 import showcase.persistence.repository.ContactRepository;
 import showcase.persistence.unit.Contact;
 import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
+import showcase.service.api.type.ContactType;
 import showcase.service.core.cache.CacheSyncImpl;
 import showcase.zipresolver.ZipResolver;
 

@@ -8,9 +8,9 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import showcase.common.ContactType;
 import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
+import showcase.service.api.type.ContactType;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;

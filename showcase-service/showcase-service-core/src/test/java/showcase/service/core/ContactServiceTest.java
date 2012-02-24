@@ -10,10 +10,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import showcase.common.CommunicationType;
-import showcase.common.ContactType;
 import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
+import showcase.service.api.type.CommunicationType;
+import showcase.service.api.type.ContactType;
 import showcase.service.core.config.ServiceConfig;
 import showcase.zipresolver.ZipResolver;
 

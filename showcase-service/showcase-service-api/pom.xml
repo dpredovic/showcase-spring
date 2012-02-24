@@ -11,13 +11,6 @@
 
     <artifactId>showcase-service-api</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>showcase</groupId>
-            <artifactId>showcase-common</artifactId>
-        </dependency>
-    </dependencies>
-
     <build>
         <resources>
             <resource>

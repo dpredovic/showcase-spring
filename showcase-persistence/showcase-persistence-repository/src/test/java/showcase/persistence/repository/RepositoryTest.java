@@ -18,13 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
-import showcase.common.CommunicationType;
-import showcase.common.ContactType;
-import showcase.common.CustomerType;
-import showcase.common.DispatchType;
 import showcase.persistence.repository.config.RepositoryConfig;
 import showcase.persistence.unit.Contact;
 import showcase.persistence.unit.Customer;
+import showcase.service.api.type.CommunicationType;
+import showcase.service.api.type.ContactType;
+import showcase.service.api.type.CustomerType;
+import showcase.service.api.type.DispatchType;
 
 import static org.fest.assertions.Assertions.assertThat;
 
