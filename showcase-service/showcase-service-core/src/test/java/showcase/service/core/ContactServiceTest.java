@@ -36,14 +36,15 @@ public class ContactServiceTest {
 
     @Test
     public void getContact() {
-        Long id = customerCreator.createCustomer().getId();
+        Long customerId = customerCreator.createCustomer().getId();
 
         ArgumentCaptor<String> ccCaptor = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<String> zipCaptor = ArgumentCaptor.forClass(String.class);
         when(zipResolver.resolveCity(ccCaptor.capture(), zipCaptor.capture())).thenReturn("MockCity");
 
-        ContactDto standardContact = contactService.getContactByCustomerAndType(id, ContactType.STANDARD);
+        ContactDto standardContact = contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD);
         assertThat(standardContact).isNotNull();
+        assertThat(standardContact.getCustomerId()).isEqualTo(customerId);
         assertThat(standardContact.getContactType()).isEqualTo(ContactType.STANDARD);
         assertThat(standardContact.getCommunications()).hasSize(1);
         assertThat(standardContact.getCommunications().get(CommunicationType.EMAIL)).isEqualTo("test@mail.com");
@@ -51,14 +52,15 @@ public class ContactServiceTest {
         assertThat(standardContact.getCountryCode()).isEqualTo(ccCaptor.getValue());
         assertThat(standardContact.getZipCode()).isEqualTo(zipCaptor.getValue());
 
-        ContactDto invoicingContact = contactService.getContactByCustomerAndType(id, ContactType.INVOICING);
+        ContactDto invoicingContact = contactService.getContactByCustomerAndType(customerId, ContactType.INVOICING);
         assertThat(invoicingContact).isNotNull();
+        assertThat(invoicingContact.getCustomerId()).isEqualTo(customerId);
         assertThat(invoicingContact.getContactType()).isEqualTo(ContactType.INVOICING);
         assertThat(invoicingContact.getCity()).isEqualTo("MockCity");
         assertThat(invoicingContact.getCountryCode()).isEqualTo(ccCaptor.getValue());
         assertThat(invoicingContact.getZipCode()).isEqualTo(zipCaptor.getValue());
 
-        List<ContactDto> contacts = contactService.getContactsByCustomer(id);
+        List<ContactDto> contacts = contactService.getContactsByCustomer(customerId);
         assertThat(contacts).hasSize(4);
         assertThat(contacts).contains(standardContact, invoicingContact);
 

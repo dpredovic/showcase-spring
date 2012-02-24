@@ -18,10 +18,10 @@ import showcase.service.api.dto.CustomerDto;
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
-    private CustomerRepository customerDao;
+    private CustomerRepository customerRepository;
 
     @Autowired
-    private ContactRepository contactDao;
+    private ContactRepository contactRepository;
 
     @Autowired
     private Mapper mapper;
@@ -29,12 +29,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Long createCustomer(CreateCustomerRequestDto requestDto) {
         Customer customer = mapper.map(requestDto.getCustomer(), Customer.class);
-        customer = customerDao.save(customer);
+        customer = customerRepository.save(customer);
 
         for (ContactDto contactDto : requestDto.getContacts()) {
             Contact contact = mapper.map(contactDto, Contact.class);
             contact.setCustomer(customer);
-            contactDao.save(contact);
+            contactRepository.save(contact);
         }
         return customer.getId();
     }
@@ -42,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional(readOnly = true)
     public CustomerDto getById(long id) {
-        Customer customer = customerDao.findOne(id);
+        Customer customer = customerRepository.findOne(id);
         if (customer == null) {
             return null;
         }

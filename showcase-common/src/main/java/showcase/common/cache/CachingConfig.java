@@ -1,4 +1,4 @@
-package showcase.zipresolver.config;
+package showcase.common.cache;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -14,7 +14,7 @@ public class CachingConfig {
 
     @Bean
     public CacheManager cacheManager() {
-        return new ConcurrentMapCacheManager("zipCityCache");
+        return new ConcurrentMapCacheManager("zipCityCache", "contact", "contactList");
     }
 
 }

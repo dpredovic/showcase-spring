@@ -24,15 +24,16 @@ public class MapperFactoryBean extends AbstractFactoryBean<Mapper> {
         mapper.addMapping(new BeanMappingBuilder() {
             @Override
             protected void configure() {
-                mapping(CustomerDto.class, Customer.class).
-                        fields("properties", "properties");
+                mapping(CustomerDto.class, Customer.class)
+                        .fields("properties", "properties");
             }
         });
         mapper.addMapping(new BeanMappingBuilder() {
             @Override
             protected void configure() {
-                mapping(ContactDto.class, Contact.class).
-                        fields("communications", "communications");
+                mapping(ContactDto.class, Contact.class)
+                        .fields("customerId", "customer.id")
+                        .fields("communications", "communications");
             }
         });
         return mapper;

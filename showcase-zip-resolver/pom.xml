@@ -12,6 +12,10 @@
     <artifactId>showcase-zip-resolver</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>showcase</groupId>
+            <artifactId>showcase-common</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>

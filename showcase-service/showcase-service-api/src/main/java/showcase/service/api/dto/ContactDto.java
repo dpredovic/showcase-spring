@@ -13,6 +13,8 @@ public class ContactDto implements Serializable {
 
     private Long id;
 
+    private Long customerId;
+
     private String firstName;
     private String lastName;
 
@@ -31,6 +33,14 @@ public class ContactDto implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstName() {
@@ -104,10 +114,12 @@ public class ContactDto implements Serializable {
 
         ContactDto that = (ContactDto) o;
 
+        if (city != null ? !city.equals(that.city) : that.city != null) return false;
         if (communications != null ? !communications.equals(that.communications) : that.communications != null)
             return false;
         if (contactType != that.contactType) return false;
         if (countryCode != null ? !countryCode.equals(that.countryCode) : that.countryCode != null) return false;
+        if (customerId != null ? !customerId.equals(that.customerId) : that.customerId != null) return false;
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
@@ -120,10 +132,12 @@ public class ContactDto implements Serializable {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (customerId != null ? customerId.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (street != null ? street.hashCode() : 0);
         result = 31 * result + (zipCode != null ? zipCode.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (countryCode != null ? countryCode.hashCode() : 0);
         result = 31 * result + (contactType != null ? contactType.hashCode() : 0);
         result = 31 * result + (communications != null ? communications.hashCode() : 0);
@@ -135,10 +149,12 @@ public class ContactDto implements Serializable {
         final StringBuilder sb = new StringBuilder();
         sb.append("ContactDto");
         sb.append("{id=").append(id);
+        sb.append(", customerId=").append(customerId);
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", street='").append(street).append('\'');
         sb.append(", zipCode='").append(zipCode).append('\'');
+        sb.append(", city='").append(city).append('\'');
         sb.append(", countryCode='").append(countryCode).append('\'');
         sb.append(", contactType=").append(contactType);
         sb.append(", communications=").append(communications);
