@@ -13,10 +13,11 @@ import showcase.service.api.CustomerService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.dto.CreateCustomerRequestDto;
 import showcase.service.api.dto.CustomerDto;
+import showcase.service.api.validation.CreateGroup;
 
 @Service
 @Transactional
-@Validated
+@Validated(CreateGroup.class)
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired

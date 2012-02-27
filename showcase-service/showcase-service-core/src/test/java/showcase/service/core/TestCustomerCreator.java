@@ -27,24 +27,19 @@ public class TestCustomerCreator {
     }
 
     public CustomerDto createCustomer(String suffix) {
-        ContactDto standardContact = new ContactDto();
-        standardContact.setFirstName("stfn" + suffix);
-        standardContact.setLastName("stln" + suffix);
-        standardContact.setContactType(ContactType.STANDARD.toString());
-        standardContact.getCommunications().put(CommunicationType.EMAIL.toString(), "test" + suffix + "@mail.com");
+        CreateCustomerRequestDto requestDto = createRequest(suffix);
 
-        ContactDto invoicingContact = new ContactDto();
-        invoicingContact.setFirstName("infn" + suffix);
-        invoicingContact.setLastName("inln" + suffix);
-        invoicingContact.setContactType(ContactType.INVOICING.toString());
+        Long id = customerService.createCustomer(requestDto);
+        requestDto.getCustomer().setId(id);
 
-        ContactDto otherContact1 = new ContactDto();
-        otherContact1.setFirstName("otfn1" + suffix);
-        otherContact1.setLastName("otln1" + suffix);
+        return requestDto.getCustomer();
+    }
 
-        ContactDto otherContact2 = new ContactDto();
-        otherContact2.setFirstName("otfn2" + suffix);
-        otherContact2.setLastName("otln2" + suffix);
+    public CreateCustomerRequestDto createRequest(String suffix) {
+        ContactDto standardContact = createContact(suffix, ContactType.STANDARD);
+        ContactDto invoicingContact = createContact(suffix, ContactType.INVOICING);
+        ContactDto otherContact1 = createContact(suffix, null);
+        ContactDto otherContact2 = createContact(suffix, null);
 
         Map<String, String> properties = new HashMap<String, String>();
         properties.put("platinum", "true");
@@ -59,11 +54,21 @@ public class TestCustomerCreator {
         CreateCustomerRequestDto requestDto = new CreateCustomerRequestDto();
         requestDto.setCustomer(customer);
         requestDto.setContacts(Arrays.asList(standardContact, invoicingContact, otherContact1, otherContact2));
+        return requestDto;
+    }
 
-        Long id = customerService.createCustomer(requestDto);
-        customer.setId(id);
-
-        return customer;
+    private ContactDto createContact(String suffix, ContactType contactType) {
+        ContactDto contact = new ContactDto();
+        contact.setFirstName("stfn" + suffix);
+        contact.setLastName("stln" + suffix);
+        if (contactType != null) {
+            contact.setContactType(contactType.toString());
+        }
+        contact.setStreet("street" + suffix);
+        contact.setZipCode("zip" + suffix);
+        contact.setCountryCode("cc" + suffix);
+        contact.getCommunications().put(CommunicationType.EMAIL.toString(), "test" + suffix + "@mail.com");
+        return contact;
     }
 
 }
