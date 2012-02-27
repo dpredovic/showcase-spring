@@ -4,6 +4,7 @@ import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import showcase.persistence.repository.ContactRepository;
 import showcase.persistence.repository.CustomerRepository;
 import showcase.persistence.unit.Contact;
@@ -15,6 +16,7 @@ import showcase.service.api.dto.CustomerDto;
 
 @Service
 @Transactional
+@Validated
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired

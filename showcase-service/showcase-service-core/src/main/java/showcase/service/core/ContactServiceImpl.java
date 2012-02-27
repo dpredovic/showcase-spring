@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import showcase.persistence.repository.ContactPredicates;
 import showcase.persistence.repository.ContactRepository;
 import showcase.persistence.unit.Contact;
@@ -19,6 +20,7 @@ import showcase.zipresolver.ZipResolver;
 
 @Service
 @Transactional
+@Validated
 public class ContactServiceImpl implements ContactService {
 
     @Autowired
