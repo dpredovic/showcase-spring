@@ -27,7 +27,7 @@ public class PersistenceUnitConfig {
         jpaProperties.setProperty("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
         jpaProperties.setProperty("javax.persistence.validation.mode", "none");
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        if (env.acceptsProfiles("junit")) {
+        if (env.acceptsProfiles("junit", "standalone")) {
             jpaVendorAdapter.setGenerateDdl(true);
         }
 
