@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 import showcase.service.api.CustomerService;
 import showcase.service.api.dto.CreateCustomerRequestDto;
+import showcase.service.api.dto.CreateCustomerResponseDto;
 import showcase.service.api.dto.CustomerDto;
 
 //EJB-component
@@ -29,7 +30,7 @@ public class CustomerServiceBean implements CustomerService {
     private CustomerService delegate;
 
     @Override
-    public Long createCustomer(CreateCustomerRequestDto requestDto) {
+    public CreateCustomerResponseDto createCustomer(CreateCustomerRequestDto requestDto) {
         return delegate.createCustomer(requestDto);
     }
 

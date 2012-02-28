@@ -29,7 +29,7 @@ public class TestCustomerCreator {
     public CustomerDto createCustomer(String suffix) {
         CreateCustomerRequestDto requestDto = createRequest(suffix);
 
-        Long id = customerService.createCustomer(requestDto);
+        Long id = customerService.createCustomer(requestDto).getId();
         requestDto.getCustomer().setId(id);
 
         return requestDto.getCustomer();

@@ -8,7 +8,7 @@ import javax.ejb.Startup;
 import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,6 +20,7 @@ import showcase.service.api.ContactService;
 import showcase.service.api.CustomerService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.dto.CreateCustomerRequestDto;
+import showcase.service.api.dto.CreateCustomerResponseDto;
 import showcase.service.api.dto.CustomerDto;
 
 @Singleton
@@ -60,10 +61,10 @@ public class RestServiceBean {
         return contactService.getContactsByCustomer(customerId);
     }
 
-    @POST
+    @PUT
     @Path("/customer")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Long createCustomer(CreateCustomerRequestDto requestDto) {
+    public CreateCustomerResponseDto createCustomer(CreateCustomerRequestDto requestDto) {
         return customerService.createCustomer(requestDto);
     }
 

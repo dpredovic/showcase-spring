@@ -1,0 +1,50 @@
+package showcase.service.core.exceptionmapping;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
+
+import org.hibernate.validator.method.MethodConstraintViolation;
+import org.hibernate.validator.method.MethodConstraintViolationException;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
+import showcase.service.api.dto.ValidationErrorDto;
+import showcase.service.api.dto.ValidationResponseDto;
+
+@Component
+public class MethodValidationExceptionMapper implements ExceptionMapper<MethodConstraintViolationException, ValidationResponseDto> {
+
+    @Override
+    public ValidationResponseDto map(MethodConstraintViolationException throwable, Class<? extends ValidationResponseDto> returnType) {
+        Set<MethodConstraintViolation<?>> constraintViolations = throwable.getConstraintViolations();
+
+        Collection<ValidationErrorDto> errors = new ArrayList<ValidationErrorDto>(constraintViolations.size());
+        for (MethodConstraintViolation<?> constraintViolation : constraintViolations) {
+            ValidationErrorDto error = new ValidationErrorDto();
+            error.setMessage(constraintViolation.getMessage());
+            error.setParamIndex(constraintViolation.getParameterIndex());
+            error.setParamName(constraintViolation.getParameterName());
+            error.setPropertyPath(constraintViolation.getPropertyPath().toString());
+            errors.add(error);
+        }
+
+        ValidationResponseDto returnValue = BeanUtils.instantiate(returnType);
+        returnValue.setValidationErrors(errors);
+        return returnValue;
+    }
+
+    @Override
+    public boolean canHandle(Throwable throwable) {
+        return throwable instanceof MethodConstraintViolationException;
+    }
+
+    @Override
+    public Class<ValidationResponseDto> baseReturnType() {
+        return ValidationResponseDto.class;
+    }
+
+    @Override
+    public Class<MethodConstraintViolationException> baseExceptionType() {
+        return MethodConstraintViolationException.class;
+    }
+}

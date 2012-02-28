@@ -12,6 +12,7 @@ import showcase.persistence.unit.Customer;
 import showcase.service.api.CustomerService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.dto.CreateCustomerRequestDto;
+import showcase.service.api.dto.CreateCustomerResponseDto;
 import showcase.service.api.dto.CustomerDto;
 import showcase.service.api.validation.CreateGroup;
 
@@ -30,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
     private Mapper mapper;
 
     @Override
-    public Long createCustomer(CreateCustomerRequestDto requestDto) {
+    public CreateCustomerResponseDto createCustomer(CreateCustomerRequestDto requestDto) {
         Customer customer = mapper.map(requestDto.getCustomer(), Customer.class);
         customer = customerRepository.save(customer);
 
@@ -39,7 +40,9 @@ public class CustomerServiceImpl implements CustomerService {
             contact.setCustomer(customer);
             contactRepository.save(contact);
         }
-        return customer.getId();
+        CreateCustomerResponseDto response = new CreateCustomerResponseDto();
+        response.setId(customer.getId());
+        return response;
     }
 
     @Override
