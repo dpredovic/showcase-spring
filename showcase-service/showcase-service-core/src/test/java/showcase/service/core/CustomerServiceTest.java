@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import showcase.service.api.CustomerService;
+import showcase.service.api.dto.ContactDto;
 import showcase.service.api.dto.CreateCustomerRequestDto;
 import showcase.service.api.dto.CreateCustomerResponseDto;
 import showcase.service.api.dto.CustomerDto;
@@ -45,7 +46,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void createCustomerFailsValidation() {
+    public void createCustomerFailsSimpleValidation() {
         CreateCustomerRequestDto request = customerCreator.createRequest("");
         request.getCustomer().setCooperationPartnerId(null);
 
@@ -55,6 +56,27 @@ public class CustomerServiceTest {
         assertThat(response.getId()).isNull();
         Collection<ValidationErrorDto> validationErrors = response.getValidationErrors();
         assertThat(validationErrors).hasSize(1);
+        ValidationErrorDto validationError = validationErrors.iterator().next();
+        assertThat(validationError.getPropertyPath()).isEqualTo("customer.cooperationPartnerId");
+        assertThat(validationError.getMessage()).isEqualTo("kann nicht null sein");
+    }
+
+    @Test
+    public void createCustomerFailsMapValidation() {
+        CreateCustomerRequestDto request = customerCreator.createRequest("");
+        ContactDto contact = request.getContacts().iterator().next();
+        contact.getCommunications().clear();
+        contact.getCommunications().put("dummy", "dummy");
+
+        CreateCustomerResponseDto response = customerService.createCustomer(request);
+
+        assertThat(response).isNotNull();
+        assertThat(response.getId()).isNull();
+        Collection<ValidationErrorDto> validationErrors = response.getValidationErrors();
+        assertThat(validationErrors).hasSize(1);
+        ValidationErrorDto validationError = validationErrors.iterator().next();
+        assertThat(validationError.getPropertyPath()).isEqualTo("contacts[0].communications");
+        assertThat(validationError.getMessage()).isEqualTo("value not in enum");
     }
 
     @Bean

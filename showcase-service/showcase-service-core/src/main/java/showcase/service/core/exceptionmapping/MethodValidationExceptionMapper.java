@@ -24,7 +24,11 @@ public class MethodValidationExceptionMapper implements ExceptionMapper<MethodCo
             error.setMessage(constraintViolation.getMessage());
             error.setParamIndex(constraintViolation.getParameterIndex());
             error.setParamName(constraintViolation.getParameterName());
-            error.setPropertyPath(constraintViolation.getPropertyPath().toString());
+            String propertyPath = constraintViolation.getPropertyPath().toString();
+            String[] pathParts = propertyPath.split("\\)\\.");
+            if (pathParts.length == 2) {
+                error.setPropertyPath(pathParts[1]);
+            }
             errors.add(error);
         }
 
