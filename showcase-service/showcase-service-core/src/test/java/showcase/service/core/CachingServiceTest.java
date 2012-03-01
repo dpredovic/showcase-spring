@@ -5,12 +5,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import showcase.addressresolver.AddressResolver;
+import showcase.addressresolver.AsyncAddressResolverImpl;
 import showcase.common.cache.CachingConfig;
 import showcase.persistence.repository.ContactRepository;
 import showcase.persistence.unit.Contact;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("standalone")
 @ContextConfiguration(classes = CachingServiceTest.class, loader = AnnotationConfigContextLoader.class)
-@Import(value = {CachingConfig.class, ContactServiceImpl.class, MapperFactoryBean.class, CacheSyncImpl.class, MockConfig.class})
+@Import(value = {CachingConfig.class, ContactServiceImpl.class, MapperFactoryBean.class, CacheSyncImpl.class, MockConfig.class, AsyncAddressResolverImpl.class})
 public class CachingServiceTest {
 
     @Autowired
@@ -58,8 +58,8 @@ public class CachingServiceTest {
         when(contactRepository.findByCustomerIdAndContactType(customerId, type.toString()))
                 .thenReturn(contact)
                 .thenThrow(new RuntimeException("allowed only once"));
-        when(addressResolver.resolveCountry(anyString())).thenReturn(new AsyncResult<String>("dummy"));
-        when(addressResolver.resolveCity(anyString(), anyString())).thenReturn(new AsyncResult<String>("dummy"));
+        when(addressResolver.resolveCountry(anyString())).thenReturn("dummy");
+        when(addressResolver.resolveCity(anyString(), anyString())).thenReturn("dummy");
 
         {
             ContactDto contactDto = contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());

@@ -9,7 +9,7 @@ import showcase.common.cache.CachingConfig;
 @Configuration
 @ComponentScan("showcase.addressresolver")
 @Import(CachingConfig.class)
-@EnableAsync(order = 0)
+@EnableAsync
 public interface AddressResolverConfig {
 
 }

@@ -22,25 +22,25 @@ public class CacheTest {
     @Test
     public void testCache() throws Exception {
         {
-            String city = addressResolver.resolveCity("X", "Y").get();
+            String city = addressResolver.resolveCity("X", "Y");
             assertThat(city).isEqualTo("City-X/Y");
             assertThat(DummyAddressResolver.counter).isEqualTo(1);
         }
 
         {
-            String city = addressResolver.resolveCity("X", "Y").get();
+            String city = addressResolver.resolveCity("X", "Y");
             assertThat(city).isEqualTo("City-X/Y");
             assertThat(DummyAddressResolver.counter).isEqualTo(1);
         }
 
         {
-            String city = addressResolver.resolveCity("Y", "Z").get();
+            String city = addressResolver.resolveCity("Y", "Z");
             assertThat(city).isEqualTo("City-Y/Z");
             assertThat(DummyAddressResolver.counter).isEqualTo(2);
         }
 
         {
-            String city = addressResolver.resolveCity("Y", "Z").get();
+            String city = addressResolver.resolveCity("Y", "Z");
             assertThat(city).isEqualTo("City-Y/Z");
             assertThat(DummyAddressResolver.counter).isEqualTo(2);
         }
