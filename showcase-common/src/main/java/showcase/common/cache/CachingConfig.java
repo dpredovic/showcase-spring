@@ -14,7 +14,7 @@ public class CachingConfig {
 
     @Bean
     public CacheManager cacheManager() {
-        return new ConcurrentMapCacheManager("zipCityCache", "contact", "contactList");
+        return new ConcurrentMapCacheManager("cityCache", "countryCache", "contact", "contactList");
     }
 
 }

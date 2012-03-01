@@ -4,9 +4,10 @@ import org.springframework.cache.annotation.Cacheable;
 
 public interface AddressResolver {
 
-    @Cacheable("zipCityCache")
+    @Cacheable("cityCache")
     String resolveCity(String countryCode, String zipCode);
 
+    @Cacheable("countryCache")
     String resolveCountry(String countryCode);
 
 }
