@@ -1,4 +1,4 @@
-package showcase.zipresolver.config;
+package showcase.addressresolver.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Import;
 import showcase.common.cache.CachingConfig;
 
 @Configuration
-@ComponentScan("showcase.zipresolver")
+@ComponentScan("showcase.addressresolver")
 @Import(CachingConfig.class)
-public class ZipResolverConfig {
+public interface AddressResolverConfig {
 
 }

@@ -13,7 +13,7 @@
         <module>showcase-persistence</module>
         <module>showcase-common</module>
         <module>showcase-service</module>
-        <module>showcase-zip-resolver</module>
+        <module>showcase-addressresolver</module>
     </modules>
 
     <properties>
@@ -75,7 +75,7 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>showcase-zip-resolver</artifactId>
+                <artifactId>showcase-addressresolver</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

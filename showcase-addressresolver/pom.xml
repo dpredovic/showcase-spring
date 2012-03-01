@@ -9,7 +9,7 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>showcase-zip-resolver</artifactId>
+    <artifactId>showcase-addressresolver</artifactId>
 
     <dependencies>
         <dependency>

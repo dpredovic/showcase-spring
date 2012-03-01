@@ -1,4 +1,4 @@
-package showcase.zipresolver;
+package showcase.addressresolver;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,42 +7,42 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import showcase.zipresolver.config.ZipResolverConfig;
+import showcase.addressresolver.config.AddressResolverConfig;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("standalone")
-@ContextConfiguration(classes = ZipResolverConfig.class, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = AddressResolverConfig.class, loader = AnnotationConfigContextLoader.class)
 public class CacheTest {
 
     @Autowired
-    private ZipResolver zipResolver;
+    private AddressResolver addressResolver;
 
     @Test
     public void testCache() throws Exception {
         {
-            String city = zipResolver.resolveCity("X", "Y");
+            String city = addressResolver.resolveCity("X", "Y");
             assertThat(city).isEqualTo("City-X/Y");
-            assertThat(DummyZipResolver.counter).isEqualTo(1);
+            assertThat(DummyAddressResolver.counter).isEqualTo(1);
         }
 
         {
-            String city = zipResolver.resolveCity("X", "Y");
+            String city = addressResolver.resolveCity("X", "Y");
             assertThat(city).isEqualTo("City-X/Y");
-            assertThat(DummyZipResolver.counter).isEqualTo(1);
+            assertThat(DummyAddressResolver.counter).isEqualTo(1);
         }
 
         {
-            String city = zipResolver.resolveCity("Y", "Z");
+            String city = addressResolver.resolveCity("Y", "Z");
             assertThat(city).isEqualTo("City-Y/Z");
-            assertThat(DummyZipResolver.counter).isEqualTo(2);
+            assertThat(DummyAddressResolver.counter).isEqualTo(2);
         }
 
         {
-            String city = zipResolver.resolveCity("Y", "Z");
+            String city = addressResolver.resolveCity("Y", "Z");
             assertThat(city).isEqualTo("City-Y/Z");
-            assertThat(DummyZipResolver.counter).isEqualTo(2);
+            assertThat(DummyAddressResolver.counter).isEqualTo(2);
         }
 
     }

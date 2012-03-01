@@ -41,6 +41,9 @@ public class ContactDto implements Serializable {
     @NotNull
     private String countryCode;
 
+    @Null
+    private String countryName;
+
     @InEnum(ContactType.class)
     private String contactType;
 
@@ -111,6 +114,14 @@ public class ContactDto implements Serializable {
 
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
     public String getContactType() {

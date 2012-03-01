@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+import showcase.addressresolver.AddressResolver;
 import showcase.persistence.repository.ContactPredicates;
 import showcase.persistence.repository.ContactRepository;
 import showcase.persistence.unit.Contact;
@@ -16,7 +17,6 @@ import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.type.CommunicationType;
 import showcase.service.core.cache.CacheSync;
-import showcase.zipresolver.ZipResolver;
 
 @Service
 @Transactional
@@ -30,7 +30,7 @@ public class ContactServiceImpl implements ContactService {
     private Mapper mapper;
 
     @Autowired
-    private ZipResolver zipResolver;
+    private AddressResolver addressResolver;
 
     @Autowired
     private CacheSync cacheSync;
@@ -43,7 +43,7 @@ public class ContactServiceImpl implements ContactService {
         if (contact == null) {
             return null;
         }
-        ContactDto contactDto = mapAndEnrichCity(contact);
+        ContactDto contactDto = mapAndEnrichAddress(contact);
         cacheSync.put(contactDto);
         return contactDto;
     }
@@ -57,7 +57,7 @@ public class ContactServiceImpl implements ContactService {
             return null;
         }
 
-        ContactDto contactDto = mapAndEnrichCity(contact);
+        ContactDto contactDto = mapAndEnrichAddress(contact);
         cacheSync.put(contactDto);
         return contactDto;
     }
@@ -70,7 +70,7 @@ public class ContactServiceImpl implements ContactService {
 
         List<ContactDto> contactDtos = new ArrayList<ContactDto>(contacts.size());
         for (Contact contact : contacts) {
-            ContactDto contactDto = mapAndEnrichCity(contact);
+            ContactDto contactDto = mapAndEnrichAddress(contact);
             contactDtos.add(contactDto);
             cacheSync.put(contactDto);
         }
@@ -84,17 +84,19 @@ public class ContactServiceImpl implements ContactService {
 
         List<ContactDto> contactDtos = new ArrayList<ContactDto>();
         for (Contact contact : contacts) {
-            ContactDto contactDto = mapAndEnrichCity(contact);
+            ContactDto contactDto = mapAndEnrichAddress(contact);
             contactDtos.add(contactDto);
             cacheSync.put(contactDto);
         }
         return contactDtos;
     }
 
-    private ContactDto mapAndEnrichCity(Contact contact) {
+    private ContactDto mapAndEnrichAddress(Contact contact) {
         ContactDto contactDto = mapper.map(contact, ContactDto.class);
-        String city = zipResolver.resolveCity(contactDto.getCountryCode(), contactDto.getZipCode());
+        String city = addressResolver.resolveCity(contactDto.getCountryCode(), contactDto.getZipCode());
+        String country = addressResolver.resolveCountry(contactDto.getCountryCode());
         contactDto.setCity(city);
+        contactDto.setCountryName(country);
         return contactDto;
     }
 }

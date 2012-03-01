@@ -1,4 +1,4 @@
-package showcase.zipresolver.config;
+package showcase.addressresolver.config;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;

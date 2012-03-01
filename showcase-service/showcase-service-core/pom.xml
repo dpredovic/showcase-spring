@@ -22,7 +22,7 @@
         </dependency>
         <dependency>
             <groupId>showcase</groupId>
-            <artifactId>showcase-zip-resolver</artifactId>
+            <artifactId>showcase-addressresolver</artifactId>
         </dependency>
 
 

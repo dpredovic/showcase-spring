@@ -10,12 +10,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import showcase.addressresolver.AddressResolver;
 import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.type.CommunicationType;
 import showcase.service.api.type.ContactType;
 import showcase.service.core.config.ServiceConfig;
-import showcase.zipresolver.ZipResolver;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -32,7 +32,7 @@ public class ContactServiceTest {
     private TestCustomerCreator customerCreator;
 
     @Autowired
-    private ZipResolver zipResolver;
+    private AddressResolver addressResolver;
 
     @Test
     public void getContact() {
@@ -40,7 +40,8 @@ public class ContactServiceTest {
 
         ArgumentCaptor<String> ccCaptor = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<String> zipCaptor = ArgumentCaptor.forClass(String.class);
-        when(zipResolver.resolveCity(ccCaptor.capture(), zipCaptor.capture())).thenReturn("MockCity");
+        when(addressResolver.resolveCity(ccCaptor.capture(), zipCaptor.capture())).thenReturn("MockCity");
+        when(addressResolver.resolveCountry(ccCaptor.capture())).thenReturn("MockCountry");
 
         ContactDto standardContact = contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
         assertThat(standardContact).isNotNull();
@@ -50,6 +51,7 @@ public class ContactServiceTest {
         assertThat(standardContact.getCommunications().get(CommunicationType.EMAIL.toString())).isEqualTo("test@mail.com");
         assertThat(standardContact.getCity()).isEqualTo("MockCity");
         assertThat(standardContact.getCountryCode()).isEqualTo(ccCaptor.getValue());
+        assertThat(standardContact.getCountryName()).isEqualTo("MockCountry");
         assertThat(standardContact.getZipCode()).isEqualTo(zipCaptor.getValue());
 
         ContactDto invoicingContact = contactService.getContactByCustomerAndType(customerId, ContactType.INVOICING.toString());
@@ -58,6 +60,7 @@ public class ContactServiceTest {
         assertThat(invoicingContact.getContactType()).isEqualTo(ContactType.INVOICING.toString());
         assertThat(invoicingContact.getCity()).isEqualTo("MockCity");
         assertThat(invoicingContact.getCountryCode()).isEqualTo(ccCaptor.getValue());
+        assertThat(invoicingContact.getCountryName()).isEqualTo("MockCountry");
         assertThat(invoicingContact.getZipCode()).isEqualTo(zipCaptor.getValue());
 
         List<ContactDto> contacts = contactService.getContactsByCustomer(customerId);

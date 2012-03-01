@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import showcase.addressresolver.AddressResolver;
 import showcase.service.api.CustomerService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.dto.CreateCustomerRequestDto;
@@ -18,7 +19,6 @@ import showcase.service.api.dto.CreateCustomerResponseDto;
 import showcase.service.api.dto.CustomerDto;
 import showcase.service.api.dto.ValidationErrorDto;
 import showcase.service.core.config.ServiceConfig;
-import showcase.zipresolver.ZipResolver;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;
@@ -80,8 +80,8 @@ public class CustomerServiceTest {
     }
 
     @Bean
-    public ZipResolver zipResolver() {
-        return Mockito.mock(ZipResolver.class, RETURNS_SMART_NULLS);
+    public AddressResolver zipResolver() {
+        return Mockito.mock(AddressResolver.class, RETURNS_SMART_NULLS);
     }
 
 }

@@ -2,7 +2,7 @@ package showcase.service.core;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import showcase.zipresolver.ZipResolver;
+import showcase.addressresolver.AddressResolver;
 
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;
 import static org.mockito.Mockito.mock;
@@ -11,8 +11,8 @@ import static org.mockito.Mockito.mock;
 public class MockConfig {
 
     @Bean
-    public ZipResolver zipResolver() {
-        return mock(ZipResolver.class, RETURNS_SMART_NULLS);
+    public AddressResolver zipResolver() {
+        return mock(AddressResolver.class, RETURNS_SMART_NULLS);
     }
 
 }

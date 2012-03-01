@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import showcase.addressresolver.AddressResolver;
 import showcase.common.cache.CachingConfig;
 import showcase.persistence.repository.ContactRepository;
 import showcase.persistence.unit.Contact;
@@ -16,7 +17,6 @@ import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.type.ContactType;
 import showcase.service.core.cache.CacheSyncImpl;
-import showcase.zipresolver.ZipResolver;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;
@@ -33,7 +33,7 @@ public class CachingServiceTest {
     private ContactService contactService;
 
     @Autowired
-    private ZipResolver zipResolver;
+    private AddressResolver addressResolver;
 
     @Autowired
     private ContactRepository contactRepository;
