@@ -38,11 +38,6 @@ public class MethodValidationExceptionMapper implements ExceptionMapper<MethodCo
     }
 
     @Override
-    public boolean canHandle(Throwable throwable) {
-        return throwable instanceof MethodConstraintViolationException;
-    }
-
-    @Override
     public Class<ValidationResponseDto> baseReturnType() {
         return ValidationResponseDto.class;
     }
