@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -40,8 +41,8 @@ public class ContactServiceTest {
 
         ArgumentCaptor<String> ccCaptor = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<String> zipCaptor = ArgumentCaptor.forClass(String.class);
-        when(addressResolver.resolveCity(ccCaptor.capture(), zipCaptor.capture())).thenReturn("MockCity");
-        when(addressResolver.resolveCountry(ccCaptor.capture())).thenReturn("MockCountry");
+        when(addressResolver.resolveCity(ccCaptor.capture(), zipCaptor.capture())).thenReturn(new AsyncResult<String>("MockCity"));
+        when(addressResolver.resolveCountry(ccCaptor.capture())).thenReturn(new AsyncResult<String>("MockCountry"));
 
         ContactDto standardContact = contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
         assertThat(standardContact).isNotNull();

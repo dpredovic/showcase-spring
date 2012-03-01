@@ -1,13 +1,11 @@
 package showcase.addressresolver;
 
-import org.springframework.cache.annotation.Cacheable;
+import java.util.concurrent.Future;
 
 public interface AddressResolver {
 
-    @Cacheable("cityCache")
-    String resolveCity(String countryCode, String zipCode);
+    Future<String> resolveCity(String countryCode, String zipCode);
 
-    @Cacheable("countryCache")
-    String resolveCountry(String countryCode);
+    Future<String> resolveCountry(String countryCode);
 
 }

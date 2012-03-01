@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,6 +20,7 @@ import showcase.service.api.type.ContactType;
 import showcase.service.core.cache.CacheSyncImpl;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -56,6 +58,8 @@ public class CachingServiceTest {
         when(contactRepository.findByCustomerIdAndContactType(customerId, type.toString()))
                 .thenReturn(contact)
                 .thenThrow(new RuntimeException("allowed only once"));
+        when(addressResolver.resolveCountry(anyString())).thenReturn(new AsyncResult<String>("dummy"));
+        when(addressResolver.resolveCity(anyString(), anyString())).thenReturn(new AsyncResult<String>("dummy"));
 
         {
             ContactDto contactDto = contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());

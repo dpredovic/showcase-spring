@@ -11,7 +11,7 @@ import static org.mockito.Mockito.mock;
 public class MockConfig {
 
     @Bean
-    public AddressResolver zipResolver() {
+    public AddressResolver addressResolver() {
         return mock(AddressResolver.class, RETURNS_SMART_NULLS);
     }
 

@@ -1,10 +1,14 @@
 package showcase.addressresolver;
 
 import java.util.HashMap;
+import java.util.concurrent.Future;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Profile;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
 
@@ -24,18 +28,22 @@ public class RestAddressResolver implements AddressResolver {
     private String countryResolverUrl;
 
     @Override
-    public String resolveCity(String countryCode, String zipCode) {
+    @Async
+    @Cacheable("cityCache")
+    public Future<String> resolveCity(String countryCode, String zipCode) {
         new HashMap<String, String>().put("cc", countryCode);
         new HashMap<String, String>().put("zip", zipCode);
 
-        return restTemplate.getForObject(cityResolverUrl, String.class, new HashMap<String, String>());
+        return new AsyncResult<String>(restTemplate.getForObject(cityResolverUrl, String.class, new HashMap<String, String>()));
     }
 
     @Override
-    public String resolveCountry(String countryCode) {
+    @Async
+    @Cacheable("countryCache")
+    public Future<String> resolveCountry(String countryCode) {
         new HashMap<String, String>().put("cc", countryCode);
 
-        return restTemplate.getForObject(countryResolverUrl, String.class, new HashMap<String, String>());
+        return new AsyncResult<String>(restTemplate.getForObject(countryResolverUrl, String.class, new HashMap<String, String>()));
     }
 
 }

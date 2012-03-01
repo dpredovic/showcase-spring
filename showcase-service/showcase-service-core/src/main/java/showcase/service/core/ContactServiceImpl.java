@@ -2,6 +2,7 @@ package showcase.service.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,10 +94,14 @@ public class ContactServiceImpl implements ContactService {
 
     private ContactDto mapAndEnrichAddress(Contact contact) {
         ContactDto contactDto = mapper.map(contact, ContactDto.class);
-        String city = addressResolver.resolveCity(contactDto.getCountryCode(), contactDto.getZipCode());
-        String country = addressResolver.resolveCountry(contactDto.getCountryCode());
-        contactDto.setCity(city);
-        contactDto.setCountryName(country);
+        Future<String> city = addressResolver.resolveCity(contactDto.getCountryCode(), contactDto.getZipCode());
+        Future<String> country = addressResolver.resolveCountry(contactDto.getCountryCode());
+        try {
+            contactDto.setCity(city.get());
+            contactDto.setCountryName(country.get());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return contactDto;
     }
 }
