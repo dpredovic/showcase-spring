@@ -12,7 +12,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 @Configuration
-@ComponentScan("showcase.persistence.unit.config")
+@ComponentScan(basePackageClasses = PersistenceUnitConfig.class)
 public class PersistenceUnitConfig {
 
     @Autowired

@@ -9,9 +9,10 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
 import showcase.addressresolver.config.AddressResolverConfig;
 import showcase.common.cache.CachingConfig;
 import showcase.persistence.repository.config.RepositoryConfig;
+import showcase.service.core.CustomerServiceImpl;
 
 @Configuration
-@ComponentScan("showcase.service.core")
+@ComponentScan(basePackageClasses = CustomerServiceImpl.class)
 @Import({RepositoryConfig.class, AddressResolverConfig.class, CachingConfig.class})
 public class ServiceConfig {
 
