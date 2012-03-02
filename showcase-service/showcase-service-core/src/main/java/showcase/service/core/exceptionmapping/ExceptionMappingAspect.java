@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExceptionMappingAspect {
 
-    private Map<Class<? extends Throwable>, ExceptionMapper<? extends Throwable, ?>> exceptionHandlerMap;
+    private Map<Class<? extends Throwable>, ExceptionMapper<? extends Throwable, ?>> exceptionMapperMap;
 
     @Autowired
     private Collection<ExceptionMapper<? extends Throwable, ?>> exceptionMappers;
@@ -26,13 +26,13 @@ public class ExceptionMappingAspect {
     protected void annotatedAsService() {
     }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Around("annotatedAsService()")
     public Object invoke(ProceedingJoinPoint pjp) throws Throwable {
         try {
             return pjp.proceed();
         } catch (Throwable throwable) {
-            MethodSignature signature = (MethodSignature) pjp.getStaticPart().getSignature();
-            Class<?> returnType = signature.getReturnType();
+            Class<?> returnType = ((MethodSignature) pjp.getStaticPart().getSignature()).getReturnType();
             ExceptionMapper exceptionMapper = getExceptionMapper(throwable, returnType);
             if (exceptionMapper != null) {
                 return exceptionMapper.map(throwable, returnType);
@@ -41,29 +41,34 @@ public class ExceptionMappingAspect {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private ExceptionMapper<? extends Throwable, ?> getExceptionMapper(Throwable exception, Class<?> returnType) {
         Class<? extends Throwable> exceptionClass = exception.getClass();
-        ExceptionMapper<? extends Throwable, ?> handler = getExceptionMapper(exceptionClass, returnType);
-        while (handler == null && !exceptionClass.equals(Throwable.class)) {
+
+        ExceptionMapper<? extends Throwable, ?> exceptionMapper;
+        while (!exceptionClass.equals(Throwable.class)) {
+            exceptionMapper = getExceptionMapperDirectMatch(exceptionClass, returnType);
+            if (exceptionMapper != null) {
+                return exceptionMapper;
+            }
             exceptionClass = (Class<? extends Throwable>) exceptionClass.getSuperclass();
-            handler = getExceptionMapper(exceptionClass, returnType);
         }
-        return handler;
+        return null;
     }
 
-    private ExceptionMapper<? extends Throwable, ?> getExceptionMapper(Class<? extends Throwable> exceptionClass, Class<?> returnType) {
-        ExceptionMapper<? extends Throwable, ?> handler = exceptionHandlerMap.get(exceptionClass);
-        if (handler.baseReturnType().isAssignableFrom(returnType)) {
-            return handler;
+    private ExceptionMapper<? extends Throwable, ?> getExceptionMapperDirectMatch(Class<? extends Throwable> exceptionClass, Class<?> returnType) {
+        ExceptionMapper<? extends Throwable, ?> exceptionMapper = exceptionMapperMap.get(exceptionClass);
+        if (exceptionMapper.getReturnClass().isAssignableFrom(returnType)) {
+            return exceptionMapper;
         }
         return null;
     }
 
     @PostConstruct
     private void init() {
-        exceptionHandlerMap = new HashMap<Class<? extends Throwable>, ExceptionMapper<? extends Throwable, ?>>();
+        exceptionMapperMap = new HashMap<Class<? extends Throwable>, ExceptionMapper<? extends Throwable, ?>>();
         for (ExceptionMapper<? extends Throwable, ?> exceptionMapper : exceptionMappers) {
-            exceptionHandlerMap.put(exceptionMapper.baseExceptionType(), exceptionMapper);
+            exceptionMapperMap.put(exceptionMapper.getThrowableClass(), exceptionMapper);
         }
     }
 

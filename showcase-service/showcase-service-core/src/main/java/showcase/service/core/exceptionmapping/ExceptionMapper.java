@@ -4,8 +4,8 @@ public interface ExceptionMapper<T extends Throwable, R> {
 
     R map(T throwable, Class<? extends R> returnType);
 
-    Class<R> baseReturnType();
+    Class<R> getReturnClass();
 
-    Class<T> baseExceptionType();
+    Class<T> getThrowableClass();
 
 }

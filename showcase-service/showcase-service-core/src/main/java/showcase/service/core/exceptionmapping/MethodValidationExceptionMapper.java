@@ -12,7 +12,7 @@ import showcase.service.api.dto.ValidationErrorDto;
 import showcase.service.api.dto.ValidationResponseDto;
 
 @Component
-public class MethodValidationExceptionMapper implements ExceptionMapper<MethodConstraintViolationException, ValidationResponseDto> {
+public class MethodValidationExceptionMapper extends AbstractExceptionMapper<MethodConstraintViolationException, ValidationResponseDto> {
 
     @Override
     public ValidationResponseDto map(MethodConstraintViolationException throwable, Class<? extends ValidationResponseDto> returnType) {
@@ -37,13 +37,4 @@ public class MethodValidationExceptionMapper implements ExceptionMapper<MethodCo
         return returnValue;
     }
 
-    @Override
-    public Class<ValidationResponseDto> baseReturnType() {
-        return ValidationResponseDto.class;
-    }
-
-    @Override
-    public Class<MethodConstraintViolationException> baseExceptionType() {
-        return MethodConstraintViolationException.class;
-    }
 }
