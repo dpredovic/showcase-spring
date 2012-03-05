@@ -45,15 +45,16 @@ public class ExceptionMappingAspect {
     private ExceptionMapper<? extends Throwable, ?> getExceptionMapper(Throwable exception, Class<?> returnType) {
         Class<? extends Throwable> exceptionClass = exception.getClass();
 
-        ExceptionMapper<? extends Throwable, ?> exceptionMapper;
-        while (!exceptionClass.equals(Throwable.class)) {
-            exceptionMapper = getExceptionMapperDirectMatch(exceptionClass, returnType);
+        do {
+            ExceptionMapper<? extends Throwable, ?> exceptionMapper = getExceptionMapperDirectMatch(exceptionClass, returnType);
             if (exceptionMapper != null) {
                 return exceptionMapper;
             }
+            if (exceptionClass.equals(Throwable.class)) {
+                return null;
+            }
             exceptionClass = (Class<? extends Throwable>) exceptionClass.getSuperclass();
-        }
-        return null;
+        } while (true);
     }
 
     private ExceptionMapper<? extends Throwable, ?> getExceptionMapperDirectMatch(Class<? extends Throwable> exceptionClass, Class<?> returnType) {
