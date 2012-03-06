@@ -2,12 +2,17 @@ package showcase.service.core.exceptionmapping;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
 import org.springframework.core.GenericTypeResolver;
+import showcase.common.logging.AutoLogger;
 
 public abstract class AbstractExceptionMapper<T extends Throwable, R> implements ExceptionMapper<T, R> {
 
     private Class<R> returnClass;
     private Class<T> throwableClass;
+
+    @AutoLogger
+    private Logger logger;
 
     @Override
     public Class<R> getReturnClass() {
@@ -28,5 +33,6 @@ public abstract class AbstractExceptionMapper<T extends Throwable, R> implements
         }
         throwableClass = (Class<T>) classes[0];
         returnClass = (Class<R>) classes[1];
+        logger.info("Exception mapper found for exception {}, returning {}", throwableClass, returnClass);
     }
 }

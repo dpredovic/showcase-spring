@@ -15,7 +15,7 @@ public class MapperFactoryBean extends AbstractFactoryBean<Mapper> {
 
     @Override
     public Class<?> getObjectType() {
-        return DozerBeanMapper.class;
+        return Mapper.class;
     }
 
     @Override

@@ -9,12 +9,13 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import showcase.addressresolver.config.AddressResolverConfig;
 import showcase.common.cache.CachingConfig;
+import showcase.common.logging.config.AutoLoggerConfig;
 import showcase.persistence.repository.config.RepositoryConfig;
 import showcase.service.core.CustomerServiceImpl;
 
 @Configuration
 @ComponentScan(basePackageClasses = CustomerServiceImpl.class)
-@Import({RepositoryConfig.class, AddressResolverConfig.class, CachingConfig.class})
+@Import({RepositoryConfig.class, AddressResolverConfig.class, CachingConfig.class, AutoLoggerConfig.class})
 @EnableAspectJAutoProxy
 public class ServiceConfig {
 
