@@ -26,9 +26,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>showcase</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>showcase-service-ee-rest-war</artifactId>
-            <version>1.0.0</version>
+            <version>${project.version}</version>
             <type>war</type>
         </dependency>
 

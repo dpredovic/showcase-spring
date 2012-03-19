@@ -23,16 +23,24 @@
         <spring.version>3.1.1.RELEASE</spring.version>
         <spring-data-jpa.version>1.0.3.RELEASE</spring-data-jpa.version>
         <hibernate-jpa-2.0-api.version>1.0.1.Final</hibernate-jpa-2.0-api.version>
-        <hibernate.version>4.1.0.Final</hibernate.version>
-		<querydsl.version>2.3.2</querydsl.version>
+        <hibernate.version>4.1.1.Final</hibernate.version>
+		<querydsl.version>2.3.3</querydsl.version>
         <slf4j.version>1.6.4</slf4j.version>
         <junit.version>4.10</junit.version>
         <dozer.version>5.3.2</dozer.version>
         <cxf.version>2.5.2</cxf.version>
+        <hibernate-validator.version>4.2.0.Final</hibernate-validator.version>
+        <httpclient.version>4.1.1</httpclient.version>
+        <jboss.version>7.1.0.Final</jboss.version>
+        <mockito.version>1.9.0</mockito.version>
+        <joda-time.version>2.0</joda-time.version>
+        <aspectj.version>1.6.12</aspectj.version>
+        <cglib.version>2.2.2</cglib.version>
+        <logback.version>1.0.1</logback.version>
+        <jsr311-api.version>1.1.1</jsr311-api.version>
 
         <compiler.source.version>1.6</compiler.source.version>
         <compiler.target.version>1.6</compiler.target.version>
-        <hibernate-validator.version>4.2.0.Final</hibernate-validator.version>
     </properties>
 
     <dependencyManagement>
@@ -168,7 +176,7 @@
             <dependency>
                 <groupId>javax.ws.rs</groupId>
                 <artifactId>jsr311-api</artifactId>
-                <version>1.1.1</version>
+                <version>${jsr311-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.interceptor</groupId>
@@ -210,7 +218,7 @@
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
-                <version>4.1.1</version>
+                <version>${httpclient.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>commons-logging</groupId>
@@ -260,19 +268,19 @@
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.0.0</version>
+                <version>${logback.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>cglib</groupId>
                 <artifactId>cglib-nodep</artifactId>
-                <version>2.2.2</version>
+                <version>${cglib.version}</version>
                 <scope>runtime</scope>
             </dependency>
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
-                <version>1.6.12</version>
+                <version>${aspectj.version}</version>
             </dependency>
 
             <dependency>
@@ -308,19 +316,19 @@
             <dependency>
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
-                <version>2.0</version>
+                <version>${joda-time.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
-                <version>1.9.0</version>
+                <version>${mockito.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.as</groupId>
                 <artifactId>jboss-as-ejb-client-bom</artifactId>
-                <version>7.1.0.Final</version>
+                <version>${jboss.version}</version>
                 <type>pom</type>
                 <scope>test</scope>
             </dependency>
