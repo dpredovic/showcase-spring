@@ -1,8 +1,9 @@
 package showcase.service.core;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.dozer.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import showcase.persistence.repository.ContactRepository;
@@ -15,19 +16,21 @@ import showcase.service.api.dto.CreateCustomerRequestDto;
 import showcase.service.api.dto.CreateCustomerResponseDto;
 import showcase.service.api.dto.CustomerDto;
 import showcase.service.api.validation.CreateGroup;
+import showcase.service.core.exceptionmapping.ExceptionsMapped;
 
-@Service
+@Named
 @Transactional
 @Validated(CreateGroup.class)
+@ExceptionsMapped
 public class CustomerServiceImpl implements CustomerService {
 
-    @Autowired
+    @Inject
     private CustomerRepository customerRepository;
 
-    @Autowired
+    @Inject
     private ContactRepository contactRepository;
 
-    @Autowired
+    @Inject
     private Mapper mapper;
 
     @Override

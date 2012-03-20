@@ -5,6 +5,7 @@ import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -14,7 +15,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 import showcase.service.api.ContactService;
 import showcase.service.api.CustomerService;
@@ -31,10 +31,10 @@ import showcase.service.api.dto.CustomerDto;
 @Path("/")
 public class RestServiceBean {
 
-    @Autowired
+    @Inject
     private CustomerService customerService;
 
-    @Autowired
+    @Inject
     private ContactService contactService;
 
     @GET

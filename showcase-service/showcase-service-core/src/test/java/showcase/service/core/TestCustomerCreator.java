@@ -3,10 +3,10 @@ package showcase.service.core;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.joda.time.LocalDate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import showcase.service.api.CustomerService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.dto.CreateCustomerRequestDto;
@@ -16,10 +16,10 @@ import showcase.service.api.type.ContactType;
 import showcase.service.api.type.CustomerType;
 import showcase.service.api.type.DispatchType;
 
-@Component
+@Named
 public class TestCustomerCreator {
 
-    @Autowired
+    @Inject
     private CustomerService customerService;
 
     public CustomerDto createCustomer() {

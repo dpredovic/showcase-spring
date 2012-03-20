@@ -4,25 +4,25 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Aspect
-@Component
+@Named
 public class ExceptionMappingAspect {
 
     private Map<Class<? extends Throwable>, ExceptionMapper<? extends Throwable, ?>> exceptionMapperMap;
 
-    @Autowired
+    @Inject
     private Collection<ExceptionMapper<? extends Throwable, ?>> exceptionMappers;
 
-    @Pointcut("within(@org.springframework.stereotype.Service *)")
+    @Pointcut("within(@ExceptionsMapped *)")
     protected void annotatedAsService() {
     }
 

@@ -1,11 +1,12 @@
 package showcase.service.core.cache;
 
+import javax.inject.Named;
+
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Caching;
-import org.springframework.stereotype.Component;
 import showcase.service.api.dto.ContactDto;
 
-@Component
+@Named
 public class CacheSyncImpl implements CacheSync {
 
     @Override

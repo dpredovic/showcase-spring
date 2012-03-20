@@ -3,10 +3,10 @@ package showcase.persistence.repository;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import javax.inject.Inject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -33,13 +33,13 @@ import static org.fest.assertions.Assertions.assertThat;
 @ContextConfiguration(classes = RepositoryConfig.class, loader = AnnotationConfigContextLoader.class)
 public class RepositoryTest {
 
-    @Autowired
+    @Inject
     private CustomerRepository customerRepository;
 
-    @Autowired
+    @Inject
     private ContactRepository contactRepository;
 
-    @Autowired
+    @Inject
     private PlatformTransactionManager transactionManager;
 
     @Test

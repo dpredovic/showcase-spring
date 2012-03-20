@@ -3,11 +3,11 @@ package showcase.service.core;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.dozer.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import showcase.addressresolver.AsyncAddressResolver;
@@ -18,22 +18,24 @@ import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.type.CommunicationType;
 import showcase.service.core.cache.CacheSync;
+import showcase.service.core.exceptionmapping.ExceptionsMapped;
 
-@Service
+@Named
 @Transactional
 @Validated
+@ExceptionsMapped
 public class ContactServiceImpl implements ContactService {
 
-    @Autowired
+    @Inject
     private ContactRepository contactRepository;
 
-    @Autowired
+    @Inject
     private Mapper mapper;
 
-    @Autowired
+    @Inject
     private AsyncAddressResolver addressResolver;
 
-    @Autowired
+    @Inject
     private CacheSync cacheSync;
 
     @Override

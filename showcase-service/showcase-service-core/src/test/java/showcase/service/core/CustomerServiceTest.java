@@ -1,11 +1,11 @@
 package showcase.service.core;
 
 import java.util.Collection;
+import javax.inject.Inject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,10 +28,10 @@ import static org.mockito.Mockito.RETURNS_SMART_NULLS;
 @ContextConfiguration(classes = ServiceConfig.class, loader = AnnotationConfigContextLoader.class)
 public class CustomerServiceTest {
 
-    @Autowired
+    @Inject
     private CustomerService customerService;
 
-    @Autowired
+    @Inject
     private TestCustomerCreator customerCreator;
 
     @Test

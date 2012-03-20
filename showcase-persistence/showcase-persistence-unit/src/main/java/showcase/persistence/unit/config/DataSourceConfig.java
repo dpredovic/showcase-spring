@@ -1,7 +1,8 @@
 package showcase.persistence.unit.config;
 
+import javax.inject.Inject;
+
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -11,7 +12,7 @@ import org.springframework.core.env.Environment;
 @Profile({"integration", "standalone"})
 public class DataSourceConfig {
 
-    @Autowired
+    @Inject
     private Environment env;
 
     @Bean(destroyMethod = "close")

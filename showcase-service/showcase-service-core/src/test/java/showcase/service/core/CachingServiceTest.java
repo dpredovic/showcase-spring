@@ -1,8 +1,9 @@
 package showcase.service.core;
 
+import javax.inject.Inject;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -10,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import showcase.addressresolver.AddressResolver;
+import showcase.addressresolver.AsyncAddressResolver;
 import showcase.addressresolver.AsyncAddressResolverImpl;
 import showcase.common.cache.CachingConfig;
 import showcase.persistence.repository.ContactRepository;
@@ -17,7 +19,9 @@ import showcase.persistence.unit.Contact;
 import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.type.ContactType;
+import showcase.service.core.cache.CacheSync;
 import showcase.service.core.cache.CacheSyncImpl;
+import showcase.service.core.config.MapperConfig;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
@@ -28,21 +32,36 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("standalone")
 @ContextConfiguration(classes = CachingServiceTest.class, loader = AnnotationConfigContextLoader.class)
-@Import(value = {CachingConfig.class, ContactServiceImpl.class, MapperFactoryBean.class, CacheSyncImpl.class, MockConfig.class, AsyncAddressResolverImpl.class})
+@Import(value = {CachingConfig.class, MapperConfig.class, MockConfig.class})
 public class CachingServiceTest {
 
-    @Autowired
+    @Inject
     private ContactService contactService;
 
-    @Autowired
+    @Inject
     private AddressResolver addressResolver;
 
-    @Autowired
+    @Inject
     private ContactRepository contactRepository;
 
     @Bean
     public ContactRepository contactRepository() {
         return mock(ContactRepository.class, RETURNS_SMART_NULLS);
+    }
+
+    @Bean
+    public ContactService contactService() {
+        return new ContactServiceImpl();
+    }
+
+    @Bean
+    public CacheSync cacheSync() {
+        return new CacheSyncImpl();
+    }
+
+    @Bean
+    public AsyncAddressResolver asyncAddressResolver() {
+        return new AsyncAddressResolverImpl();
     }
 
     @Test

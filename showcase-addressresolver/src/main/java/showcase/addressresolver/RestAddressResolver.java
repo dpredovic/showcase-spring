@@ -2,19 +2,19 @@ package showcase.addressresolver;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
 
-@Component
+@Named
 @Profile("integration")
 public class RestAddressResolver implements AddressResolver {
 
-    @Autowired
+    @Inject
     private RestOperations restTemplate;
 
     // url must contain 2 variables: cc and zip - something like "http://..../country/{cc}/city/{zip}/name"

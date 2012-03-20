@@ -1,10 +1,11 @@
 package showcase.addressresolver;
 
+import javax.inject.Named;
+
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 
-@Component
+@Named
 @Profile("standalone")
 public class DummyAddressResolver implements AddressResolver {
 

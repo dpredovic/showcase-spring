@@ -1,15 +1,15 @@
 package showcase.addressresolver;
 
 import java.util.concurrent.Future;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.AsyncResult;
-import org.springframework.stereotype.Component;
 
-@Component
+@Named
 public class AsyncAddressResolverImpl implements AsyncAddressResolver {
 
-    @Autowired
+    @Inject
     private AddressResolver delegate;
 
     @Override

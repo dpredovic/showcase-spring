@@ -3,15 +3,15 @@ package showcase.service.core.exceptionmapping;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
+import javax.inject.Named;
 
 import org.hibernate.validator.method.MethodConstraintViolation;
 import org.hibernate.validator.method.MethodConstraintViolationException;
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Component;
 import showcase.service.api.dto.ValidationErrorDto;
 import showcase.service.api.dto.ValidationResponseDto;
 
-@Component
+@Named
 public class MethodValidationExceptionMapper extends AbstractExceptionMapper<MethodConstraintViolationException, ValidationResponseDto> {
 
     @Override

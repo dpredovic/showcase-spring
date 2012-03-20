@@ -6,10 +6,10 @@ import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Remote;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.jws.WebService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
@@ -25,7 +25,7 @@ import showcase.service.api.dto.ContactDto;
 @Remote(ContactService.class)
 public class ContactServiceBean implements ContactService {
 
-    @Autowired
+    @Inject
     private ContactService delegate;
 
     @Override

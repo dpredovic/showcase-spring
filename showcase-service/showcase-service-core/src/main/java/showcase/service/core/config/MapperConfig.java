@@ -1,25 +1,20 @@
-package showcase.service.core;
+package showcase.service.core.config;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.dozer.loader.api.BeanMappingBuilder;
-import org.springframework.beans.factory.config.AbstractFactoryBean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import showcase.persistence.unit.Contact;
 import showcase.persistence.unit.Customer;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.dto.CustomerDto;
 
-@Component
-public class MapperFactoryBean extends AbstractFactoryBean<Mapper> {
+@Configuration
+public class MapperConfig {
 
-    @Override
-    public Class<?> getObjectType() {
-        return Mapper.class;
-    }
-
-    @Override
-    protected Mapper createInstance() throws Exception {
+    @Bean
+    public Mapper mapper() {
         DozerBeanMapper mapper = new DozerBeanMapper();
         mapper.addMapping(new BeanMappingBuilder() {
             @Override
@@ -39,8 +34,4 @@ public class MapperFactoryBean extends AbstractFactoryBean<Mapper> {
         return mapper;
     }
 
-    @Override
-    protected void destroyInstance(Mapper instance) throws Exception {
-        ((DozerBeanMapper) instance).destroy();
-    }
 }
