@@ -1,4 +1,4 @@
-package showcase.service.core.config;
+package showcase.service.core;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -7,14 +7,13 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
-import showcase.addressresolver.config.AddressResolverConfig;
+import showcase.addressresolver.AddressResolverConfig;
 import showcase.common.cache.CachingConfig;
-import showcase.common.logging.config.AutoLoggerConfig;
-import showcase.persistence.repository.config.RepositoryConfig;
-import showcase.service.core.CustomerServiceImpl;
+import showcase.common.logging.AutoLoggerConfig;
+import showcase.persistence.repository.RepositoryConfig;
 
 @Configuration
-@ComponentScan(basePackageClasses = CustomerServiceImpl.class)
+@ComponentScan(basePackageClasses = ServiceConfig.class)
 @Import({RepositoryConfig.class, AddressResolverConfig.class, CachingConfig.class, AutoLoggerConfig.class})
 @EnableAspectJAutoProxy
 public class ServiceConfig {

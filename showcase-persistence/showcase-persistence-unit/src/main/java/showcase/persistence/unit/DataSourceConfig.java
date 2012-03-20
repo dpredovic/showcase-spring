@@ -1,4 +1,4 @@
-package showcase.persistence.unit.config;
+package showcase.persistence.unit;
 
 import javax.inject.Inject;
 

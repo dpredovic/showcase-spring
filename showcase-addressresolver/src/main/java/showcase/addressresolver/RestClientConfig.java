@@ -1,4 +1,4 @@
-package showcase.addressresolver.config;
+package showcase.addressresolver;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;

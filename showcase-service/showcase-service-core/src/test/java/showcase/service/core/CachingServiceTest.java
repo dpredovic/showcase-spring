@@ -21,7 +21,6 @@ import showcase.service.api.dto.ContactDto;
 import showcase.service.api.type.ContactType;
 import showcase.service.core.cache.CacheSync;
 import showcase.service.core.cache.CacheSyncImpl;
-import showcase.service.core.config.MapperConfig;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;

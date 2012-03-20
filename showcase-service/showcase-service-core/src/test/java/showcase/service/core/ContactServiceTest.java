@@ -15,7 +15,6 @@ import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.type.CommunicationType;
 import showcase.service.api.type.ContactType;
-import showcase.service.core.config.ServiceConfig;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;

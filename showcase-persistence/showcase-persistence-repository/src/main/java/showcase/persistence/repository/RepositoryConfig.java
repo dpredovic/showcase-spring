@@ -1,4 +1,4 @@
-package showcase.persistence.repository.config;
+package showcase.persistence.repository;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import showcase.persistence.unit.config.PersistenceUnitConfig;
+import showcase.persistence.unit.PersistenceUnitConfig;
 
 @Configuration
 @EnableTransactionManagement

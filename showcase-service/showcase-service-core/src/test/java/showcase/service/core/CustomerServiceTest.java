@@ -18,7 +18,6 @@ import showcase.service.api.dto.CreateCustomerRequestDto;
 import showcase.service.api.dto.CreateCustomerResponseDto;
 import showcase.service.api.dto.CustomerDto;
 import showcase.service.api.dto.ValidationErrorDto;
-import showcase.service.core.config.ServiceConfig;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;

@@ -1,4 +1,4 @@
-package showcase.service.core.config;
+package showcase.service.core;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;

@@ -1,4 +1,4 @@
-package showcase.common.logging.config;
+package showcase.common.logging;
 
 import java.lang.reflect.Field;
 
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ReflectionUtils;
-import showcase.common.logging.AutoLogger;
 
 @Configuration
 public class AutoLoggerConfig {
@@ -27,7 +26,7 @@ public class AutoLoggerConfig {
         public Object postProcessBeforeInitialization(final Object bean, String beanName) throws BeansException {
             ReflectionUtils.doWithFields(bean.getClass(), new ReflectionUtils.FieldCallback() {
                         @Override
-                        public void doWith(Field field) throws IllegalArgumentException, IllegalAccessException {
+                        public void doWith(Field field) throws IllegalArgumentException {
                             ReflectionUtils.makeAccessible(field);
                             Class<?> fieldType = field.getType();
                             if (fieldType.equals(Logger.class)) {
@@ -35,7 +34,7 @@ public class AutoLoggerConfig {
                             } else if (fieldType.equals(Log.class)) {
                                 ReflectionUtils.setField(field, bean, LogFactory.getLog(bean.getClass()));
                             } else {
-                                throw new IllegalArgumentException("Unknown autologger field type: " + fieldType.getCanonicalName());
+                                throw new IllegalArgumentException("Unknown @AutoLogger field type: " + fieldType.getCanonicalName());
                             }
                         }
                     }, new ReflectionUtils.FieldFilter() {

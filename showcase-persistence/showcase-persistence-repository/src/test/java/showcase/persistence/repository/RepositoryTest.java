@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
-import showcase.persistence.repository.config.RepositoryConfig;
 import showcase.persistence.unit.Contact;
 import showcase.persistence.unit.Customer;
 import showcase.service.api.type.CommunicationType;

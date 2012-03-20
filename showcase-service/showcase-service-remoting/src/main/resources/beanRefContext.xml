@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean class="org.springframework.context.annotation.AnnotationConfigApplicationContext">
-        <constructor-arg value="showcase.service.remoting.config.EjbConfig"/>
+        <constructor-arg value="showcase.service.remoting.EjbConfig"/>
     </bean>
 
 </beans>
