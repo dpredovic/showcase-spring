@@ -1,6 +1,5 @@
 package showcase.service.remoting;
 
-import java.util.List;
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Remote;
@@ -10,9 +9,9 @@ import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.jws.WebService;
 
+import lombok.Delegate;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 import showcase.service.api.ContactService;
-import showcase.service.api.dto.ContactDto;
 
 //EJB-component
 @Singleton(name = "ContactService")
@@ -26,25 +25,7 @@ import showcase.service.api.dto.ContactDto;
 public class ContactServiceBean implements ContactService {
 
     @Inject
+    @Delegate
     private ContactService delegate;
 
-    @Override
-    public ContactDto getContact(long contactId) {
-        return delegate.getContact(contactId);
-    }
-
-    @Override
-    public ContactDto getContactByCustomerAndType(long customerId, String type) {
-        return delegate.getContactByCustomerAndType(customerId, type);
-    }
-
-    @Override
-    public List<ContactDto> getContactsByCustomer(long customerId) {
-        return delegate.getContactsByCustomer(customerId);
-    }
-
-    @Override
-    public List<ContactDto> getByEmail(String email) {
-        return delegate.getByEmail(email);
-    }
 }

@@ -11,10 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.envers.Audited;
 
 @Entity
 @Audited
+@Getter
+@Setter
 public class Customer {
 
     @Id
@@ -36,49 +40,5 @@ public class Customer {
 
     @ElementCollection
     private Map<String, String> properties = new HashMap<String, String>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getCooperationPartnerId() {
-        return cooperationPartnerId;
-    }
-
-    public void setCooperationPartnerId(Long cooperationPartnerId) {
-        this.cooperationPartnerId = cooperationPartnerId;
-    }
-
-    public Date getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
-    }
-
-    public String getCustomerType() {
-        return customerType;
-    }
-
-    public void setCustomerType(String customerType) {
-        this.customerType = customerType;
-    }
-
-    public String getDispatchType() {
-        return dispatchType;
-    }
-
-    public void setDispatchType(String dispatchType) {
-        this.dispatchType = dispatchType;
-    }
-
-    public Map<String, String> getProperties() {
-        return properties;
-    }
 
 }

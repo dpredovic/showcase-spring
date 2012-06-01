@@ -6,6 +6,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.Data;
+
+@Data
 public class CreateCustomerRequestDto implements Serializable {
 
     @Valid
@@ -17,19 +20,4 @@ public class CreateCustomerRequestDto implements Serializable {
     @Size(min = 1)
     private Collection<ContactDto> contacts;
 
-    public CustomerDto getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(CustomerDto customer) {
-        this.customer = customer;
-    }
-
-    public Collection<ContactDto> getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(Collection<ContactDto> contacts) {
-        this.contacts = contacts;
-    }
 }

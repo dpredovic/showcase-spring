@@ -9,11 +9,9 @@ import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.jws.WebService;
 
+import lombok.Delegate;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 import showcase.service.api.CustomerService;
-import showcase.service.api.dto.CreateCustomerRequestDto;
-import showcase.service.api.dto.CreateCustomerResponseDto;
-import showcase.service.api.dto.CustomerDto;
 
 //EJB-component
 @Singleton(name = "CustomerService")
@@ -27,15 +25,7 @@ import showcase.service.api.dto.CustomerDto;
 public class CustomerServiceBean implements CustomerService {
 
     @Inject
+    @Delegate
     private CustomerService delegate;
 
-    @Override
-    public CreateCustomerResponseDto createCustomer(CreateCustomerRequestDto requestDto) {
-        return delegate.createCustomer(requestDto);
-    }
-
-    @Override
-    public CustomerDto getById(long id) {
-        return delegate.getById(id);
-    }
 }

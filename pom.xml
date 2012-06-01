@@ -19,12 +19,12 @@
     <properties>
         <app.name>showcase</app.name>
         <service.name>${app.name}-${parsedVersion.majorVersion}.${parsedVersion.minorVersion}</service.name>
-		
+
         <spring.version>3.1.1.RELEASE</spring.version>
-        <spring-data-jpa.version>1.0.3.RELEASE</spring-data-jpa.version>
+        <spring-data-jpa.version>1.1.0.RELEASE</spring-data-jpa.version>
         <hibernate-jpa-2.0-api.version>1.0.1.Final</hibernate-jpa-2.0-api.version>
         <hibernate.version>4.1.1.Final</hibernate.version>
-		<querydsl.version>2.3.3</querydsl.version>
+        <querydsl.version>2.3.3</querydsl.version>
         <slf4j.version>1.6.4</slf4j.version>
         <junit.version>4.10</junit.version>
         <dozer.version>5.3.2</dozer.version>
@@ -38,9 +38,11 @@
         <cglib.version>2.2.2</cglib.version>
         <logback.version>1.0.1</logback.version>
         <jsr311-api.version>1.1.1</jsr311-api.version>
+        <lombok.version>0.11.0</lombok.version>
 
         <compiler.source.version>1.6</compiler.source.version>
         <compiler.target.version>1.6</compiler.target.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencyManagement>
@@ -291,6 +293,12 @@
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
                 <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>
