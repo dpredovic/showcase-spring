@@ -1,9 +1,10 @@
 package showcase.service.ear;
 
-import java.util.Hashtable;
+import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
+import lombok.Cleanup;
 import org.junit.Before;
 import org.junit.Test;
 import showcase.service.api.CustomerService;
@@ -17,15 +18,16 @@ public class RemoteInvocation {
 
     @Before
     public void setUp() throws Exception {
-        Hashtable jndiProperties = new Hashtable();
-        jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+        Properties jndiProperties = new Properties();
+        jndiProperties.setProperty(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+
+        @Cleanup
         Context context = new InitialContext(jndiProperties);
 
         customerService = (CustomerService) context.lookup(CustomerService.JNDI_NAME);
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testServiceCall() throws Exception {
         long id = 421L;
         CustomerDto customer = customerService.getById(id);
