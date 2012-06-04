@@ -1,47 +1,37 @@
 package showcase.addressresolver;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Profile;
-import org.springframework.web.client.RestOperations;
 
 @Named
 @Profile("integration")
 public class RestAddressResolver implements AddressResolver {
 
     @Inject
-    private RestOperations restTemplate;
+    private JAXRSClientFactoryBean clientFactoryBean;
 
-    // url must contain 2 variables: cc and zip - something like "http://..../country/{cc}/city/{zip}/name"
-    @Value("${city.address.resolver.url}")
-    private String cityResolverUrl;
-
-    // url must contain 1 variable: cc - something like "http://..../country/{cc}/name"
-    @Value("${country.address.resolver.url}")
-    private String countryResolverUrl;
+    private AddressResolver delegate;
 
     @Override
     @Cacheable("cityCache")
     public String resolveCity(String countryCode, String zipCode) {
-        Map<String, String> vars = new HashMap<String, String>();
-        vars.put("cc", countryCode);
-        vars.put("zip", zipCode);
-
-        return restTemplate.getForObject(cityResolverUrl, String.class, vars);
+        return delegate.resolveCity(countryCode, zipCode);
     }
 
     @Override
     @Cacheable("countryCache")
     public String resolveCountry(String countryCode) {
-        Map<String, String> vars = new HashMap<String, String>();
-        vars.put("cc", countryCode);
+        return delegate.resolveCountry(countryCode);
+    }
 
-        return restTemplate.getForObject(countryResolverUrl, String.class, vars);
+    @PostConstruct
+    private void init() {
+        delegate = clientFactoryBean.create(AddressResolver.class);
     }
 
 }
