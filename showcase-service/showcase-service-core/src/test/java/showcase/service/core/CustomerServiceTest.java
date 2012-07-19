@@ -1,8 +1,5 @@
 package showcase.service.core;
 
-import java.util.Collection;
-import javax.inject.Inject;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -18,6 +15,9 @@ import showcase.service.api.dto.CreateCustomerRequestDto;
 import showcase.service.api.dto.CreateCustomerResponseDto;
 import showcase.service.api.dto.CustomerDto;
 import showcase.service.api.dto.ValidationErrorDto;
+
+import java.util.Collection;
+import javax.inject.Inject;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;
@@ -57,7 +57,7 @@ public class CustomerServiceTest {
         assertThat(validationErrors).hasSize(1);
         ValidationErrorDto validationError = validationErrors.iterator().next();
         assertThat(validationError.getPropertyPath()).isEqualTo("customer.cooperationPartnerId");
-        assertThat(validationError.getMessage()).isEqualTo("kann nicht null sein");
+        assertThat(validationError.getMessage()).isEqualTo("darf nicht null sein");
     }
 
     @Test

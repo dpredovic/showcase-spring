@@ -1,11 +1,5 @@
 package showcase.service.core;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.joda.time.LocalDate;
 import showcase.service.api.CustomerService;
 import showcase.service.api.dto.ContactDto;
@@ -15,6 +9,10 @@ import showcase.service.api.type.CommunicationType;
 import showcase.service.api.type.ContactType;
 import showcase.service.api.type.CustomerType;
 import showcase.service.api.type.DispatchType;
+
+import java.util.Arrays;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named
 public class TestCustomerCreator {
@@ -36,25 +34,24 @@ public class TestCustomerCreator {
     }
 
     public CreateCustomerRequestDto createRequest(String suffix) {
-        ContactDto standardContact = createContact(suffix, ContactType.STANDARD);
-        ContactDto invoicingContact = createContact(suffix, ContactType.INVOICING);
-        ContactDto otherContact1 = createContact(suffix, null);
-        ContactDto otherContact2 = createContact(suffix, null);
-
-        Map<String, String> properties = new HashMap<String, String>();
-        properties.put("platinum", "true");
 
         CustomerDto customer = new CustomerDto();
         customer.setCooperationPartnerId(1L);
         customer.setCustomerType(CustomerType.PERSON.toString());
         customer.setDispatchType(DispatchType.EMAIL.toString());
         customer.setRegistrationDate(LocalDate.now().toDate());
-        customer.setProperties(properties);
+        customer.getProperties().put("platinum", "true");
 
-        CreateCustomerRequestDto requestDto = new CreateCustomerRequestDto();
-        requestDto.setCustomer(customer);
-        requestDto.setContacts(Arrays.asList(standardContact, invoicingContact, otherContact1, otherContact2));
-        return requestDto;
+        ContactDto standardContact = createContact(suffix, ContactType.STANDARD);
+        ContactDto invoicingContact = createContact(suffix, ContactType.INVOICING);
+        ContactDto otherContact1 = createContact(suffix, null);
+        ContactDto otherContact2 = createContact(suffix, null);
+
+        return new CreateCustomerRequestDto(customer,
+                                            Arrays.asList(standardContact,
+                                                          invoicingContact,
+                                                          otherContact1,
+                                                          otherContact2));
     }
 
     private ContactDto createContact(String suffix, ContactType contactType) {

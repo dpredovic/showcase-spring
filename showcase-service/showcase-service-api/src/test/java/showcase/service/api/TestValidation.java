@@ -1,14 +1,5 @@
 package showcase.service.api;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import showcase.service.api.dto.ContactDto;
@@ -19,6 +10,14 @@ import showcase.service.api.type.ContactType;
 import showcase.service.api.type.CustomerType;
 import showcase.service.api.type.DispatchType;
 import showcase.service.api.validation.CreateGroup;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -66,24 +65,17 @@ public class TestValidation {
     }
 
     private CreateCustomerRequestDto createValidRequest() {
-        CreateCustomerRequestDto createCustomerRequestDto = new CreateCustomerRequestDto();
 
         CustomerDto customer = new CustomerDto();
         customer.setCustomerType(CustomerType.PERSON.toString());
         customer.setDispatchType(DispatchType.EMAIL.toString());
         customer.setCooperationPartnerId(1L);
         customer.setRegistrationDate(new Date(new Date().getTime() - 10));
-        createCustomerRequestDto.setCustomer(customer);
 
         ContactDto standardContact = createContact(ContactType.STANDARD);
         ContactDto untypedContact = createContact(null);
 
-        Collection<ContactDto> contacts = new ArrayList<ContactDto>();
-        contacts.add(standardContact);
-        contacts.add(untypedContact);
-        createCustomerRequestDto.setContacts(contacts);
-
-        return createCustomerRequestDto;
+        return new CreateCustomerRequestDto(customer, Arrays.asList(standardContact, untypedContact));
     }
 
     private ContactDto createContact(ContactType contactType) {

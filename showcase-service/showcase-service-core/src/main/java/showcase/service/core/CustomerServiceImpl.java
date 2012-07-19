@@ -1,8 +1,5 @@
 package showcase.service.core;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.dozer.Mapper;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +14,9 @@ import showcase.service.api.dto.CreateCustomerResponseDto;
 import showcase.service.api.dto.CustomerDto;
 import showcase.service.api.validation.CreateGroup;
 import showcase.service.core.exceptionmapping.ExceptionsMapped;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named
 @Transactional
@@ -43,9 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
             contact.setCustomer(customer);
             contactRepository.save(contact);
         }
-        CreateCustomerResponseDto response = new CreateCustomerResponseDto();
-        response.setId(customer.getId());
-        return response;
+        return new CreateCustomerResponseDto(customer.getId());
     }
 
     @Override
@@ -55,8 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer == null) {
             return null;
         }
-        CustomerDto customerDto = mapper.map(customer, CustomerDto.class);
-        return customerDto;
+        return mapper.map(customer, CustomerDto.class);
     }
 
 }

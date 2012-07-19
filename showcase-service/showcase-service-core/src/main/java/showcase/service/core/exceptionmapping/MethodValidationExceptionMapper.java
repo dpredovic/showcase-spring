@@ -1,35 +1,34 @@
 package showcase.service.core.exceptionmapping;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Set;
-import javax.inject.Named;
-
 import org.hibernate.validator.method.MethodConstraintViolation;
 import org.hibernate.validator.method.MethodConstraintViolationException;
 import org.springframework.beans.BeanUtils;
 import showcase.service.api.dto.ValidationErrorDto;
 import showcase.service.api.dto.ValidationResponseDto;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
+import javax.inject.Named;
+
 @Named
 public class MethodValidationExceptionMapper extends AbstractExceptionMapper<MethodConstraintViolationException, ValidationResponseDto> {
 
     @Override
-    public ValidationResponseDto map(MethodConstraintViolationException throwable, Class<? extends ValidationResponseDto> returnType) {
+    public ValidationResponseDto map(MethodConstraintViolationException throwable,
+                                     Class<? extends ValidationResponseDto> returnType) {
         Set<MethodConstraintViolation<?>> constraintViolations = throwable.getConstraintViolations();
 
         Collection<ValidationErrorDto> errors = new ArrayList<ValidationErrorDto>(constraintViolations.size());
-        for (MethodConstraintViolation<?> constraintViolation : constraintViolations) {
-            ValidationErrorDto error = new ValidationErrorDto();
-            error.setMessage(constraintViolation.getMessage());
-            error.setParamIndex(constraintViolation.getParameterIndex());
-            error.setParamName(constraintViolation.getParameterName());
-            String propertyPath = constraintViolation.getPropertyPath().toString();
+        for (MethodConstraintViolation<?> cv : constraintViolations) {
+            String propertyPath = cv.getPropertyPath().toString();
             String[] pathParts = propertyPath.split("\\)\\.");
+            String pp = null;
             if (pathParts.length == 2) {
-                error.setPropertyPath(pathParts[1]);
+                pp = pathParts[1];
             }
-            errors.add(error);
+
+            errors.add(new ValidationErrorDto(cv.getParameterIndex(), cv.getParameterName(), pp, cv.getMessage()));
         }
 
         ValidationResponseDto returnValue = BeanUtils.instantiate(returnType);

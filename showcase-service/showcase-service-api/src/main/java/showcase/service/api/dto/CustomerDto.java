@@ -1,5 +1,13 @@
 package showcase.service.api.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import showcase.service.api.type.CustomerType;
+import showcase.service.api.type.DispatchType;
+import showcase.service.api.validation.CreateGroup;
+import showcase.service.api.validation.InEnum;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,14 +17,10 @@ import javax.validation.constraints.Null;
 import javax.validation.constraints.Past;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import lombok.Data;
-import showcase.service.api.type.CustomerType;
-import showcase.service.api.type.DispatchType;
-import showcase.service.api.validation.CreateGroup;
-import showcase.service.api.validation.InEnum;
-
 @XmlRootElement
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CustomerDto implements Serializable {
 
     @Null(groups = CreateGroup.class)
