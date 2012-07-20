@@ -13,18 +13,26 @@ import showcase.persistence.repository.RepositoryConfig;
 
 @Configuration
 @ComponentScan(basePackageClasses = ServiceConfig.class)
-@Import({RepositoryConfig.class, AddressResolverConfig.class, CachingConfig.class})
+@Import({
+            RepositoryConfig.class,
+            AddressResolverConfig.class,
+            CachingConfig.class
+        })
 @EnableAspectJAutoProxy
 public class ServiceConfig {
 
     @Bean
     public LocalValidatorFactoryBean localValidatorFactoryBean() {
-        return new LocalValidatorFactoryBean();
+        LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
+        localValidatorFactoryBean.setMessageInterpolator(new SimpleAnnotationNameMessageInterpolator());
+        return localValidatorFactoryBean;
     }
 
     @Bean
     public MethodValidationPostProcessor methodValidationPostProcessor() {
-        return new MethodValidationPostProcessor();
+        MethodValidationPostProcessor methodValidationPostProcessor = new MethodValidationPostProcessor();
+        methodValidationPostProcessor.setValidatorFactory(localValidatorFactoryBean());
+        return methodValidationPostProcessor;
     }
 
 }

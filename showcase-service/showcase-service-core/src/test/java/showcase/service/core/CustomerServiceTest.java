@@ -15,9 +15,11 @@ import showcase.service.api.dto.CreateCustomerRequestDto;
 import showcase.service.api.dto.CreateCustomerResponseDto;
 import showcase.service.api.dto.CustomerDto;
 import showcase.service.api.dto.ValidationErrorDto;
+import showcase.service.api.validation.AllKeysInEnum;
 
 import java.util.Collection;
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;
@@ -57,7 +59,7 @@ public class CustomerServiceTest {
         assertThat(validationErrors).hasSize(1);
         ValidationErrorDto validationError = validationErrors.iterator().next();
         assertThat(validationError.getPropertyPath()).isEqualTo("customer.cooperationPartnerId");
-        assertThat(validationError.getMessage()).isEqualTo("darf nicht null sein");
+        assertThat(validationError.getMessage()).isEqualTo(NotNull.class.getSimpleName());
     }
 
     @Test
@@ -75,7 +77,7 @@ public class CustomerServiceTest {
         assertThat(validationErrors).hasSize(1);
         ValidationErrorDto validationError = validationErrors.iterator().next();
         assertThat(validationError.getPropertyPath()).isEqualTo("contacts[0].communications");
-        assertThat(validationError.getMessage()).isEqualTo("value not in enum");
+        assertThat(validationError.getMessage()).isEqualTo(AllKeysInEnum.class.getSimpleName());
     }
 
     @Bean
