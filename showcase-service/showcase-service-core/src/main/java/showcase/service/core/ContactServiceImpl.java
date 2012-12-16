@@ -1,12 +1,6 @@
 package showcase.service.core;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Future;
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.dozer.Mapper;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +14,12 @@ import showcase.service.api.type.CommunicationType;
 import showcase.service.core.cache.CacheSync;
 import showcase.service.core.exceptionmapping.ExceptionsMapped;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Future;
+
 @Named
 @Transactional
 @Validated
@@ -30,7 +30,7 @@ public class ContactServiceImpl implements ContactService {
     private ContactRepository contactRepository;
 
     @Inject
-    private Mapper mapper;
+    private MapperFacade mapper;
 
     @Inject
     private AsyncAddressResolver addressResolver;
@@ -83,7 +83,10 @@ public class ContactServiceImpl implements ContactService {
     @Override
     @Transactional(readOnly = true)
     public List<ContactDto> getByEmail(String email) {
-        Iterable<Contact> contacts = contactRepository.findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(), email));
+        Iterable<Contact> contacts = contactRepository.findAll(ContactPredicates.containsCommunication(CommunicationType
+                                                                                                               .EMAIL
+                                                                                                               .toString(),
+                                                                                                       email));
 
         List<ContactDto> contactDtos = new ArrayList<ContactDto>();
         for (Contact contact : contacts) {

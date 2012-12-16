@@ -1,6 +1,6 @@
 package showcase.service.core;
 
-import org.dozer.Mapper;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import showcase.persistence.repository.ContactRepository;
@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
     private ContactRepository contactRepository;
 
     @Inject
-    private Mapper mapper;
+    private MapperFacade mapper;
 
     @Override
     public CreateCustomerResponseDto createCustomer(CreateCustomerRequestDto requestDto) {

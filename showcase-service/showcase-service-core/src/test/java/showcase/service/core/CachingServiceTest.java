@@ -1,7 +1,5 @@
 package showcase.service.core;
 
-import javax.inject.Inject;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +7,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import showcase.addressresolver.AddressResolver;
 import showcase.addressresolver.AsyncAddressResolver;
 import showcase.addressresolver.AsyncAddressResolverImpl;
@@ -22,6 +19,8 @@ import showcase.service.api.type.ContactType;
 import showcase.service.core.cache.CacheSync;
 import showcase.service.core.cache.CacheSyncImpl;
 
+import javax.inject.Inject;
+
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;
@@ -29,9 +28,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles("standalone")
-@ContextConfiguration(classes = CachingServiceTest.class, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = CachingServiceTest.class)
 @Import(value = {CachingConfig.class, MapperConfig.class, MockConfig.class})
+@ActiveProfiles("standalone")
 public class CachingServiceTest {
 
     @Inject
@@ -80,14 +79,16 @@ public class CachingServiceTest {
         when(addressResolver.resolveCity(anyString(), anyString())).thenReturn("dummy");
 
         {
-            ContactDto contactDto = contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
+            ContactDto contactDto = contactService.getContactByCustomerAndType(customerId,
+                                                                               ContactType.STANDARD.toString());
             assertThat(contactDto).isNotNull();
             assertThat(contactDto.getId()).isEqualTo(contactId);
             assertThat(contactDto.getContactType()).isEqualTo(type.toString());
         }
 
         {
-            ContactDto contactDto = contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
+            ContactDto contactDto = contactService.getContactByCustomerAndType(customerId,
+                                                                               ContactType.STANDARD.toString());
             assertThat(contactDto).isNotNull();
             assertThat(contactDto.getId()).isEqualTo(contactId);
             assertThat(contactDto.getContactType()).isEqualTo(type.toString());

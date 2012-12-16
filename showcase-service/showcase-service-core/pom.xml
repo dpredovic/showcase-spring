@@ -30,8 +30,8 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>

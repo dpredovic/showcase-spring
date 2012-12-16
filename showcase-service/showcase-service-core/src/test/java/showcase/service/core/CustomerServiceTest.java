@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import showcase.addressresolver.AddressResolver;
 import showcase.service.api.CustomerService;
 import showcase.service.api.dto.ContactDto;
@@ -17,16 +16,16 @@ import showcase.service.api.dto.CustomerDto;
 import showcase.service.api.dto.ValidationErrorDto;
 import showcase.service.api.validation.AllKeysInEnum;
 
-import java.util.Collection;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = ServiceConfig.class)
 @ActiveProfiles("junit")
-@ContextConfiguration(classes = ServiceConfig.class, loader = AnnotationConfigContextLoader.class)
 public class CustomerServiceTest {
 
     @Inject

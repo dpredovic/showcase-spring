@@ -14,11 +14,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>showcase</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>showcase-service-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>showcase</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>showcase-service-core</artifactId>
         </dependency>
         <dependency>
@@ -28,6 +28,10 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jboss.interceptor</groupId>

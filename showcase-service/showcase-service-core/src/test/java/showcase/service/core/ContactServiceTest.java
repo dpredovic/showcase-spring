@@ -1,27 +1,26 @@
 package showcase.service.core;
 
-import java.util.List;
-import javax.inject.Inject;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import showcase.addressresolver.AddressResolver;
 import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.type.CommunicationType;
 import showcase.service.api.type.ContactType;
 
+import javax.inject.Inject;
+import java.util.List;
+
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = ServiceConfig.class)
 @ActiveProfiles("junit")
-@ContextConfiguration(classes = ServiceConfig.class, loader = AnnotationConfigContextLoader.class)
 public class ContactServiceTest {
 
     @Inject
@@ -42,18 +41,21 @@ public class ContactServiceTest {
         when(addressResolver.resolveCity(ccCaptor.capture(), zipCaptor.capture())).thenReturn("MockCity");
         when(addressResolver.resolveCountry(ccCaptor.capture())).thenReturn("MockCountry");
 
-        ContactDto standardContact = contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
+        ContactDto standardContact = contactService.getContactByCustomerAndType(customerId,
+                                                                                ContactType.STANDARD.toString());
         assertThat(standardContact).isNotNull();
         assertThat(standardContact.getCustomerId()).isEqualTo(customerId);
         assertThat(standardContact.getContactType()).isEqualTo(ContactType.STANDARD.toString());
         assertThat(standardContact.getCommunications()).hasSize(1);
-        assertThat(standardContact.getCommunications().get(CommunicationType.EMAIL.toString())).isEqualTo("test@mail.com");
+        assertThat(standardContact.getCommunications().get(CommunicationType.EMAIL.toString())).isEqualTo(
+                "test@mail.com");
         assertThat(standardContact.getCity()).isEqualTo("MockCity");
         assertThat(standardContact.getCountryCode()).isEqualTo(ccCaptor.getValue());
         assertThat(standardContact.getCountryName()).isEqualTo("MockCountry");
         assertThat(standardContact.getZipCode()).isEqualTo(zipCaptor.getValue());
 
-        ContactDto invoicingContact = contactService.getContactByCustomerAndType(customerId, ContactType.INVOICING.toString());
+        ContactDto invoicingContact = contactService.getContactByCustomerAndType(customerId,
+                                                                                 ContactType.INVOICING.toString());
         assertThat(invoicingContact).isNotNull();
         assertThat(invoicingContact.getCustomerId()).isEqualTo(customerId);
         assertThat(invoicingContact.getContactType()).isEqualTo(ContactType.INVOICING.toString());
