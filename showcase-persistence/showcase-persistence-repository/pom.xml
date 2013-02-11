@@ -22,10 +22,23 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.mysema.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
         </dependency>
 
         <dependency>
@@ -38,7 +51,7 @@
         </dependency>
         <dependency>
             <groupId>org.easytesting</groupId>
-            <artifactId>fest-assert</artifactId>
+            <artifactId>fest-assert-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

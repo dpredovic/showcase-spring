@@ -28,13 +28,10 @@ public class ContactServiceImpl implements ContactService {
 
     @Inject
     private ContactRepository contactRepository;
-
     @Inject
     private MapperFacade mapper;
-
     @Inject
     private AsyncAddressResolver addressResolver;
-
     @Inject
     private CacheSync cacheSync;
 
@@ -83,10 +80,8 @@ public class ContactServiceImpl implements ContactService {
     @Override
     @Transactional(readOnly = true)
     public List<ContactDto> getByEmail(String email) {
-        Iterable<Contact> contacts = contactRepository.findAll(ContactPredicates.containsCommunication(CommunicationType
-                                                                                                               .EMAIL
-                                                                                                               .toString(),
-                                                                                                       email));
+        Iterable<Contact> contacts = contactRepository
+            .findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(), email));
 
         List<ContactDto> contactDtos = new ArrayList<ContactDto>();
         for (Contact contact : contacts) {

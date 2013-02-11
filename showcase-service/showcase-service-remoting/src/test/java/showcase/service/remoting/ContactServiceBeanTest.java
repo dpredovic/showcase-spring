@@ -1,8 +1,5 @@
 package showcase.service.remoting;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -12,7 +9,10 @@ import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.type.ContactType;
 
-import static org.fest.assertions.Assertions.assertThat;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -20,7 +20,6 @@ public class ContactServiceBeanTest {
 
     @Mock
     private ContactService mock;
-
     @InjectMocks
     private ContactServiceBean underTest;
 

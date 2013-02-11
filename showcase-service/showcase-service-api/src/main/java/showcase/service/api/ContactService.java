@@ -1,10 +1,10 @@
 package showcase.service.api;
 
-import java.util.List;
+import showcase.service.api.dto.ContactDto;
+
 import javax.jws.WebService;
 import javax.validation.constraints.NotNull;
-
-import showcase.service.api.dto.ContactDto;
+import java.util.List;
 
 @WebService
 public interface ContactService {
@@ -13,14 +13,13 @@ public interface ContactService {
 
     ContactDto getContact(long contactId);
 
-    ContactDto getContactByCustomerAndType(
-            long customerId,
-            @NotNull
-            String type);
+    ContactDto getContactByCustomerAndType(long customerId,
+                                           @NotNull
+                                           String type);
 
     List<ContactDto> getContactsByCustomer(long customerId);
 
     List<ContactDto> getByEmail(
-            @NotNull
-            String email);
+        @NotNull
+        String email);
 }

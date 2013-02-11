@@ -1,16 +1,10 @@
 package showcase.persistence.repository;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import javax.inject.Inject;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -25,19 +19,22 @@ import showcase.service.api.type.ContactType;
 import showcase.service.api.type.CustomerType;
 import showcase.service.api.type.DispatchType;
 
-import static org.fest.assertions.Assertions.assertThat;
+import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+
+import static org.fest.assertions.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("junit")
-@ContextConfiguration(classes = RepositoryConfig.class, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = RepositoryConfig.class)
 public class RepositoryTest {
 
     @Inject
     private CustomerRepository customerRepository;
-
     @Inject
     private ContactRepository contactRepository;
-
     @Inject
     private PlatformTransactionManager transactionManager;
 
@@ -61,18 +58,22 @@ public class RepositoryTest {
         }
 
         {
-            Iterable<Contact> foundByEmail = contactRepository.findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(), "test1@test"));
+            Iterable<Contact> foundByEmail = contactRepository
+                .findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(), "test1@test"));
             assertThat(foundByEmail).hasSize(1);
         }
 
         {
-            Iterable<Contact> foundByEmail = contactRepository.findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(), "notexisting"));
+            Iterable<Contact> foundByEmail = contactRepository
+                .findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(), "notexisting"));
             assertThat(foundByEmail).isEmpty();
         }
     }
 
     private Long saveCustomer() {
-        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager, new DefaultTransactionDefinition(TransactionDefinition.PROPAGATION_REQUIRES_NEW));
+        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager,
+                                                                          new DefaultTransactionDefinition(
+                                                                              TransactionDefinition.PROPAGATION_REQUIRES_NEW));
         return transactionTemplate.execute(new TransactionCallback<Long>() {
             public Long doInTransaction(TransactionStatus status) {
 

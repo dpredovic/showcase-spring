@@ -1,10 +1,10 @@
 package showcase.addressresolver;
 
-import java.util.concurrent.Future;
+import org.springframework.scheduling.annotation.AsyncResult;
+
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import org.springframework.scheduling.annotation.AsyncResult;
+import java.util.concurrent.Future;
 
 @Named
 public class AsyncAddressResolverImpl implements AsyncAddressResolver {

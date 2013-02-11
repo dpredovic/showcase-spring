@@ -11,15 +11,15 @@ import showcase.service.api.type.CustomerType;
 import showcase.service.api.type.DispatchType;
 import showcase.service.api.validation.CreateGroup;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Set;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat;
 
 public class TestValidation {
 

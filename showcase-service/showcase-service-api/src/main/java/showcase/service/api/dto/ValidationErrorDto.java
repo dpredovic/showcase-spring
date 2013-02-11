@@ -13,9 +13,7 @@ public class ValidationErrorDto implements Serializable {
 
     private int paramIndex;
     private String paramName;
-
     private String propertyPath;
-
     private String message;
 
 }

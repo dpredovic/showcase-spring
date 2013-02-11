@@ -1,9 +1,9 @@
 package showcase.addressresolver;
 
-import javax.inject.Named;
-
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Profile;
+
+import javax.inject.Named;
 
 @Named
 @Profile("standalone")

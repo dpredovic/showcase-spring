@@ -1,5 +1,9 @@
 package showcase.service.remoting;
 
+import lombok.Delegate;
+import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
+import showcase.service.api.CustomerService;
+
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Remote;
@@ -8,10 +12,6 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.jws.WebService;
-
-import lombok.Delegate;
-import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
-import showcase.service.api.CustomerService;
 
 //EJB-component
 @Singleton(name = "CustomerService")

@@ -1,12 +1,12 @@
 package showcase.addressresolver;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Profile;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named
 @Profile("integration")
@@ -14,7 +14,6 @@ public class RestAddressResolver implements AddressResolver {
 
     @Inject
     private JAXRSClientFactoryBean clientFactoryBean;
-
     private AddressResolver delegate;
 
     @Override

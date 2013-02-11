@@ -1,6 +1,13 @@
 package showcase.service.remoting;
 
-import java.util.List;
+import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
+import showcase.service.api.ContactService;
+import showcase.service.api.CustomerService;
+import showcase.service.api.dto.ContactDto;
+import showcase.service.api.dto.CreateCustomerRequestDto;
+import showcase.service.api.dto.CreateCustomerResponseDto;
+import showcase.service.api.dto.CustomerDto;
+
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Singleton;
@@ -14,14 +21,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
-import showcase.service.api.ContactService;
-import showcase.service.api.CustomerService;
-import showcase.service.api.dto.ContactDto;
-import showcase.service.api.dto.CreateCustomerRequestDto;
-import showcase.service.api.dto.CreateCustomerResponseDto;
-import showcase.service.api.dto.CustomerDto;
+import java.util.List;
 
 @Singleton
 @ConcurrencyManagement(ConcurrencyManagementType.BEAN)
@@ -33,25 +33,24 @@ public class RestServiceBean {
 
     @Inject
     private CustomerService customerService;
-
     @Inject
     private ContactService contactService;
 
     @GET
     @Path("/contact/{id}")
     public ContactDto getContact(
-            @PathParam("id")
-            long contactId) {
+        @PathParam("id")
+        long contactId) {
         return contactService.getContact(contactId);
     }
 
     @GET
     @Path("/customer/{id}/contact/type/{type}")
     public ContactDto getContactByCustomerAndType(
-            @PathParam("id")
-            long customerId,
-            @PathParam("type")
-            String type) {
+        @PathParam("id")
+        long customerId,
+        @PathParam("type")
+        String type) {
         return contactService.getContactByCustomerAndType(customerId, type);
     }
 
@@ -71,8 +70,8 @@ public class RestServiceBean {
     @GET
     @Path("/customer/{id}")
     public CustomerDto getById(
-            @PathParam("id")
-            long id) {
+        @PathParam("id")
+        long id) {
         return customerService.getById(id);
     }
 

@@ -1,7 +1,7 @@
 package showcase.service.core;
 
-import java.util.Locale;
 import javax.validation.MessageInterpolator;
+import java.util.Locale;
 
 public class SimpleAnnotationNameMessageInterpolator implements MessageInterpolator {
 

@@ -1,19 +1,18 @@
 package showcase.addressresolver;
 
-import javax.inject.Inject;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static org.fest.assertions.Assertions.assertThat;
+import javax.inject.Inject;
+
+import static org.fest.assertions.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("standalone")
-@ContextConfiguration(classes = AddressResolverConfig.class, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = AddressResolverConfig.class)
 public class CacheTest {
 
     @Inject

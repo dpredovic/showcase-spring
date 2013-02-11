@@ -10,15 +10,15 @@ public interface AddressResolver {
     @GET
     @Path("/country/{countryCode}/city/{zipCode}")
     String resolveCity(
-            @PathParam("countryCode")
-            String countryCode,
-            @PathParam("zipCode")
-            String zipCode);
+        @PathParam("countryCode")
+        String countryCode,
+        @PathParam("zipCode")
+        String zipCode);
 
     @GET
     @Path("/country/{countryCode}")
     String resolveCountry(
-            @PathParam("countryCode")
-            String countryCode);
+        @PathParam("countryCode")
+        String countryCode);
 
 }

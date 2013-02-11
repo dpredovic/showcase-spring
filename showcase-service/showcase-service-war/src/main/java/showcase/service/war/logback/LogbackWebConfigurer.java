@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.util.WebUtils;
 
+import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.FileNotFoundException;
-import javax.servlet.ServletContext;
 
 public abstract class LogbackWebConfigurer {
 

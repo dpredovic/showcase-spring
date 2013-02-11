@@ -20,35 +20,8 @@ public class MapperConfig {
             protected void configure(MapperFactory factory) {
                 factory.registerClassMap(factory.classMap(CustomerDto.class, Customer.class).byDefault().toClassMap());
                 factory.registerClassMap(factory.classMap(ContactDto.class, Contact.class)
-                                                .field("customerId", "customer.id")
-                                                .byDefault()
-                                                .toClassMap());
+                                                .field("customerId", "customer.id").byDefault().toClassMap());
             }
         };
     }
-
-/*
-    @Bean
-    public Mapper mapper() {
-        DozerBeanMapper mapper = new DozerBeanMapper();
-        mapper.addMapping(new BeanMappingBuilder() {
-            @Override
-            protected void configure() {
-                mapping(CustomerDto.class, Customer.class)
-                        .fields("properties", "properties");
-            }
-        });
-        mapper.addMapping(new BeanMappingBuilder() {
-            @Override
-            protected void configure() {
-                mapping(ContactDto.class, Contact.class)
-                        .fields("customerId", "customer.id")
-                        .fields("communications", "communications");
-            }
-        });
-        return mapper;
-    }
-*/
-
-
 }

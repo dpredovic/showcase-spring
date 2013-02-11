@@ -21,7 +21,7 @@ import showcase.service.core.cache.CacheSyncImpl;
 
 import javax.inject.Inject;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;
 import static org.mockito.Mockito.mock;
@@ -72,23 +72,22 @@ public class CachingServiceTest {
         contact.setId(contactId);
         contact.setContactType(type.toString());
 
-        when(contactRepository.findByCustomerIdAndContactType(customerId, type.toString()))
-                .thenReturn(contact)
-                .thenThrow(new RuntimeException("allowed only once"));
+        when(contactRepository.findByCustomerIdAndContactType(customerId, type.toString())).thenReturn(contact)
+            .thenThrow(new RuntimeException("allowed only once"));
         when(addressResolver.resolveCountry(anyString())).thenReturn("dummy");
         when(addressResolver.resolveCity(anyString(), anyString())).thenReturn("dummy");
 
         {
-            ContactDto contactDto = contactService.getContactByCustomerAndType(customerId,
-                                                                               ContactType.STANDARD.toString());
+            ContactDto contactDto = contactService
+                .getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
             assertThat(contactDto).isNotNull();
             assertThat(contactDto.getId()).isEqualTo(contactId);
             assertThat(contactDto.getContactType()).isEqualTo(type.toString());
         }
 
         {
-            ContactDto contactDto = contactService.getContactByCustomerAndType(customerId,
-                                                                               ContactType.STANDARD.toString());
+            ContactDto contactDto = contactService
+                .getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
             assertThat(contactDto).isNotNull();
             assertThat(contactDto.getId()).isEqualTo(contactId);
             assertThat(contactDto.getContactType()).isEqualTo(type.toString());

@@ -1,8 +1,8 @@
 package showcase.service.api.validation;
 
-import java.util.Map;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.Map;
 
 public class AllKeysInEnumValidator implements ConstraintValidator<AllKeysInEnum, Map<String, ?>> {
 

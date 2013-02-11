@@ -1,17 +1,17 @@
 package showcase.service.core.exceptionmapping;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Aspect
 @Named
@@ -46,7 +46,8 @@ public class ExceptionMappingAspect {
         Class<? extends Throwable> exceptionClass = exception.getClass();
 
         do {
-            ExceptionMapper<? extends Throwable, ?> exceptionMapper = getExceptionMapperDirectMatch(exceptionClass, returnType);
+            ExceptionMapper<? extends Throwable, ?> exceptionMapper = getExceptionMapperDirectMatch(exceptionClass,
+                                                                                                    returnType);
             if (exceptionMapper != null) {
                 return exceptionMapper;
             }
@@ -57,7 +58,8 @@ public class ExceptionMappingAspect {
         } while (true);
     }
 
-    private ExceptionMapper<? extends Throwable, ?> getExceptionMapperDirectMatch(Class<? extends Throwable> exceptionClass, Class<?> returnType) {
+    private ExceptionMapper<? extends Throwable, ?> getExceptionMapperDirectMatch(
+        Class<? extends Throwable> exceptionClass, Class<?> returnType) {
         ExceptionMapper<? extends Throwable, ?> exceptionMapper = exceptionMapperMap.get(exceptionClass);
         if (exceptionMapper.getReturnClass().isAssignableFrom(returnType)) {
             return exceptionMapper;

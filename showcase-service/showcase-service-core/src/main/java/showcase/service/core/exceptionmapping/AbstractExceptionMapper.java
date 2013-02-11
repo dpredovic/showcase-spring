@@ -1,9 +1,9 @@
 package showcase.service.core.exceptionmapping;
 
-import javax.annotation.PostConstruct;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.GenericTypeResolver;
+
+import javax.annotation.PostConstruct;
 
 @Slf4j
 public abstract class AbstractExceptionMapper<T extends Throwable, R> implements ExceptionMapper<T, R> {

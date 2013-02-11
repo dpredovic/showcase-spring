@@ -20,7 +20,7 @@ import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,7 +30,6 @@ public class CustomerServiceTest {
 
     @Inject
     private CustomerService customerService;
-
     @Inject
     private TestCustomerCreator customerCreator;
 

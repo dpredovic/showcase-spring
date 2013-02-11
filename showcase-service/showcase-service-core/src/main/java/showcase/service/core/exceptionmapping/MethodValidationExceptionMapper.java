@@ -6,10 +6,10 @@ import org.springframework.beans.BeanUtils;
 import showcase.service.api.dto.ValidationErrorDto;
 import showcase.service.api.dto.ValidationResponseDto;
 
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
-import javax.inject.Named;
 
 @Named
 public class MethodValidationExceptionMapper extends AbstractExceptionMapper<MethodConstraintViolationException, ValidationResponseDto> {

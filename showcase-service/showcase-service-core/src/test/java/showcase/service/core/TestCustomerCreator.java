@@ -10,9 +10,9 @@ import showcase.service.api.type.ContactType;
 import showcase.service.api.type.CustomerType;
 import showcase.service.api.type.DispatchType;
 
-import java.util.Arrays;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Arrays;
 
 @Named
 public class TestCustomerCreator {
