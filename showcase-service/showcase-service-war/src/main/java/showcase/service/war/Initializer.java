@@ -23,7 +23,7 @@ public class Initializer implements WebApplicationInitializer {
 
         ServletRegistration.Dynamic cxf = servletContext.addServlet("cxf", new CXFServlet());
         cxf.setLoadOnStartup(1);
-        cxf.addMapping("/services/*");
+        cxf.addMapping("/*");
     }
 
 }

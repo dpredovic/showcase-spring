@@ -6,7 +6,7 @@ import javax.jws.WebService;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@WebService
+@WebService(serviceName = "ContactService")
 public interface ContactService {
 
     String JNDI_NAME = VersionData.jndiName(ContactService.class);
