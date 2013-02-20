@@ -9,13 +9,16 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public abstract class LogbackWebConfigurer {
+public class LogbackContextListener implements ServletContextListener {
 
-    public static void init(ServletContext servletContext) {
-        File configFile = getConfigFile(servletContext);
+    @Override
+    public void contextInitialized(ServletContextEvent servletContextEvent) {
+        File configFile = getConfigFile(servletContextEvent.getServletContext());
 
         if (configFile != null) {
             LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
@@ -30,6 +33,10 @@ public abstract class LogbackWebConfigurer {
                 StatusPrinter.printInCaseOfErrorsOrWarnings(context);
             }
         }
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
     }
 
     private static File getConfigFile(ServletContext servletContext) {

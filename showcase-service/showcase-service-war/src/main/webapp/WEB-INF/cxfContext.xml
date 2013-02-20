@@ -26,7 +26,4 @@
         </jaxrs:serviceBeans>
     </jaxrs:server>
 
-    <bean id="restService" class="showcase.service.remoting.RestServiceBean"/>
-    <bean id="contactService" class="showcase.service.remoting.ContactServiceBean"/>
-    <bean id="customerService" class="showcase.service.remoting.CustomerServiceBean"/>
 </beans>
