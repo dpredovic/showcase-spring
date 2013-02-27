@@ -1,6 +1,6 @@
 package showcase.persistence.repository;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
@@ -91,7 +91,7 @@ public class RepositoryTest {
 				Contact c2 = createContact(2, ContactType.CONTRACT, customer);
 				Contact c3 = createContact(3, null, customer);
 
-				contactRepository.save(Lists.newArrayList(c1, c2, c3));
+				contactRepository.save(ImmutableList.of(c1, c2, c3));
 
 				return customer.getId();
 			}

@@ -2,15 +2,15 @@ package showcase.service.api.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.EnumSet;
 
 public class InEnumValidator implements ConstraintValidator<InEnum, String> {
 
-	private Enum<?>[] enumConstants;
+	private EnumSet<?> enumSet;
 
 	@Override
 	public void initialize(InEnum constraintAnnotation) {
-		Class<? extends Enum<?>> enumClass = constraintAnnotation.value();
-		enumConstants = enumClass.getEnumConstants();
+		initSet(constraintAnnotation);
 	}
 
 	@Override
@@ -19,11 +19,17 @@ public class InEnumValidator implements ConstraintValidator<InEnum, String> {
 			return true;
 		}
 
-		for (Enum<?> enumConstant : enumConstants) {
+		for (Enum<?> enumConstant : enumSet) {
 			if (enumConstant.toString().equals(value)) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	private <E extends Enum<E>> void initSet(InEnum constraintAnnotation) {
+		@SuppressWarnings("unchecked")
+		Class<E> enumClass = (Class<E>) constraintAnnotation.value();
+		enumSet = EnumSet.allOf(enumClass);
 	}
 }

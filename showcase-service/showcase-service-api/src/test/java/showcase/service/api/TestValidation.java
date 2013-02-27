@@ -1,6 +1,6 @@
 package showcase.service.api;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableList;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import showcase.service.api.dto.ContactDto;
@@ -51,7 +51,7 @@ public class TestValidation {
 		ContactDto standardContact = createContact(ContactType.STANDARD);
 		ContactDto untypedContact = createContact(null);
 
-		return new CreateCustomerRequestDto(customer, Lists.newArrayList(standardContact, untypedContact));
+		return new CreateCustomerRequestDto(customer, ImmutableList.of(standardContact, untypedContact));
 	}
 
 	private ContactDto createContact(ContactType contactType) {

@@ -1,5 +1,6 @@
 package showcase.service.core.exceptionmapping;
 
+import com.google.common.collect.Maps;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -10,7 +11,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 @Aspect
@@ -18,7 +18,6 @@ import java.util.Map;
 public class ExceptionMappingAspect {
 
 	private Map<Class<? extends Throwable>, ExceptionMapper<? extends Throwable, ?>> exceptionMapperMap;
-
 	@Inject
 	private Collection<ExceptionMapper<? extends Throwable, ?>> exceptionMappers;
 
@@ -69,10 +68,9 @@ public class ExceptionMappingAspect {
 
 	@PostConstruct
 	private void init() {
-		exceptionMapperMap = new HashMap<Class<? extends Throwable>, ExceptionMapper<? extends Throwable, ?>>();
+		exceptionMapperMap = Maps.newHashMap();
 		for (ExceptionMapper<? extends Throwable, ?> exceptionMapper : exceptionMappers) {
 			exceptionMapperMap.put(exceptionMapper.getThrowableClass(), exceptionMapper);
 		}
 	}
-
 }

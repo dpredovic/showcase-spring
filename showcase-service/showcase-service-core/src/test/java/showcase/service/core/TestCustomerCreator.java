@@ -1,6 +1,6 @@
 package showcase.service.core;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableList;
 import org.joda.time.LocalDate;
 import showcase.service.api.CustomerService;
 import showcase.service.api.dto.ContactDto;
@@ -48,10 +48,10 @@ public class TestCustomerCreator {
 		ContactDto otherContact2 = createContact(suffix, null);
 
 		return new CreateCustomerRequestDto(customer,
-											Lists.<ContactDto>newArrayList(standardContact,
-																		   invoicingContact,
-																		   otherContact1,
-																		   otherContact2));
+											ImmutableList.of(standardContact,
+															 invoicingContact,
+															 otherContact1,
+															 otherContact2));
 	}
 
 	private ContactDto createContact(String suffix, ContactType contactType) {

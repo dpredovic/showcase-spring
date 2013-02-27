@@ -1,5 +1,6 @@
 package showcase.service.remoting;
 
+import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -9,7 +10,6 @@ import showcase.service.api.ContactService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.type.ContactType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -45,7 +45,7 @@ public class ContactServiceBeanTest {
 
 	@Test
 	public void testByCustomer() throws Exception {
-		List<ContactDto> expected = new ArrayList<ContactDto>(0);
+		List<ContactDto> expected = ImmutableList.of();
 		when(mock.getContactsByCustomer(1L)).thenReturn(expected);
 
 		List<ContactDto> contacts = underTest.getContactsByCustomer(1L);
