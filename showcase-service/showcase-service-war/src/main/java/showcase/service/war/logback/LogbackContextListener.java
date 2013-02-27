@@ -16,44 +16,44 @@ import java.io.FileNotFoundException;
 
 public class LogbackContextListener implements ServletContextListener {
 
-    @Override
-    public void contextInitialized(ServletContextEvent servletContextEvent) {
-        File configFile = getConfigFile(servletContextEvent.getServletContext());
+	@Override
+	public void contextInitialized(ServletContextEvent servletContextEvent) {
+		File configFile = getConfigFile(servletContextEvent.getServletContext());
 
-        if (configFile != null) {
-            LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+		if (configFile != null) {
+			LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
 
-            JoranConfigurator configurator = new JoranConfigurator();
-            configurator.setContext(context);
-            context.reset();
+			JoranConfigurator configurator = new JoranConfigurator();
+			configurator.setContext(context);
+			context.reset();
 
-            try {
-                configurator.doConfigure(configFile);
-            } catch (JoranException ignored) {
-                StatusPrinter.printInCaseOfErrorsOrWarnings(context);
-            }
-        }
-    }
+			try {
+				configurator.doConfigure(configFile);
+			} catch (JoranException ignored) {
+				StatusPrinter.printInCaseOfErrorsOrWarnings(context);
+			}
+		}
+	}
 
-    @Override
-    public void contextDestroyed(ServletContextEvent servletContextEvent) {
-    }
+	@Override
+	public void contextDestroyed(ServletContextEvent servletContextEvent) {
+	}
 
-    private static File getConfigFile(ServletContext servletContext) {
-        String contextName = servletContext.getServletContextName();
-        if (contextName == null) {
-            contextName = WebUtils.extractFullFilenameFromUrlPath(servletContext.getContextPath());
-        }
-        String configFileName = contextName + "-logback.xml";
-        File configFile = null;
-        try {
-            configFile = ResourceUtils.getFile("classpath:" + configFileName);
-            servletContext.log("logback configuration file " + configFile + " found");
-        } catch (FileNotFoundException e) {
-            servletContext.log("logback configuration file " + configFileName + " not found");
-            //
-        }
-        return configFile;
-    }
+	private static File getConfigFile(ServletContext servletContext) {
+		String contextName = servletContext.getServletContextName();
+		if (contextName == null) {
+			contextName = WebUtils.extractFullFilenameFromUrlPath(servletContext.getContextPath());
+		}
+		String configFileName = contextName + "-logback.xml";
+		File configFile = null;
+		try {
+			configFile = ResourceUtils.getFile("classpath:" + configFileName);
+			servletContext.log("logback configuration file " + configFile + " found");
+		} catch (FileNotFoundException e) {
+			servletContext.log("logback configuration file " + configFileName + " not found");
+			//
+		}
+		return configFile;
+	}
 
 }

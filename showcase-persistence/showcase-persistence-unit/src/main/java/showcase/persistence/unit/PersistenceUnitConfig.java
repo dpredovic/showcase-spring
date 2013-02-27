@@ -15,27 +15,27 @@ import java.util.Properties;
 @ComponentScan(basePackageClasses = PersistenceUnitConfig.class)
 public class PersistenceUnitConfig {
 
-    @Inject
-    private DataSource dataSource;
-    @Inject
-    private Environment env;
+	@Inject
+	private DataSource dataSource;
+	@Inject
+	private Environment env;
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        Properties jpaProperties = new Properties();
-        jpaProperties.setProperty("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
-        jpaProperties.setProperty("javax.persistence.validation.mode", "none");
-        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        if (env.acceptsProfiles("junit", "standalone")) {
-            jpaVendorAdapter.setGenerateDdl(true);
-        }
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+		Properties jpaProperties = new Properties();
+		jpaProperties.setProperty("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
+		jpaProperties.setProperty("javax.persistence.validation.mode", "none");
+		HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+		if (env.acceptsProfiles("junit", "standalone")) {
+			jpaVendorAdapter.setGenerateDdl(true);
+		}
 
-        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-        factoryBean.setDataSource(dataSource);
-        factoryBean.setPackagesToScan("showcase.persistence.unit");
-        factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
-        factoryBean.setJpaProperties(jpaProperties);
-        return factoryBean;
-    }
+		LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+		factoryBean.setDataSource(dataSource);
+		factoryBean.setPackagesToScan("showcase.persistence.unit");
+		factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
+		factoryBean.setJpaProperties(jpaProperties);
+		return factoryBean;
+	}
 
 }

@@ -9,11 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import showcase.addressresolver.AddressResolver;
 import showcase.service.api.CustomerService;
-import showcase.service.api.dto.ContactDto;
-import showcase.service.api.dto.CreateCustomerRequestDto;
-import showcase.service.api.dto.CreateCustomerResponseDto;
-import showcase.service.api.dto.CustomerDto;
-import showcase.service.api.dto.ValidationErrorDto;
+import showcase.service.api.dto.*;
 import showcase.service.api.validation.AllKeysInEnum;
 
 import javax.inject.Inject;
@@ -28,59 +24,59 @@ import static org.mockito.Mockito.RETURNS_SMART_NULLS;
 @ActiveProfiles("junit")
 public class CustomerServiceTest {
 
-    @Inject
-    private CustomerService customerService;
-    @Inject
-    private TestCustomerCreator customerCreator;
+	@Inject
+	private CustomerService customerService;
+	@Inject
+	private TestCustomerCreator customerCreator;
 
-    @Test
-    public void createCustomer() {
-        CustomerDto customer = customerCreator.createCustomer();
-        assertThat(customer.getId()).isNotNull();
+	@Test
+	public void createCustomer() {
+		CustomerDto customer = customerCreator.createCustomer();
+		assertThat(customer.getId()).isNotNull();
 
-        CustomerDto found = customerService.getById(customer.getId());
+		CustomerDto found = customerService.getById(customer.getId());
 
-        assertThat(found).isNotNull();
-        assertThat(found).isEqualTo(customer);
-    }
+		assertThat(found).isNotNull();
+		assertThat(found).isEqualTo(customer);
+	}
 
-    @Test
-    public void createCustomerFailsSimpleValidation() {
-        CreateCustomerRequestDto request = customerCreator.createRequest("");
-        request.getCustomer().setCooperationPartnerId(null);
+	@Test
+	public void createCustomerFailsSimpleValidation() {
+		CreateCustomerRequestDto request = customerCreator.createRequest("");
+		request.getCustomer().setCooperationPartnerId(null);
 
-        CreateCustomerResponseDto response = customerService.createCustomer(request);
+		CreateCustomerResponseDto response = customerService.createCustomer(request);
 
-        assertThat(response).isNotNull();
-        assertThat(response.getId()).isNull();
-        Collection<ValidationErrorDto> validationErrors = response.getValidationErrors();
-        assertThat(validationErrors).hasSize(1);
-        ValidationErrorDto validationError = validationErrors.iterator().next();
-        assertThat(validationError.getPropertyPath()).isEqualTo("customer.cooperationPartnerId");
-        assertThat(validationError.getMessage()).isEqualTo(NotNull.class.getSimpleName());
-    }
+		assertThat(response).isNotNull();
+		assertThat(response.getId()).isNull();
+		Collection<ValidationErrorDto> validationErrors = response.getValidationErrors();
+		assertThat(validationErrors).hasSize(1);
+		ValidationErrorDto validationError = validationErrors.iterator().next();
+		assertThat(validationError.getPropertyPath()).isEqualTo("customer.cooperationPartnerId");
+		assertThat(validationError.getMessage()).isEqualTo(NotNull.class.getSimpleName());
+	}
 
-    @Test
-    public void createCustomerFailsMapValidation() {
-        CreateCustomerRequestDto request = customerCreator.createRequest("");
-        ContactDto contact = request.getContacts().iterator().next();
-        contact.getCommunications().clear();
-        contact.getCommunications().put("dummy", "dummy");
+	@Test
+	public void createCustomerFailsMapValidation() {
+		CreateCustomerRequestDto request = customerCreator.createRequest("");
+		ContactDto contact = request.getContacts().iterator().next();
+		contact.getCommunications().clear();
+		contact.getCommunications().put("dummy", "dummy");
 
-        CreateCustomerResponseDto response = customerService.createCustomer(request);
+		CreateCustomerResponseDto response = customerService.createCustomer(request);
 
-        assertThat(response).isNotNull();
-        assertThat(response.getId()).isNull();
-        Collection<ValidationErrorDto> validationErrors = response.getValidationErrors();
-        assertThat(validationErrors).hasSize(1);
-        ValidationErrorDto validationError = validationErrors.iterator().next();
-        assertThat(validationError.getPropertyPath()).isEqualTo("contacts[0].communications");
-        assertThat(validationError.getMessage()).isEqualTo(AllKeysInEnum.class.getSimpleName());
-    }
+		assertThat(response).isNotNull();
+		assertThat(response.getId()).isNull();
+		Collection<ValidationErrorDto> validationErrors = response.getValidationErrors();
+		assertThat(validationErrors).hasSize(1);
+		ValidationErrorDto validationError = validationErrors.iterator().next();
+		assertThat(validationError.getPropertyPath()).isEqualTo("contacts[0].communications");
+		assertThat(validationError.getMessage()).isEqualTo(AllKeysInEnum.class.getSimpleName());
+	}
 
-    @Bean
-    public AddressResolver zipResolver() {
-        return Mockito.mock(AddressResolver.class, RETURNS_SMART_NULLS);
-    }
+	@Bean
+	public AddressResolver zipResolver() {
+		return Mockito.mock(AddressResolver.class, RETURNS_SMART_NULLS);
+	}
 
 }

@@ -12,9 +12,9 @@ import org.springframework.context.annotation.Profile;
 @EnableCaching
 public class CachingConfig {
 
-    @Bean
-    public CacheManager cacheManager() {
-        return new ConcurrentMapCacheManager("cityCache", "countryCache", "contact", "contactList");
-    }
+	@Bean
+	public CacheManager cacheManager() {
+		return new ConcurrentMapCacheManager("cityCache", "countryCache", "contact", "contactList");
+	}
 
 }

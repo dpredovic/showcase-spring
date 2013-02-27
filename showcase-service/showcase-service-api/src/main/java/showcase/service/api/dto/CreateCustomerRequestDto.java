@@ -15,12 +15,12 @@ import java.util.Collection;
 @AllArgsConstructor
 public class CreateCustomerRequestDto implements Serializable {
 
-    @Valid
-    @NotNull
-    private CustomerDto customer;
-    @Valid
-    @NotNull
-    @Size(min = 1)
-    private Collection<ContactDto> contacts;
+	@Valid
+	@NotNull
+	private CustomerDto customer;
+	@Valid
+	@NotNull
+	@Size(min = 1)
+	private Collection<ContactDto> contacts;
 
 }

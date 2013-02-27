@@ -17,62 +17,62 @@ import java.util.Map;
 @Named
 public class ExceptionMappingAspect {
 
-    private Map<Class<? extends Throwable>, ExceptionMapper<? extends Throwable, ?>> exceptionMapperMap;
+	private Map<Class<? extends Throwable>, ExceptionMapper<? extends Throwable, ?>> exceptionMapperMap;
 
-    @Inject
-    private Collection<ExceptionMapper<? extends Throwable, ?>> exceptionMappers;
+	@Inject
+	private Collection<ExceptionMapper<? extends Throwable, ?>> exceptionMappers;
 
-    @Pointcut("within(@ExceptionsMapped *)")
-    protected void annotatedAsService() {
-    }
+	@Pointcut("within(@ExceptionsMapped *)")
+	protected void annotatedAsService() {
+	}
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    @Around("annotatedAsService()")
-    public Object invoke(ProceedingJoinPoint pjp) throws Throwable {
-        try {
-            return pjp.proceed();
-        } catch (Throwable throwable) {
-            Class<?> returnType = ((MethodSignature) pjp.getStaticPart().getSignature()).getReturnType();
-            ExceptionMapper exceptionMapper = getExceptionMapper(throwable, returnType);
-            if (exceptionMapper != null) {
-                return exceptionMapper.map(throwable, returnType);
-            }
-            throw throwable;
-        }
-    }
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@Around("annotatedAsService()")
+	public Object invoke(ProceedingJoinPoint pjp) throws Throwable {
+		try {
+			return pjp.proceed();
+		} catch (Throwable throwable) {
+			Class<?> returnType = ((MethodSignature) pjp.getStaticPart().getSignature()).getReturnType();
+			ExceptionMapper exceptionMapper = getExceptionMapper(throwable, returnType);
+			if (exceptionMapper != null) {
+				return exceptionMapper.map(throwable, returnType);
+			}
+			throw throwable;
+		}
+	}
 
-    @SuppressWarnings("unchecked")
-    private ExceptionMapper<? extends Throwable, ?> getExceptionMapper(Throwable exception, Class<?> returnType) {
-        Class<? extends Throwable> exceptionClass = exception.getClass();
+	@SuppressWarnings("unchecked")
+	private ExceptionMapper<? extends Throwable, ?> getExceptionMapper(Throwable exception, Class<?> returnType) {
+		Class<? extends Throwable> exceptionClass = exception.getClass();
 
-        do {
-            ExceptionMapper<? extends Throwable, ?> exceptionMapper = getExceptionMapperDirectMatch(exceptionClass,
-                                                                                                    returnType);
-            if (exceptionMapper != null) {
-                return exceptionMapper;
-            }
-            if (exceptionClass.equals(Throwable.class)) {
-                return null;
-            }
-            exceptionClass = (Class<? extends Throwable>) exceptionClass.getSuperclass();
-        } while (true);
-    }
+		do {
+			ExceptionMapper<? extends Throwable, ?> exceptionMapper =
+				getExceptionMapperDirectMatch(exceptionClass, returnType);
+			if (exceptionMapper != null) {
+				return exceptionMapper;
+			}
+			if (exceptionClass.equals(Throwable.class)) {
+				return null;
+			}
+			exceptionClass = (Class<? extends Throwable>) exceptionClass.getSuperclass();
+		} while (true);
+	}
 
-    private ExceptionMapper<? extends Throwable, ?> getExceptionMapperDirectMatch(
-        Class<? extends Throwable> exceptionClass, Class<?> returnType) {
-        ExceptionMapper<? extends Throwable, ?> exceptionMapper = exceptionMapperMap.get(exceptionClass);
-        if (exceptionMapper.getReturnClass().isAssignableFrom(returnType)) {
-            return exceptionMapper;
-        }
-        return null;
-    }
+	private ExceptionMapper<? extends Throwable, ?> getExceptionMapperDirectMatch(Class<? extends Throwable> exceptionClass,
+																				  Class<?> returnType) {
+		ExceptionMapper<? extends Throwable, ?> exceptionMapper = exceptionMapperMap.get(exceptionClass);
+		if (exceptionMapper.getReturnClass().isAssignableFrom(returnType)) {
+			return exceptionMapper;
+		}
+		return null;
+	}
 
-    @PostConstruct
-    private void init() {
-        exceptionMapperMap = new HashMap<Class<? extends Throwable>, ExceptionMapper<? extends Throwable, ?>>();
-        for (ExceptionMapper<? extends Throwable, ?> exceptionMapper : exceptionMappers) {
-            exceptionMapperMap.put(exceptionMapper.getThrowableClass(), exceptionMapper);
-        }
-    }
+	@PostConstruct
+	private void init() {
+		exceptionMapperMap = new HashMap<Class<? extends Throwable>, ExceptionMapper<? extends Throwable, ?>>();
+		for (ExceptionMapper<? extends Throwable, ?> exceptionMapper : exceptionMappers) {
+			exceptionMapperMap.put(exceptionMapper.getThrowableClass(), exceptionMapper);
+		}
+	}
 
 }

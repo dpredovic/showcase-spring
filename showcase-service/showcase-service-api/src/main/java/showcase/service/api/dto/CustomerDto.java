@@ -23,20 +23,20 @@ import java.util.Map;
 @AllArgsConstructor
 public class CustomerDto implements Serializable {
 
-    @Null(groups = CreateGroup.class)
-    private Long id;
-    @NotNull
-    private Long cooperationPartnerId;
-    @NotNull
-    @Past
-    private Date registrationDate;
-    @NotNull
-    @InEnum(CustomerType.class)
-    private String customerType;
-    @NotNull
-    @InEnum(DispatchType.class)
-    private String dispatchType;
-    @NotNull
-    private Map<String, String> properties = new HashMap<String, String>();
+	@Null(groups = CreateGroup.class)
+	private Long id;
+	@NotNull
+	private Long cooperationPartnerId;
+	@NotNull
+	@Past
+	private Date registrationDate;
+	@NotNull
+	@InEnum(CustomerType.class)
+	private String customerType;
+	@NotNull
+	@InEnum(DispatchType.class)
+	private String dispatchType;
+	@NotNull
+	private Map<String, String> properties = new HashMap<String, String>();
 
 }

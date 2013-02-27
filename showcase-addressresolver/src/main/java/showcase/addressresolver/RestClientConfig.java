@@ -13,15 +13,16 @@ import org.springframework.context.annotation.Profile;
 @ImportResource("classpath:META-INF/cxf/cxf.xml")
 public class RestClientConfig {
 
-    @Value("${address.resolver.url}")
-    private String resolverUrl;
+	@Value("${address.resolver.url}")
+	private String resolverUrl;
 
-    @Bean
-    public JAXRSClientFactoryBean jaxrsClientFactoryBean() {
-        JAXRSClientFactoryBean clientFactoryBean = new JAXRSClientFactoryBeanDefinitionParser.JAXRSSpringClientFactoryBean();
+	@Bean
+	public JAXRSClientFactoryBean jaxrsClientFactoryBean() {
+		JAXRSClientFactoryBean clientFactoryBean =
+			new JAXRSClientFactoryBeanDefinitionParser.JAXRSSpringClientFactoryBean();
 
-        clientFactoryBean.setServiceClass(AddressResolver.class);
-        clientFactoryBean.setAddress(resolverUrl);
-        return clientFactoryBean;
-    }
+		clientFactoryBean.setServiceClass(AddressResolver.class);
+		clientFactoryBean.setAddress(resolverUrl);
+		return clientFactoryBean;
+	}
 }

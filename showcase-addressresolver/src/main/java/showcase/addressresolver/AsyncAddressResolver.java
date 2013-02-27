@@ -7,8 +7,8 @@ import java.util.concurrent.Future;
 @Async
 public interface AsyncAddressResolver {
 
-    Future<String> resolveCity(String countryCode, String zipCode);
+	Future<String> resolveCity(String countryCode, String zipCode);
 
-    Future<String> resolveCountry(String countryCode);
+	Future<String> resolveCountry(String countryCode);
 
 }

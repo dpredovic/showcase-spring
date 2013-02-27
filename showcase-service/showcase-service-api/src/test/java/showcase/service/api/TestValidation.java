@@ -1,5 +1,6 @@
 package showcase.service.api;
 
+import com.google.common.collect.Lists;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import showcase.service.api.dto.ContactDto;
@@ -15,7 +16,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
 
@@ -23,73 +23,73 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 public class TestValidation {
 
-    private static Validator validator;
+	private static Validator validator;
 
-    @BeforeClass
-    public static void init() {
-        ValidatorFactory vf = Validation.buildDefaultValidatorFactory();
-        validator = vf.getValidator();
-    }
+	@BeforeClass
+	public static void init() {
+		ValidatorFactory vf = Validation.buildDefaultValidatorFactory();
+		validator = vf.getValidator();
+	}
 
-    @Test
-    public void testValid() {
-        CreateCustomerRequestDto request = createValidRequest();
+	@Test
+	public void testValid() {
+		CreateCustomerRequestDto request = createValidRequest();
 
-        Set<ConstraintViolation<CreateCustomerRequestDto>> violations = validator.validate(request, CreateGroup.class);
+		Set<ConstraintViolation<CreateCustomerRequestDto>> violations = validator.validate(request, CreateGroup.class);
 
-        assertThat(violations).isEmpty();
-    }
+		assertThat(violations).isEmpty();
+	}
 
-    @Test
-    public void testInvalid() {
-        CreateCustomerRequestDto request = createValidRequest();
-        request.getCustomer().setCooperationPartnerId(null);
+	private CreateCustomerRequestDto createValidRequest() {
 
-        Set<ConstraintViolation<CreateCustomerRequestDto>> violations = validator.validate(request, CreateGroup.class);
+		CustomerDto customer = new CustomerDto();
+		customer.setCustomerType(CustomerType.PERSON.toString());
+		customer.setDispatchType(DispatchType.EMAIL.toString());
+		customer.setCooperationPartnerId(1L);
+		customer.setRegistrationDate(new Date(new Date().getTime() - 10));
 
-        assertThat(violations).hasSize(1);
-        ConstraintViolation<CreateCustomerRequestDto> violation = violations.iterator().next();
-        assertThat(violation.getPropertyPath().toString()).isEqualTo("customer.cooperationPartnerId");
-    }
+		ContactDto standardContact = createContact(ContactType.STANDARD);
+		ContactDto untypedContact = createContact(null);
 
-    @Test
-    public void testInvalidEnum() {
-        CreateCustomerRequestDto request = createValidRequest();
-        request.getCustomer().setCustomerType("12345");
+		return new CreateCustomerRequestDto(customer, Lists.newArrayList(standardContact, untypedContact));
+	}
 
-        Set<ConstraintViolation<CreateCustomerRequestDto>> violations = validator.validate(request, CreateGroup.class);
+	private ContactDto createContact(ContactType contactType) {
+		ContactDto contact = new ContactDto();
+		if (contactType != null) {
+			contact.setContactType(contactType.toString());
+		}
+		contact.setFirstName("firstName");
+		contact.setLastName("lastName");
+		contact.setStreet("street");
+		contact.setZipCode("zipCode");
+		contact.setCountryCode("cc");
 
-        assertThat(violations).hasSize(1);
-        ConstraintViolation<CreateCustomerRequestDto> violation = violations.iterator().next();
-        assertThat(violation.getPropertyPath().toString()).isEqualTo("customer.customerType");
-    }
+		contact.getCommunications().put(CommunicationType.EMAIL.toString(), "test@test");
+		return contact;
+	}
 
-    private CreateCustomerRequestDto createValidRequest() {
+	@Test
+	public void testInvalid() {
+		CreateCustomerRequestDto request = createValidRequest();
+		request.getCustomer().setCooperationPartnerId(null);
 
-        CustomerDto customer = new CustomerDto();
-        customer.setCustomerType(CustomerType.PERSON.toString());
-        customer.setDispatchType(DispatchType.EMAIL.toString());
-        customer.setCooperationPartnerId(1L);
-        customer.setRegistrationDate(new Date(new Date().getTime() - 10));
+		Set<ConstraintViolation<CreateCustomerRequestDto>> violations = validator.validate(request, CreateGroup.class);
 
-        ContactDto standardContact = createContact(ContactType.STANDARD);
-        ContactDto untypedContact = createContact(null);
+		assertThat(violations).hasSize(1);
+		ConstraintViolation<CreateCustomerRequestDto> violation = violations.iterator().next();
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("customer.cooperationPartnerId");
+	}
 
-        return new CreateCustomerRequestDto(customer, Arrays.asList(standardContact, untypedContact));
-    }
+	@Test
+	public void testInvalidEnum() {
+		CreateCustomerRequestDto request = createValidRequest();
+		request.getCustomer().setCustomerType("12345");
 
-    private ContactDto createContact(ContactType contactType) {
-        ContactDto contact = new ContactDto();
-        if (contactType != null) {
-            contact.setContactType(contactType.toString());
-        }
-        contact.setFirstName("firstName");
-        contact.setLastName("lastName");
-        contact.setStreet("street");
-        contact.setZipCode("zipCode");
-        contact.setCountryCode("cc");
+		Set<ConstraintViolation<CreateCustomerRequestDto>> violations = validator.validate(request, CreateGroup.class);
 
-        contact.getCommunications().put(CommunicationType.EMAIL.toString(), "test@test");
-        return contact;
-    }
+		assertThat(violations).hasSize(1);
+		ConstraintViolation<CreateCustomerRequestDto> violation = violations.iterator().next();
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("customer.customerType");
+	}
 }

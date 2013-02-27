@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateCustomerResponseDto extends ValidationResponseDto {
 
-    private Long id;
+	private Long id;
 
 }

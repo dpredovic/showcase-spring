@@ -12,18 +12,18 @@ import javax.servlet.ServletRegistration;
 
 public class Initializer implements WebApplicationInitializer {
 
-    @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
+	@Override
+	public void onStartup(ServletContext servletContext) throws ServletException {
 
-        AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
-        applicationContext.register(WarConfig.class);
+		AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
+		applicationContext.register(WarConfig.class);
 
-        servletContext.addListener(new LogbackContextListener());
-        servletContext.addListener(new ContextLoaderListener(applicationContext));
+		servletContext.addListener(new LogbackContextListener());
+		servletContext.addListener(new ContextLoaderListener(applicationContext));
 
-        ServletRegistration.Dynamic cxf = servletContext.addServlet("cxf", new CXFServlet());
-        cxf.setLoadOnStartup(1);
-        cxf.addMapping("/*");
-    }
+		ServletRegistration.Dynamic cxf = servletContext.addServlet("cxf", new CXFServlet());
+		cxf.setLoadOnStartup(1);
+		cxf.addMapping("/*");
+	}
 
 }

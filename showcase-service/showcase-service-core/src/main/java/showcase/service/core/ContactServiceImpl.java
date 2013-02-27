@@ -26,82 +26,83 @@ import java.util.concurrent.Future;
 @ExceptionsMapped
 public class ContactServiceImpl implements ContactService {
 
-    @Inject
-    private ContactRepository contactRepository;
-    @Inject
-    private MapperFacade mapper;
-    @Inject
-    private AsyncAddressResolver addressResolver;
-    @Inject
-    private CacheSync cacheSync;
+	@Inject
+	private ContactRepository contactRepository;
+	@Inject
+	private MapperFacade mapper;
+	@Inject
+	private AsyncAddressResolver addressResolver;
+	@Inject
+	private CacheSync cacheSync;
 
-    @Override
-    @Transactional(readOnly = true)
-    @Cacheable(value = "contact", key = "'id='+#contactId")
-    public ContactDto getContact(long contactId) {
-        Contact contact = contactRepository.findOne(contactId);
-        if (contact == null) {
-            return null;
-        }
-        ContactDto contactDto = mapAndEnrichAddress(contact);
-        cacheSync.put(contactDto);
-        return contactDto;
-    }
+	@Override
+	@Transactional(readOnly = true)
+	@Cacheable(value = "contact", key = "'id='+#contactId")
+	public ContactDto getContact(long contactId) {
+		Contact contact = contactRepository.findOne(contactId);
+		if (contact == null) {
+			return null;
+		}
+		ContactDto contactDto = mapAndEnrichAddress(contact);
+		cacheSync.put(contactDto);
+		return contactDto;
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    @Cacheable(value = "contact", key = "'customerId='+#customerId+',type='+#type")
-    public ContactDto getContactByCustomerAndType(long customerId, String type) {
-        Contact contact = contactRepository.findByCustomerIdAndContactType(customerId, type);
-        if (contact == null) {
-            return null;
-        }
+	@Override
+	@Transactional(readOnly = true)
+	@Cacheable(value = "contact", key = "'customerId='+#customerId+',type='+#type")
+	public ContactDto getContactByCustomerAndType(long customerId, String type) {
+		Contact contact = contactRepository.findByCustomerIdAndContactType(customerId, type);
+		if (contact == null) {
+			return null;
+		}
 
-        ContactDto contactDto = mapAndEnrichAddress(contact);
-        cacheSync.put(contactDto);
-        return contactDto;
-    }
+		ContactDto contactDto = mapAndEnrichAddress(contact);
+		cacheSync.put(contactDto);
+		return contactDto;
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    @Cacheable("contactList")
-    public List<ContactDto> getContactsByCustomer(long customerId) {
-        List<Contact> contacts = contactRepository.findByCustomerId(customerId);
+	@Override
+	@Transactional(readOnly = true)
+	@Cacheable("contactList")
+	public List<ContactDto> getContactsByCustomer(long customerId) {
+		List<Contact> contacts = contactRepository.findByCustomerId(customerId);
 
-        List<ContactDto> contactDtos = new ArrayList<ContactDto>(contacts.size());
-        for (Contact contact : contacts) {
-            ContactDto contactDto = mapAndEnrichAddress(contact);
-            contactDtos.add(contactDto);
-            cacheSync.put(contactDto);
-        }
-        return contactDtos;
-    }
+		List<ContactDto> contactDtos = new ArrayList<ContactDto>(contacts.size());
+		for (Contact contact : contacts) {
+			ContactDto contactDto = mapAndEnrichAddress(contact);
+			contactDtos.add(contactDto);
+			cacheSync.put(contactDto);
+		}
+		return contactDtos;
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<ContactDto> getByEmail(String email) {
-        Iterable<Contact> contacts = contactRepository
-            .findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(), email));
+	@Override
+	@Transactional(readOnly = true)
+	public List<ContactDto> getByEmail(String email) {
+		Iterable<Contact> contacts =
+			contactRepository.findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(),
+																			  email));
 
-        List<ContactDto> contactDtos = new ArrayList<ContactDto>();
-        for (Contact contact : contacts) {
-            ContactDto contactDto = mapAndEnrichAddress(contact);
-            contactDtos.add(contactDto);
-            cacheSync.put(contactDto);
-        }
-        return contactDtos;
-    }
+		List<ContactDto> contactDtos = new ArrayList<ContactDto>();
+		for (Contact contact : contacts) {
+			ContactDto contactDto = mapAndEnrichAddress(contact);
+			contactDtos.add(contactDto);
+			cacheSync.put(contactDto);
+		}
+		return contactDtos;
+	}
 
-    private ContactDto mapAndEnrichAddress(Contact contact) {
-        ContactDto contactDto = mapper.map(contact, ContactDto.class);
-        Future<String> city = addressResolver.resolveCity(contactDto.getCountryCode(), contactDto.getZipCode());
-        Future<String> country = addressResolver.resolveCountry(contactDto.getCountryCode());
-        try {
-            contactDto.setCity(city.get());
-            contactDto.setCountryName(country.get());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return contactDto;
-    }
+	private ContactDto mapAndEnrichAddress(Contact contact) {
+		ContactDto contactDto = mapper.map(contact, ContactDto.class);
+		Future<String> city = addressResolver.resolveCity(contactDto.getCountryCode(), contactDto.getZipCode());
+		Future<String> country = addressResolver.resolveCountry(contactDto.getCountryCode());
+		try {
+			contactDto.setCity(city.get());
+			contactDto.setCountryName(country.get());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return contactDto;
+	}
 }

@@ -11,13 +11,10 @@ import javax.validation.constraints.NotNull;
 @WebService(serviceName = "CustomerService")
 public interface CustomerService {
 
-    String JNDI_NAME = VersionData.jndiName(CustomerService.class);
+	String JNDI_NAME = VersionData.jndiName(CustomerService.class);
 
-    CreateCustomerResponseDto createCustomer(
-        @NotNull
-        @Valid
-        CreateCustomerRequestDto requestDto);
+	CreateCustomerResponseDto createCustomer(@NotNull @Valid CreateCustomerRequestDto requestDto);
 
-    CustomerDto getById(long id);
+	CustomerDto getById(long id);
 
 }

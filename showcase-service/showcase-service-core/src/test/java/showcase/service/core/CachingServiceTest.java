@@ -23,9 +23,7 @@ import javax.inject.Inject;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.RETURNS_SMART_NULLS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = CachingServiceTest.class)
@@ -33,73 +31,73 @@ import static org.mockito.Mockito.when;
 @ActiveProfiles("standalone")
 public class CachingServiceTest {
 
-    @Inject
-    private ContactService contactService;
+	@Inject
+	private ContactService contactService;
 
-    @Inject
-    private AddressResolver addressResolver;
+	@Inject
+	private AddressResolver addressResolver;
 
-    @Inject
-    private ContactRepository contactRepository;
+	@Inject
+	private ContactRepository contactRepository;
 
-    @Bean
-    public ContactRepository contactRepository() {
-        return mock(ContactRepository.class, RETURNS_SMART_NULLS);
-    }
+	@Bean
+	public ContactRepository contactRepository() {
+		return mock(ContactRepository.class, RETURNS_SMART_NULLS);
+	}
 
-    @Bean
-    public ContactService contactService() {
-        return new ContactServiceImpl();
-    }
+	@Bean
+	public ContactService contactService() {
+		return new ContactServiceImpl();
+	}
 
-    @Bean
-    public CacheSync cacheSync() {
-        return new CacheSyncImpl();
-    }
+	@Bean
+	public CacheSync cacheSync() {
+		return new CacheSyncImpl();
+	}
 
-    @Bean
-    public AsyncAddressResolver asyncAddressResolver() {
-        return new AsyncAddressResolverImpl();
-    }
+	@Bean
+	public AsyncAddressResolver asyncAddressResolver() {
+		return new AsyncAddressResolverImpl();
+	}
 
-    @Test
-    public void getContact() {
-        long customerId = 1L;
-        long contactId = 2L;
-        ContactType type = ContactType.STANDARD;
+	@Test
+	public void getContact() {
+		long customerId = 1L;
+		long contactId = 2L;
+		ContactType type = ContactType.STANDARD;
 
-        Contact contact = new Contact();
-        contact.setId(contactId);
-        contact.setContactType(type.toString());
+		Contact contact = new Contact();
+		contact.setId(contactId);
+		contact.setContactType(type.toString());
 
-        when(contactRepository.findByCustomerIdAndContactType(customerId, type.toString())).thenReturn(contact)
-            .thenThrow(new RuntimeException("allowed only once"));
-        when(addressResolver.resolveCountry(anyString())).thenReturn("dummy");
-        when(addressResolver.resolveCity(anyString(), anyString())).thenReturn("dummy");
+		when(contactRepository.findByCustomerIdAndContactType(customerId, type.toString())).thenReturn(contact)
+			.thenThrow(new RuntimeException("allowed only once"));
+		when(addressResolver.resolveCountry(anyString())).thenReturn("dummy");
+		when(addressResolver.resolveCity(anyString(), anyString())).thenReturn("dummy");
 
-        {
-            ContactDto contactDto = contactService
-                .getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
-            assertThat(contactDto).isNotNull();
-            assertThat(contactDto.getId()).isEqualTo(contactId);
-            assertThat(contactDto.getContactType()).isEqualTo(type.toString());
-        }
+		{
+			ContactDto contactDto =
+				contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
+			assertThat(contactDto).isNotNull();
+			assertThat(contactDto.getId()).isEqualTo(contactId);
+			assertThat(contactDto.getContactType()).isEqualTo(type.toString());
+		}
 
-        {
-            ContactDto contactDto = contactService
-                .getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
-            assertThat(contactDto).isNotNull();
-            assertThat(contactDto.getId()).isEqualTo(contactId);
-            assertThat(contactDto.getContactType()).isEqualTo(type.toString());
-        }
+		{
+			ContactDto contactDto =
+				contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
+			assertThat(contactDto).isNotNull();
+			assertThat(contactDto.getId()).isEqualTo(contactId);
+			assertThat(contactDto.getContactType()).isEqualTo(type.toString());
+		}
 
-        {
-            ContactDto contactDto = contactService.getContact(contactId);
-            assertThat(contactDto).isNotNull();
-            assertThat(contactDto.getId()).isEqualTo(contactId);
-            assertThat(contactDto.getContactType()).isEqualTo(type.toString());
-        }
+		{
+			ContactDto contactDto = contactService.getContact(contactId);
+			assertThat(contactDto).isNotNull();
+			assertThat(contactDto.getId()).isEqualTo(contactId);
+			assertThat(contactDto.getContactType()).isEqualTo(type.toString());
+		}
 
-    }
+	}
 
 }

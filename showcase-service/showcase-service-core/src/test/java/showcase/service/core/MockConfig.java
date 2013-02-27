@@ -10,9 +10,9 @@ import static org.mockito.Mockito.mock;
 @Configuration
 public class MockConfig {
 
-    @Bean
-    public AddressResolver addressResolver() {
-        return mock(AddressResolver.class, RETURNS_SMART_NULLS);
-    }
+	@Bean
+	public AddressResolver addressResolver() {
+		return mock(AddressResolver.class, RETURNS_SMART_NULLS);
+	}
 
 }

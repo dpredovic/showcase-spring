@@ -9,16 +9,16 @@ import java.util.concurrent.Future;
 @Named
 public class AsyncAddressResolverImpl implements AsyncAddressResolver {
 
-    @Inject
-    private AddressResolver delegate;
+	@Inject
+	private AddressResolver delegate;
 
-    @Override
-    public Future<String> resolveCity(String countryCode, String zipCode) {
-        return new AsyncResult<String>(delegate.resolveCity(countryCode, zipCode));
-    }
+	@Override
+	public Future<String> resolveCity(String countryCode, String zipCode) {
+		return new AsyncResult<String>(delegate.resolveCity(countryCode, zipCode));
+	}
 
-    @Override
-    public Future<String> resolveCountry(String countryCode) {
-        return new AsyncResult<String>(delegate.resolveCountry(countryCode));
-    }
+	@Override
+	public Future<String> resolveCountry(String countryCode) {
+		return new AsyncResult<String>(delegate.resolveCountry(countryCode));
+	}
 }

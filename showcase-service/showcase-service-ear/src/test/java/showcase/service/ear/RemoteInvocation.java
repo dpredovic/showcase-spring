@@ -14,23 +14,23 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 public class RemoteInvocation {
 
-    private CustomerService customerService;
+	private CustomerService customerService;
 
-    @Before
-    public void setUp() throws Exception {
-        Properties jndiProperties = new Properties();
-        jndiProperties.setProperty(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+	@Before
+	public void setUp() throws Exception {
+		Properties jndiProperties = new Properties();
+		jndiProperties.setProperty(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 
-        @Cleanup
-        Context context = new InitialContext(jndiProperties);
+		@Cleanup
+		Context context = new InitialContext(jndiProperties);
 
-        customerService = (CustomerService) context.lookup(CustomerService.JNDI_NAME);
-    }
+		customerService = (CustomerService) context.lookup(CustomerService.JNDI_NAME);
+	}
 
-    @Test
-    public void testServiceCall() throws Exception {
-        long id = 421L;
-        CustomerDto customer = customerService.getById(id);
-        assertThat(customer.getId()).isEqualTo(id);
-    }
+	@Test
+	public void testServiceCall() throws Exception {
+		long id = 421L;
+		CustomerDto customer = customerService.getById(id);
+		assertThat(customer.getId()).isEqualTo(id);
+	}
 }

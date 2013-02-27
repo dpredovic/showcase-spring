@@ -9,18 +9,18 @@ import javax.inject.Named;
 @Profile("standalone")
 public class DummyAddressResolver implements AddressResolver {
 
-    public static int counter = 0;
+	public static int counter = 0;
 
-    @Override
-    @Cacheable("cityCache")
-    public String resolveCity(String countryCode, String zipCode) {
-        counter++;
-        return "City-" + countryCode + "/" + zipCode;
-    }
+	@Override
+	@Cacheable("cityCache")
+	public String resolveCity(String countryCode, String zipCode) {
+		counter++;
+		return "City-" + countryCode + "/" + zipCode;
+	}
 
-    @Override
-    @Cacheable("countryCache")
-    public String resolveCountry(String countryCode) {
-        return "Country-" + countryCode;
-    }
+	@Override
+	@Cacheable("countryCache")
+	public String resolveCountry(String countryCode) {
+		return "Country-" + countryCode;
+	}
 }

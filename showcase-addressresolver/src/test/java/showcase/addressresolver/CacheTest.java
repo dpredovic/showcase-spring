@@ -15,34 +15,34 @@ import static org.fest.assertions.api.Assertions.assertThat;
 @ContextConfiguration(classes = AddressResolverConfig.class)
 public class CacheTest {
 
-    @Inject
-    private AddressResolver addressResolver;
+	@Inject
+	private AddressResolver addressResolver;
 
-    @Test
-    public void testCache() throws Exception {
-        {
-            String city = addressResolver.resolveCity("X", "Y");
-            assertThat(city).isEqualTo("City-X/Y");
-            assertThat(DummyAddressResolver.counter).isEqualTo(1);
-        }
+	@Test
+	public void testCache() throws Exception {
+		{
+			String city = addressResolver.resolveCity("X", "Y");
+			assertThat(city).isEqualTo("City-X/Y");
+			assertThat(DummyAddressResolver.counter).isEqualTo(1);
+		}
 
-        {
-            String city = addressResolver.resolveCity("X", "Y");
-            assertThat(city).isEqualTo("City-X/Y");
-            assertThat(DummyAddressResolver.counter).isEqualTo(1);
-        }
+		{
+			String city = addressResolver.resolveCity("X", "Y");
+			assertThat(city).isEqualTo("City-X/Y");
+			assertThat(DummyAddressResolver.counter).isEqualTo(1);
+		}
 
-        {
-            String city = addressResolver.resolveCity("Y", "Z");
-            assertThat(city).isEqualTo("City-Y/Z");
-            assertThat(DummyAddressResolver.counter).isEqualTo(2);
-        }
+		{
+			String city = addressResolver.resolveCity("Y", "Z");
+			assertThat(city).isEqualTo("City-Y/Z");
+			assertThat(DummyAddressResolver.counter).isEqualTo(2);
+		}
 
-        {
-            String city = addressResolver.resolveCity("Y", "Z");
-            assertThat(city).isEqualTo("City-Y/Z");
-            assertThat(DummyAddressResolver.counter).isEqualTo(2);
-        }
+		{
+			String city = addressResolver.resolveCity("Y", "Z");
+			assertThat(city).isEqualTo("City-Y/Z");
+			assertThat(DummyAddressResolver.counter).isEqualTo(2);
+		}
 
-    }
+	}
 }

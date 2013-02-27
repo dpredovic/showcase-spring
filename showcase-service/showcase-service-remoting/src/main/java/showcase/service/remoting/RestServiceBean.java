@@ -14,12 +14,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -31,48 +26,40 @@ import java.util.List;
 @Path("/")
 public class RestServiceBean {
 
-    @Inject
-    private CustomerService customerService;
-    @Inject
-    private ContactService contactService;
+	@Inject
+	private CustomerService customerService;
+	@Inject
+	private ContactService contactService;
 
-    @GET
-    @Path("/contact/{id}")
-    public ContactDto getContact(
-        @PathParam("id")
-        long contactId) {
-        return contactService.getContact(contactId);
-    }
+	@GET
+	@Path("/contact/{id}")
+	public ContactDto getContact(@PathParam("id") long contactId) {
+		return contactService.getContact(contactId);
+	}
 
-    @GET
-    @Path("/customer/{id}/contact/type/{type}")
-    public ContactDto getContactByCustomerAndType(
-        @PathParam("id")
-        long customerId,
-        @PathParam("type")
-        String type) {
-        return contactService.getContactByCustomerAndType(customerId, type);
-    }
+	@GET
+	@Path("/customer/{id}/contact/type/{type}")
+	public ContactDto getContactByCustomerAndType(@PathParam("id") long customerId, @PathParam("type") String type) {
+		return contactService.getContactByCustomerAndType(customerId, type);
+	}
 
-    @GET
-    @Path("/customer/{id}/contact")
-    public List<ContactDto> getContactsByCustomer(long customerId) {
-        return contactService.getContactsByCustomer(customerId);
-    }
+	@GET
+	@Path("/customer/{id}/contact")
+	public List<ContactDto> getContactsByCustomer(long customerId) {
+		return contactService.getContactsByCustomer(customerId);
+	}
 
-    @PUT
-    @Path("/customer")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public CreateCustomerResponseDto createCustomer(CreateCustomerRequestDto requestDto) {
-        return customerService.createCustomer(requestDto);
-    }
+	@PUT
+	@Path("/customer")
+	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public CreateCustomerResponseDto createCustomer(CreateCustomerRequestDto requestDto) {
+		return customerService.createCustomer(requestDto);
+	}
 
-    @GET
-    @Path("/customer/{id}")
-    public CustomerDto getById(
-        @PathParam("id")
-        long id) {
-        return customerService.getById(id);
-    }
+	@GET
+	@Path("/customer/{id}")
+	public CustomerDto getById(@PathParam("id") long id) {
+		return customerService.getById(id);
+	}
 
 }

@@ -16,18 +16,18 @@ import javax.sql.DataSource;
 @Profile("junit")
 public class TestDataSourceConfig {
 
-    @Bean
-    public DataSource dataSource() {
-        Log4JdbcCustomFormatter formatter = new Log4JdbcCustomFormatter();
-        formatter.setLoggingType(LoggingType.MULTI_LINE);
-        formatter.setSqlPrefix("SQL:\r");
+	@Bean
+	public DataSource dataSource() {
+		Log4JdbcCustomFormatter formatter = new Log4JdbcCustomFormatter();
+		formatter.setLoggingType(LoggingType.MULTI_LINE);
+		formatter.setSqlPrefix("SQL:\r");
 
-        EmbeddedDatabase embeddedDatabase = new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
-                                                                         .addScript("init.sql").build();
+		EmbeddedDatabase embeddedDatabase =
+			new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("init.sql").build();
 
-        Log4jdbcProxyDataSource dataSource = new Log4jdbcProxyDataSource(embeddedDatabase);
-        dataSource.setLogFormatter(formatter);
-        return dataSource;
-    }
+		Log4jdbcProxyDataSource dataSource = new Log4jdbcProxyDataSource(embeddedDatabase);
+		dataSource.setLogFormatter(formatter);
+		return dataSource;
+	}
 
 }

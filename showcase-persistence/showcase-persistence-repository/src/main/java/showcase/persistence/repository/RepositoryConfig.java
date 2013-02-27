@@ -15,9 +15,9 @@ import showcase.persistence.unit.PersistenceUnitConfig;
 @EnableJpaRepositories
 public class RepositoryConfig {
 
-    @Bean
-    public PlatformTransactionManager transactionManager() {
-        return new JpaTransactionManager();
-    }
+	@Bean
+	public PlatformTransactionManager transactionManager() {
+		return new JpaTransactionManager();
+	}
 
 }

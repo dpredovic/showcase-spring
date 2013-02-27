@@ -12,28 +12,29 @@ import java.util.Collection;
 import java.util.Set;
 
 @Named
-public class MethodValidationExceptionMapper extends AbstractExceptionMapper<MethodConstraintViolationException, ValidationResponseDto> {
+public class MethodValidationExceptionMapper
+	extends AbstractExceptionMapper<MethodConstraintViolationException, ValidationResponseDto> {
 
-    @Override
-    public ValidationResponseDto map(MethodConstraintViolationException throwable,
-                                     Class<? extends ValidationResponseDto> returnType) {
-        Set<MethodConstraintViolation<?>> constraintViolations = throwable.getConstraintViolations();
+	@Override
+	public ValidationResponseDto map(MethodConstraintViolationException throwable,
+									 Class<? extends ValidationResponseDto> returnType) {
+		Set<MethodConstraintViolation<?>> constraintViolations = throwable.getConstraintViolations();
 
-        Collection<ValidationErrorDto> errors = new ArrayList<ValidationErrorDto>(constraintViolations.size());
-        for (MethodConstraintViolation<?> cv : constraintViolations) {
-            String propertyPath = cv.getPropertyPath().toString();
-            String[] pathParts = propertyPath.split("\\)\\.");
-            String pp = null;
-            if (pathParts.length == 2) {
-                pp = pathParts[1];
-            }
+		Collection<ValidationErrorDto> errors = new ArrayList<ValidationErrorDto>(constraintViolations.size());
+		for (MethodConstraintViolation<?> cv : constraintViolations) {
+			String propertyPath = cv.getPropertyPath().toString();
+			String[] pathParts = propertyPath.split("\\)\\.");
+			String pp = null;
+			if (pathParts.length == 2) {
+				pp = pathParts[1];
+			}
 
-            errors.add(new ValidationErrorDto(cv.getParameterIndex(), cv.getParameterName(), pp, cv.getMessage()));
-        }
+			errors.add(new ValidationErrorDto(cv.getParameterIndex(), cv.getParameterName(), pp, cv.getMessage()));
+		}
 
-        ValidationResponseDto returnValue = BeanUtils.instantiate(returnType);
-        returnValue.setValidationErrors(errors);
-        return returnValue;
-    }
+		ValidationResponseDto returnValue = BeanUtils.instantiate(returnType);
+		returnValue.setValidationErrors(errors);
+		return returnValue;
+	}
 
 }

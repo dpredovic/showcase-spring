@@ -1,5 +1,6 @@
 package showcase.persistence.repository;
 
+import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
@@ -20,7 +21,6 @@ import showcase.service.api.type.CustomerType;
 import showcase.service.api.type.DispatchType;
 
 import javax.inject.Inject;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
@@ -31,83 +31,84 @@ import static org.fest.assertions.api.Assertions.assertThat;
 @ContextConfiguration(classes = RepositoryConfig.class)
 public class RepositoryTest {
 
-    @Inject
-    private CustomerRepository customerRepository;
-    @Inject
-    private ContactRepository contactRepository;
-    @Inject
-    private PlatformTransactionManager transactionManager;
+	@Inject
+	private CustomerRepository customerRepository;
+	@Inject
+	private ContactRepository contactRepository;
+	@Inject
+	private PlatformTransactionManager transactionManager;
 
-    @Test
-    @Transactional(readOnly = true)
-    public void createCustomer() throws Exception {
+	@Test
+	@Transactional(readOnly = true)
+	public void createCustomer() throws Exception {
 
-        Long id = saveCustomer();
+		Long id = saveCustomer();
 
-        Customer customer = customerRepository.findOne(id);
+		Customer customer = customerRepository.findOne(id);
 
-        assertThat(customer).isNotNull();
-        assertThat(customer.getId()).isEqualTo(id);
+		assertThat(customer).isNotNull();
+		assertThat(customer.getId()).isEqualTo(id);
 
-        assertThat(customer.getProperties()).hasSize(1);
+		assertThat(customer.getProperties()).hasSize(1);
 
-        Collection<Contact> contacts = contactRepository.findByCustomerId(id);
-        assertThat(contacts).hasSize(3);
-        for (Contact contact : contacts) {
-            assertThat(contact.getCommunications()).hasSize(1);
-        }
+		Collection<Contact> contacts = contactRepository.findByCustomerId(id);
+		assertThat(contacts).hasSize(3);
+		for (Contact contact : contacts) {
+			assertThat(contact.getCommunications()).hasSize(1);
+		}
 
-        {
-            Iterable<Contact> foundByEmail = contactRepository
-                .findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(), "test1@test"));
-            assertThat(foundByEmail).hasSize(1);
-        }
+		{
+			Iterable<Contact> foundByEmail =
+				contactRepository.findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(),
+																				  "test1@test"));
+			assertThat(foundByEmail).hasSize(1);
+		}
 
-        {
-            Iterable<Contact> foundByEmail = contactRepository
-                .findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(), "notexisting"));
-            assertThat(foundByEmail).isEmpty();
-        }
-    }
+		{
+			Iterable<Contact> foundByEmail =
+				contactRepository.findAll(ContactPredicates.containsCommunication(CommunicationType.EMAIL.toString(),
+																				  "notexisting"));
+			assertThat(foundByEmail).isEmpty();
+		}
+	}
 
-    private Long saveCustomer() {
-        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager,
-                                                                          new DefaultTransactionDefinition(
-                                                                              TransactionDefinition.PROPAGATION_REQUIRES_NEW));
-        return transactionTemplate.execute(new TransactionCallback<Long>() {
-            public Long doInTransaction(TransactionStatus status) {
+	private Long saveCustomer() {
+		TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager,
+																		  new DefaultTransactionDefinition(TransactionDefinition.PROPAGATION_REQUIRES_NEW));
+		return transactionTemplate.execute(new TransactionCallback<Long>() {
+			public Long doInTransaction(TransactionStatus status) {
 
-                Customer customer = new Customer();
-                customer.setCustomerType(CustomerType.PERSON.toString());
-                customer.setDispatchType(DispatchType.EMAIL.toString());
-                customer.setRegistrationDate(new Date());
-                customer.setCooperationPartnerId(1L);
-                customer.getProperties().put("platinum", "true");
+				Customer customer = new Customer();
+				customer.setCustomerType(CustomerType.PERSON.toString());
+				customer.setDispatchType(DispatchType.EMAIL.toString());
+				customer.setRegistrationDate(new Date());
+				customer.setCooperationPartnerId(1L);
+				customer.getProperties().put("platinum", "true");
 
-                customer = customerRepository.save(customer);
+				customer = customerRepository.save(customer);
 
-                Contact c1 = createContact(1, ContactType.STANDARD, customer);
-                Contact c2 = createContact(2, ContactType.CONTRACT, customer);
-                Contact c3 = createContact(3, null, customer);
+				Contact c1 = createContact(1, ContactType.STANDARD, customer);
+				Contact c2 = createContact(2, ContactType.CONTRACT, customer);
+				Contact c3 = createContact(3, null, customer);
 
-                contactRepository.save(Arrays.asList(c1, c2, c3));
+				contactRepository.save(Lists.newArrayList(c1, c2, c3));
 
-                return customer.getId();
-            }
-        });
-    }
+				return customer.getId();
+			}
+		});
+	}
 
-    private Contact createContact(int i, ContactType type, Customer customer) {
-        Contact contact = new Contact();
-        contact.setFirstName("fn" + i);
-        contact.setLastName("ln" + i);
-        contact.setStreet("str" + i);
-        contact.setZipCode("zip" + i);
-        contact.setContactType(type == null ? null : type.toString());
+	private Contact createContact(int i, ContactType type, Customer customer) {
+		Contact contact = new Contact();
+		contact.setFirstName("fn" + i);
+		contact.setLastName("ln" + i);
+		contact.setStreet("str" + i);
+		contact.setZipCode("zip" + i);
+		contact.setContactType(type == null ? null : type.toString());
 
-        contact.getCommunications().put(CommunicationType.EMAIL.toString(), "test" + i + "@test");
+		contact.getCommunications().put(CommunicationType.EMAIL.toString(), "test" + i + "@test");
 
-        contact.setCustomer(customer);
-        return contact;
-    }
+		contact.setCustomer(customer);
+		return contact;
+	}
 }

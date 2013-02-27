@@ -12,17 +12,17 @@ import javax.inject.Inject;
 @Profile({"integration", "standalone"})
 public class DataSourceConfig {
 
-    @Inject
-    private Environment env;
+	@Inject
+	private Environment env;
 
-    @Bean(destroyMethod = "close")
-    public BasicDataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(env.getRequiredProperty("dataSource.driver"));
-        dataSource.setUrl(env.getRequiredProperty("dataSource.url"));
-        dataSource.setUsername(env.getRequiredProperty("dataSource.username"));
-        dataSource.setPassword(env.getRequiredProperty("dataSource.password"));
-        dataSource.setMaxActive(Integer.parseInt(env.getProperty("dataSource.maxActive", "10")));
-        return dataSource;
-    }
+	@Bean(destroyMethod = "close")
+	public BasicDataSource dataSource() {
+		BasicDataSource dataSource = new BasicDataSource();
+		dataSource.setDriverClassName(env.getRequiredProperty("dataSource.driver"));
+		dataSource.setUrl(env.getRequiredProperty("dataSource.url"));
+		dataSource.setUsername(env.getRequiredProperty("dataSource.username"));
+		dataSource.setPassword(env.getRequiredProperty("dataSource.password"));
+		dataSource.setMaxActive(Integer.parseInt(env.getProperty("dataSource.maxActive", "10")));
+		return dataSource;
+	}
 }

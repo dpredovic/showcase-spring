@@ -12,6 +12,6 @@ import java.util.Collection;
 @AllArgsConstructor
 public class ValidationResponseDto implements Serializable {
 
-    private Collection<ValidationErrorDto> validationErrors;
+	private Collection<ValidationErrorDto> validationErrors;
 
 }

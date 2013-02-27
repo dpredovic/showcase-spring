@@ -6,20 +6,20 @@ import showcase.persistence.unit.QContact;
 
 public abstract class ContactPredicates {
 
-    private static QContact $ = QContact.contact;
+	private static QContact $ = QContact.contact;
 
-    public static Predicate containsCommunication(String type, String... values) {
-        BooleanBuilder bb = new BooleanBuilder();
-        for (String value : values) {
-            Predicate predicate;
-            if (type == null) {
-                predicate = $.communications.containsValue(value);
-            } else {
-                predicate = $.communications.contains(type, value);
-            }
-            bb.or(predicate);
-        }
-        return bb.getValue();
-    }
+	public static Predicate containsCommunication(String type, String... values) {
+		BooleanBuilder bb = new BooleanBuilder();
+		for (String value : values) {
+			Predicate predicate;
+			if (type == null) {
+				predicate = $.communications.containsValue(value);
+			} else {
+				predicate = $.communications.contains(type, value);
+			}
+			bb.or(predicate);
+		}
+		return bb.getValue();
+	}
 
 }

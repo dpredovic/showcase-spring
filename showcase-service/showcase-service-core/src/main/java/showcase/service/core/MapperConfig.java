@@ -13,15 +13,17 @@ import showcase.service.api.dto.CustomerDto;
 @Configuration
 public class MapperConfig {
 
-    @Bean
-    public MapperFacade mapperFacade() {
-        return new ConfigurableMapper() {
-            @Override
-            protected void configure(MapperFactory factory) {
-                factory.registerClassMap(factory.classMap(CustomerDto.class, Customer.class).byDefault().toClassMap());
-                factory.registerClassMap(factory.classMap(ContactDto.class, Contact.class)
-                                                .field("customerId", "customer.id").byDefault().toClassMap());
-            }
-        };
-    }
+	@Bean
+	public MapperFacade mapperFacade() {
+		return new ConfigurableMapper() {
+			@Override
+			protected void configure(MapperFactory factory) {
+				factory.registerClassMap(factory.classMap(CustomerDto.class, Customer.class).byDefault().toClassMap());
+				factory.registerClassMap(factory.classMap(ContactDto.class, Contact.class)
+												.field("customerId", "customer.id")
+												.byDefault()
+												.toClassMap());
+			}
+		};
+	}
 }

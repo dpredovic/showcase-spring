@@ -24,36 +24,36 @@ import javax.inject.Named;
 @ExceptionsMapped
 public class CustomerServiceImpl implements CustomerService {
 
-    @Inject
-    private CustomerRepository customerRepository;
+	@Inject
+	private CustomerRepository customerRepository;
 
-    @Inject
-    private ContactRepository contactRepository;
+	@Inject
+	private ContactRepository contactRepository;
 
-    @Inject
-    private MapperFacade mapper;
+	@Inject
+	private MapperFacade mapper;
 
-    @Override
-    public CreateCustomerResponseDto createCustomer(CreateCustomerRequestDto requestDto) {
-        Customer customer = mapper.map(requestDto.getCustomer(), Customer.class);
-        customer = customerRepository.save(customer);
+	@Override
+	public CreateCustomerResponseDto createCustomer(CreateCustomerRequestDto requestDto) {
+		Customer customer = mapper.map(requestDto.getCustomer(), Customer.class);
+		customer = customerRepository.save(customer);
 
-        for (ContactDto contactDto : requestDto.getContacts()) {
-            Contact contact = mapper.map(contactDto, Contact.class);
-            contact.setCustomer(customer);
-            contactRepository.save(contact);
-        }
-        return new CreateCustomerResponseDto(customer.getId());
-    }
+		for (ContactDto contactDto : requestDto.getContacts()) {
+			Contact contact = mapper.map(contactDto, Contact.class);
+			contact.setCustomer(customer);
+			contactRepository.save(contact);
+		}
+		return new CreateCustomerResponseDto(customer.getId());
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public CustomerDto getById(long id) {
-        Customer customer = customerRepository.findOne(id);
-        if (customer == null) {
-            return null;
-        }
-        return mapper.map(customer, CustomerDto.class);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public CustomerDto getById(long id) {
+		Customer customer = customerRepository.findOne(id);
+		if (customer == null) {
+			return null;
+		}
+		return mapper.map(customer, CustomerDto.class);
+	}
 
 }

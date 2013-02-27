@@ -9,17 +9,13 @@ import java.util.List;
 @WebService(serviceName = "ContactService")
 public interface ContactService {
 
-    String JNDI_NAME = VersionData.jndiName(ContactService.class);
+	String JNDI_NAME = VersionData.jndiName(ContactService.class);
 
-    ContactDto getContact(long contactId);
+	ContactDto getContact(long contactId);
 
-    ContactDto getContactByCustomerAndType(long customerId,
-                                           @NotNull
-                                           String type);
+	ContactDto getContactByCustomerAndType(long customerId, @NotNull String type);
 
-    List<ContactDto> getContactsByCustomer(long customerId);
+	List<ContactDto> getContactsByCustomer(long customerId);
 
-    List<ContactDto> getByEmail(
-        @NotNull
-        String email);
+	List<ContactDto> getByEmail(@NotNull String email);
 }

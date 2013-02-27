@@ -12,25 +12,25 @@ import javax.inject.Named;
 @Profile("integration")
 public class RestAddressResolver implements AddressResolver {
 
-    @Inject
-    private JAXRSClientFactoryBean clientFactoryBean;
-    private AddressResolver delegate;
+	@Inject
+	private JAXRSClientFactoryBean clientFactoryBean;
+	private AddressResolver delegate;
 
-    @Override
-    @Cacheable("cityCache")
-    public String resolveCity(String countryCode, String zipCode) {
-        return delegate.resolveCity(countryCode, zipCode);
-    }
+	@Override
+	@Cacheable("cityCache")
+	public String resolveCity(String countryCode, String zipCode) {
+		return delegate.resolveCity(countryCode, zipCode);
+	}
 
-    @Override
-    @Cacheable("countryCache")
-    public String resolveCountry(String countryCode) {
-        return delegate.resolveCountry(countryCode);
-    }
+	@Override
+	@Cacheable("countryCache")
+	public String resolveCountry(String countryCode) {
+		return delegate.resolveCountry(countryCode);
+	}
 
-    @PostConstruct
-    private void init() {
-        delegate = clientFactoryBean.create(AddressResolver.class);
-    }
+	@PostConstruct
+	private void init() {
+		delegate = clientFactoryBean.create(AddressResolver.class);
+	}
 
 }

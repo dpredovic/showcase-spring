@@ -11,8 +11,8 @@ import java.util.List;
 @Transactional(propagation = Propagation.MANDATORY)
 public interface ContactRepository extends JpaRepository<Contact, Long>, QueryDslPredicateExecutor<Contact> {
 
-    List<Contact> findByCustomerId(long id);
+	List<Contact> findByCustomerId(long id);
 
-    Contact findByCustomerIdAndContactType(long id, String type);
+	Contact findByCustomerIdAndContactType(long id, String type);
 
 }
