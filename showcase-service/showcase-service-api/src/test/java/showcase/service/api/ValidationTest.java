@@ -1,7 +1,6 @@
 package showcase.service.api;
 
 import com.google.common.collect.ImmutableList;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.dto.CreateCustomerRequestDto;
@@ -15,21 +14,14 @@ import showcase.service.api.validation.CreateGroup;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.util.Date;
 import java.util.Set;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-public class TestValidation {
+public class ValidationTest {
 
-	private static Validator validator;
-
-	@BeforeClass
-	public static void init() {
-		ValidatorFactory vf = Validation.buildDefaultValidatorFactory();
-		validator = vf.getValidator();
-	}
+	private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
 	@Test
 	public void testValid() {
@@ -40,13 +32,13 @@ public class TestValidation {
 		assertThat(violations).isEmpty();
 	}
 
-	private CreateCustomerRequestDto createValidRequest() {
+	private static CreateCustomerRequestDto createValidRequest() {
 
 		CustomerDto customer = new CustomerDto();
 		customer.setCustomerType(CustomerType.PERSON.toString());
 		customer.setDispatchType(DispatchType.EMAIL.toString());
 		customer.setCooperationPartnerId(1L);
-		customer.setRegistrationDate(new Date(new Date().getTime() - 10));
+		customer.setRegistrationDate(new Date(new Date().getTime() - 10L));
 
 		ContactDto standardContact = createContact(ContactType.STANDARD);
 		ContactDto untypedContact = createContact(null);
@@ -54,7 +46,7 @@ public class TestValidation {
 		return new CreateCustomerRequestDto(customer, ImmutableList.of(standardContact, untypedContact));
 	}
 
-	private ContactDto createContact(ContactType contactType) {
+	private static ContactDto createContact(ContactType contactType) {
 		ContactDto contact = new ContactDto();
 		if (contactType != null) {
 			contact.setContactType(contactType.toString());

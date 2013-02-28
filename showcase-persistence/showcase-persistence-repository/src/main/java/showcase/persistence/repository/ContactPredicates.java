@@ -4,19 +4,18 @@ import com.mysema.query.BooleanBuilder;
 import com.mysema.query.types.Predicate;
 import showcase.persistence.unit.QContact;
 
-public abstract class ContactPredicates {
+public final class ContactPredicates {
 
-	private static QContact $ = QContact.contact;
+	private static final QContact $ = QContact.contact;
+
+	private ContactPredicates() {
+	}
 
 	public static Predicate containsCommunication(String type, String... values) {
 		BooleanBuilder bb = new BooleanBuilder();
 		for (String value : values) {
-			Predicate predicate;
-			if (type == null) {
-				predicate = $.communications.containsValue(value);
-			} else {
-				predicate = $.communications.contains(type, value);
-			}
+			Predicate predicate =
+				type == null ? $.communications.containsValue(value) : $.communications.contains(type, value);
 			bb.or(predicate);
 		}
 		return bb.getValue();

@@ -9,7 +9,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import showcase.addressresolver.AddressResolver;
 import showcase.service.api.CustomerService;
-import showcase.service.api.dto.*;
+import showcase.service.api.dto.ContactDto;
+import showcase.service.api.dto.CreateCustomerRequestDto;
+import showcase.service.api.dto.CreateCustomerResponseDto;
+import showcase.service.api.dto.CustomerDto;
+import showcase.service.api.dto.ValidationErrorDto;
 import showcase.service.api.validation.AllKeysInEnum;
 
 import javax.inject.Inject;

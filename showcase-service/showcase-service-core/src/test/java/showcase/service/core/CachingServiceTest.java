@@ -23,20 +23,20 @@ import javax.inject.Inject;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.RETURNS_SMART_NULLS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = CachingServiceTest.class)
-@Import(value = {CachingConfig.class, MapperConfig.class, MockConfig.class})
+@Import({CachingConfig.class, MapperConfig.class, MockConfig.class})
 @ActiveProfiles("standalone")
 public class CachingServiceTest {
 
 	@Inject
 	private ContactService contactService;
-
 	@Inject
 	private AddressResolver addressResolver;
-
 	@Inject
 	private ContactRepository contactRepository;
 

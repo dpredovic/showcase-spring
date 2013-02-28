@@ -8,9 +8,9 @@ import org.springframework.beans.BeanUtils;
 import showcase.service.api.dto.ValidationErrorDto;
 import showcase.service.api.dto.ValidationResponseDto;
 
-import javax.annotation.Nullable;
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 @Named
 public class MethodValidationExceptionMapper
@@ -28,11 +28,12 @@ public class MethodValidationExceptionMapper
 	}
 
 	private static class MapFunction implements Function<MethodConstraintViolation<?>, ValidationErrorDto> {
-		@Nullable
+		private static final Pattern PATTERN = Pattern.compile("\\)\\.");
+
 		@Override
-		public ValidationErrorDto apply(@Nullable MethodConstraintViolation<?> cv) {
+		public ValidationErrorDto apply(MethodConstraintViolation<?> cv) {
 			String propertyPath = cv.getPropertyPath().toString();
-			String[] pathParts = propertyPath.split("\\)\\.");
+			String[] pathParts = PATTERN.split(propertyPath);
 			String pp = null;
 			if (pathParts.length == 2) {
 				pp = pathParts[1];

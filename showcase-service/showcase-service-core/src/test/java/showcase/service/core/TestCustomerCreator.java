@@ -54,7 +54,7 @@ public class TestCustomerCreator {
 															 otherContact2));
 	}
 
-	private ContactDto createContact(String suffix, ContactType contactType) {
+	private static ContactDto createContact(String suffix, ContactType contactType) {
 		ContactDto contact = new ContactDto();
 		contact.setFirstName("stfn" + suffix);
 		contact.setLastName("stln" + suffix);

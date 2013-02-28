@@ -10,6 +10,6 @@ import showcase.common.cache.CachingConfig;
 @ComponentScan(basePackageClasses = AddressResolverConfig.class)
 @Import(CachingConfig.class)
 @EnableAsync
-public interface AddressResolverConfig {
+public class AddressResolverConfig {
 
 }

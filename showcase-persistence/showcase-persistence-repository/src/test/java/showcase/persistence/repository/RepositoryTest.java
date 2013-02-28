@@ -76,6 +76,7 @@ public class RepositoryTest {
 		TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager,
 																		  new DefaultTransactionDefinition(TransactionDefinition.PROPAGATION_REQUIRES_NEW));
 		return transactionTemplate.execute(new TransactionCallback<Long>() {
+			@Override
 			public Long doInTransaction(TransactionStatus status) {
 
 				Customer customer = new Customer();
@@ -98,7 +99,7 @@ public class RepositoryTest {
 		});
 	}
 
-	private Contact createContact(int i, ContactType type, Customer customer) {
+	private static Contact createContact(int i, ContactType type, Customer customer) {
 		Contact contact = new Contact();
 		contact.setFirstName("fn" + i);
 		contact.setLastName("ln" + i);

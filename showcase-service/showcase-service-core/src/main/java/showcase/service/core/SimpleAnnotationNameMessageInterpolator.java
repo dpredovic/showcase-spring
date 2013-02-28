@@ -15,7 +15,7 @@ public class SimpleAnnotationNameMessageInterpolator implements MessageInterpola
 		return getSimpleName(context);
 	}
 
-	private String getSimpleName(Context context) {
+	private static String getSimpleName(Context context) {
 		return context.getConstraintDescriptor().getAnnotation().annotationType().getSimpleName();
 	}
 }

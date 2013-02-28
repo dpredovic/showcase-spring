@@ -49,9 +49,8 @@ public class LogbackContextListener implements ServletContextListener {
 		try {
 			configFile = ResourceUtils.getFile("classpath:" + configFileName);
 			servletContext.log("logback configuration file " + configFile + " found");
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException ignored) {
 			servletContext.log("logback configuration file " + configFileName + " not found");
-			//
 		}
 		return configFile;
 	}

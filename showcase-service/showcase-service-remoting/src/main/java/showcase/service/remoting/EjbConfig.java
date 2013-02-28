@@ -8,6 +8,6 @@ import showcase.service.core.ServiceConfig;
 @Configuration
 @Import(ServiceConfig.class)
 @PropertySource("file:showcase.properties")
-public interface EjbConfig {
+public class EjbConfig {
 
 }
