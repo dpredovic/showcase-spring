@@ -20,7 +20,7 @@
 		<app.name>showcase</app.name>
 		<service.name>${app.name}-${parsedVersion.majorVersion}.${parsedVersion.minorVersion}</service.name>
 
-		<spring.version>3.1.2.RELEASE</spring.version>
+		<spring.version>3.2.2.RELEASE</spring.version>
 		<spring-data-jpa.version>1.3.0.RELEASE</spring-data-jpa.version>
 		<hibernate-jpa-2.0-api.version>1.0.1.Final</hibernate-jpa-2.0-api.version>
 		<hibernate.version>4.1.9.Final</hibernate.version>

@@ -40,21 +40,21 @@ public class ContactServiceImpl implements ContactService {
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(value = "contact", key = "'id='+#contactId")
+	@Cacheable(value = "contact", key = "'id='+#contactId", unless = "#result==null")
 	public ContactDto getContact(long contactId) {
 		return mapFunction.apply(contactRepository.findOne(contactId));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(value = "contact", key = "'customerId='+#customerId+',type='+#type")
+	@Cacheable(value = "contact", key = "'customerId='+#customerId+',type='+#type", unless = "#result==null")
 	public ContactDto getContactByCustomerAndType(long customerId, String type) {
 		return mapFunction.apply(contactRepository.findByCustomerIdAndContactType(customerId, type));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable("contactList")
+	@Cacheable(value = "contactList", unless = "#result.isEmpty()")
 	public List<ContactDto> getContactsByCustomer(long customerId) {
 		return FluentIterable.from(contactRepository.findByCustomerId(customerId)).transform(mapFunction).toList();
 	}
