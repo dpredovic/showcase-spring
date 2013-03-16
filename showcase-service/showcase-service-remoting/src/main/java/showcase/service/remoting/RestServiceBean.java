@@ -3,6 +3,7 @@ package showcase.service.remoting;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 import showcase.service.api.ContactService;
 import showcase.service.api.CustomerService;
+import showcase.service.api.VersionService;
 import showcase.service.api.dto.ContactDto;
 import showcase.service.api.dto.CreateCustomerRequestDto;
 import showcase.service.api.dto.CreateCustomerResponseDto;
@@ -35,6 +36,8 @@ public class RestServiceBean {
 	private CustomerService customerService;
 	@Inject
 	private ContactService contactService;
+	@Inject
+	private VersionService versionService;
 
 	@GET
 	@Path("/contact/{id}")
@@ -65,6 +68,12 @@ public class RestServiceBean {
 	@Path("/customer/{id}")
 	public CustomerDto getById(@PathParam("id") long id) {
 		return customerService.getById(id);
+	}
+
+	@GET
+	@Path("/version")
+	public String getVersion() {
+		return versionService.getVersion();
 	}
 
 }

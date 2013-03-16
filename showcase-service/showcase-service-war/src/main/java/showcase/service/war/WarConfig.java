@@ -14,6 +14,7 @@ import showcase.service.api.ContactService;
 import showcase.service.api.CustomerService;
 import showcase.service.core.ServiceConfig;
 import showcase.service.remoting.RestServiceBean;
+import showcase.service.remoting.VersionServiceBean;
 
 import javax.inject.Inject;
 
@@ -63,5 +64,10 @@ public class WarConfig {
 	@Bean
 	public RestServiceBean restServiceBean() {
 		return new RestServiceBean();
+	}
+
+	@Bean
+	public VersionServiceBean versionServiceBean() {
+		return new VersionServiceBean();
 	}
 }
