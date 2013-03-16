@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import showcase.common.cache.CachingConfig;
 
 @Configuration
-@ComponentScan(basePackageClasses = AddressResolverConfig.class)
+@ComponentScan
 @Import(CachingConfig.class)
 @EnableAsync
 public class AddressResolverConfig {

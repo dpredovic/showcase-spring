@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackageClasses = PersistenceUnitConfig.class)
+@ComponentScan
 public class PersistenceUnitConfig {
 
 	@Inject

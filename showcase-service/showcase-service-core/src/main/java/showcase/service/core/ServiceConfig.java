@@ -14,7 +14,7 @@ import showcase.persistence.repository.RepositoryConfig;
 import javax.validation.ValidatorFactory;
 
 @Configuration
-@ComponentScan(basePackageClasses = ServiceConfig.class)
+@ComponentScan
 @Import({RepositoryConfig.class, AddressResolverConfig.class, CachingConfig.class})
 @EnableAspectJAutoProxy
 public class ServiceConfig {

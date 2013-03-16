@@ -50,7 +50,7 @@ public class RestServiceBean {
 
 	@GET
 	@Path("/customer/{id}/contact")
-	public List<ContactDto> getContactsByCustomer(long customerId) {
+	public List<ContactDto> getContactsByCustomer(@PathParam("id") long customerId) {
 		return contactService.getContactsByCustomer(customerId);
 	}
 

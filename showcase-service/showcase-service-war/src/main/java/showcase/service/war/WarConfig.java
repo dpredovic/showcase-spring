@@ -3,6 +3,7 @@ package showcase.service.war;
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
+import org.apache.cxf.jaxrs.provider.json.JSONProvider;
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,6 +56,7 @@ public class WarConfig {
 		serverFactoryBean.setAddress("/rest");
 		serverFactoryBean.setServiceBean(restServiceBean());
 		serverFactoryBean.setBus(cxfBus);
+		serverFactoryBean.setProvider(new JSONProvider());
 		return serverFactoryBean.create();
 	}
 
