@@ -20,11 +20,11 @@ import showcase.service.api.type.ContactType;
 import showcase.service.api.type.CustomerType;
 import showcase.service.api.type.DispatchType;
 
-import javax.inject.Inject;
 import java.util.Collection;
 import java.util.Date;
+import javax.inject.Inject;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("junit")
@@ -52,10 +52,9 @@ public class RepositoryTest {
 		assertThat(customer.getProperties()).hasSize(1);
 
 		Collection<Contact> contacts = contactRepository.findByCustomerId(id);
-		assertThat(contacts).hasSize(3);
-		for (Contact contact : contacts) {
-			assertThat(contact.getCommunications()).hasSize(1);
-		}
+        assertThat(contacts).extracting("communications")
+                            .extractingResultOf("size", Integer.class)
+                            .containsExactly(1, 1, 1);
 
 		{
 			Iterable<Contact> foundByEmail =

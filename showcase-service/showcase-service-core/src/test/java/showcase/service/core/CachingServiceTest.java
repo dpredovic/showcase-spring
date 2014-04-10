@@ -17,7 +17,7 @@ import showcase.service.core.cache.CacheSyncImpl;
 
 import javax.inject.Inject;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -45,28 +45,26 @@ public class CachingServiceTest {
 		when(contactRepository.findByCustomerIdAndContactType(customerId, type.toString())).thenReturn(contact)
 			.thenThrow(new RuntimeException("allowed only once"));
 
-		{
-			ContactDto contactDto =
-				contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
-			assertThat(contactDto).isNotNull();
-			assertThat(contactDto.getId()).isEqualTo(contactId);
-			assertThat(contactDto.getContactType()).isEqualTo(type.toString());
-		}
+        ContactDto expected = new ContactDto();
+        expected.setId(contactId);
+        expected.setContactType(type.toString());
 
 		{
 			ContactDto contactDto =
 				contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
-			assertThat(contactDto).isNotNull();
-			assertThat(contactDto.getId()).isEqualTo(contactId);
-			assertThat(contactDto.getContactType()).isEqualTo(type.toString());
-		}
+            assertThat(contactDto).isNotNull().isEqualToIgnoringNullFields(expected);
+        }
+
+		{
+			ContactDto contactDto =
+				contactService.getContactByCustomerAndType(customerId, ContactType.STANDARD.toString());
+            assertThat(contactDto).isNotNull().isEqualToIgnoringNullFields(expected);
+        }
 
 		{
 			ContactDto contactDto = contactService.getContact(contactId);
-			assertThat(contactDto).isNotNull();
-			assertThat(contactDto.getId()).isEqualTo(contactId);
-			assertThat(contactDto.getContactType()).isEqualTo(type.toString());
-		}
+            assertThat(contactDto).isNotNull().isEqualToIgnoringNullFields(expected);
+        }
 
 	}
 

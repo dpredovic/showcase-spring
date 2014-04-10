@@ -6,11 +6,11 @@ import org.junit.Test;
 import showcase.service.api.CustomerService;
 import showcase.service.api.dto.CustomerDto;
 
+import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import java.util.Properties;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RemoteInvocation {
 

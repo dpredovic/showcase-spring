@@ -16,11 +16,11 @@ import showcase.service.api.dto.CustomerDto;
 import showcase.service.api.dto.ValidationErrorDto;
 import showcase.service.api.validation.AllKeysInEnum;
 
+import java.util.Collection;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;
 
 @RunWith(SpringJUnit4ClassRunner.class)
