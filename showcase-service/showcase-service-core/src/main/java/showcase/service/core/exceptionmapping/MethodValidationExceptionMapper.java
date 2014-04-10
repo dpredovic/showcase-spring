@@ -2,43 +2,49 @@ package showcase.service.core.exceptionmapping;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
-import org.hibernate.validator.method.MethodConstraintViolation;
-import org.hibernate.validator.method.MethodConstraintViolationException;
 import org.springframework.beans.BeanUtils;
 import showcase.service.api.dto.ValidationErrorDto;
 import showcase.service.api.dto.ValidationResponseDto;
 
-import javax.inject.Named;
 import java.util.Collection;
-import java.util.regex.Pattern;
+import java.util.Iterator;
+import javax.inject.Named;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Path;
 
 @Named
 public class MethodValidationExceptionMapper
-	extends AbstractExceptionMapper<MethodConstraintViolationException, ValidationResponseDto> {
+    extends AbstractExceptionMapper<ConstraintViolationException, ValidationResponseDto> {
 
-	@Override
-	public ValidationResponseDto map(MethodConstraintViolationException throwable,
-									 Class<? extends ValidationResponseDto> returnType) {
-		Collection<ValidationErrorDto> errors =
-			FluentIterable.from(throwable.getConstraintViolations()).transform(new MapFunction()).toList();
+    @Override
+    public ValidationResponseDto map(
+        ConstraintViolationException throwable, Class<? extends ValidationResponseDto> returnType) {
+        Collection<ValidationErrorDto> errors =
+            FluentIterable.from(throwable.getConstraintViolations()).transform(new MapFunction()).toList();
 
-		ValidationResponseDto returnValue = BeanUtils.instantiate(returnType);
-		returnValue.setValidationErrors(errors);
-		return returnValue;
-	}
+        ValidationResponseDto returnValue = BeanUtils.instantiate(returnType);
+        returnValue.setValidationErrors(errors);
+        return returnValue;
+    }
 
-	private static class MapFunction implements Function<MethodConstraintViolation<?>, ValidationErrorDto> {
-		private static final Pattern PATTERN = Pattern.compile("\\)\\.");
+    private static class MapFunction implements Function<ConstraintViolation<?>, ValidationErrorDto> {
 
-		@Override
-		public ValidationErrorDto apply(MethodConstraintViolation<?> cv) {
-			String propertyPath = cv.getPropertyPath().toString();
-			String[] pathParts = PATTERN.split(propertyPath);
-			String pp = null;
-			if (pathParts.length == 2) {
-				pp = pathParts[1];
-			}
-			return new ValidationErrorDto(cv.getParameterIndex(), cv.getParameterName(), pp, cv.getMessage());
-		}
-	}
+        @Override
+        public ValidationErrorDto apply(ConstraintViolation<?> input) {
+            Iterator<Path.Node> propertyPath = input.getPropertyPath().iterator();
+            propertyPath.next(); // skip past the method
+            Path.ParameterNode parameter = propertyPath.next().as(Path.ParameterNode.class);
+            StringBuilder sb = new StringBuilder();
+            while (propertyPath.hasNext()) {
+                Path.PropertyNode property = propertyPath.next().as(Path.PropertyNode.class);
+                sb.append(property);
+                if (propertyPath.hasNext()) {
+                    sb.append(".");
+                }
+            }
+            return new ValidationErrorDto(parameter.getParameterIndex(), parameter.getName(), sb.toString(),
+                                          input.getMessage());
+        }
+    }
 }
